@@ -11,16 +11,16 @@ export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Home'>
-          <Stack.Screen 
+          <Stack.Screen
             name="Home"
             component={Home}
             options={{
-              title: 'Welcome!',
+              title: 'Homepage',
               headerStyle: {
-                backgroundColor: '#f4511e',
+                backgroundColor: '#EE8E3A',
               },
               headerTintColor: '#fff',
               headerTitleStyle: {
@@ -28,7 +28,7 @@ export default function App() {
               },
             }}
           />
-          <Stack.Screen name="About" component={About}/>
+          <Stack.Screen name="About" component={About} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
@@ -38,8 +38,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
