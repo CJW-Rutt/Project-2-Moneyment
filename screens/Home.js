@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { Appearance, useColorScheme } from 'react-native';
 import { useState } from 'react';
 
+import User from '../components/atoms/User';
+
 export default function Home({ navigation }) {
     const colorScheme = useColorScheme();
 
@@ -18,6 +20,7 @@ export default function Home({ navigation }) {
                 title="Go to about page"
                 onPress={() => navigation.push('About')}
             /> */}
+            <User />
         </View>
     );
 }
