@@ -20,7 +20,13 @@ export default function Home({ navigation }) {
                 title="Go to about page"
                 onPress={() => navigation.push('About')}
             /> */}
-            <User />
+            <User size='xs' />
+            <User size='s' />
+            <User size='m' />
+            <User size='l' />
+            <User size='xl' />
+            <User size='xxl' />
+
         </View>
     );
 }
