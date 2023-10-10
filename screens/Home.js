@@ -2,8 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { Appearance, useColorScheme } from 'react-native';
 import { useState } from 'react';
+import userAvatar from '../assets/images/sampleAvatar.png'
 
-import User from '../components/atoms/User';
+import User from '../components/atoms/Avatar';
+import IconContainer from '../components/atoms/IconContainer';
 
 export default function Home({ navigation }) {
     const colorScheme = useColorScheme();
@@ -20,12 +22,12 @@ export default function Home({ navigation }) {
                 title="Go to about page"
                 onPress={() => navigation.push('About')}
             /> */}
-            <User size='xs' />
-            <User size='s' />
-            <User size='m' />
-            <User size='l' />
-            <User size='xl' />
-            <User size='xxl' />
+            {/* <User size='xs' url={userAvatar} /> */}
+            <IconContainer type='calendar' size='xs' colour='orange' />
+            <IconContainer type='plus' size='xs' colour='darkGreen' />
+            <IconContainer type='fruits' size='xl' colour='mango' />
+
+
 
         </View>
     );
