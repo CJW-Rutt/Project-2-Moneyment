@@ -23,10 +23,9 @@ export default function Home({ navigation }) {
                 onPress={() => navigation.push('About')}
             /> */}
             {/* <User size='xs' url={userAvatar} /> */}
-            <IconContainer type='calendar' size='xs' colour='orange' />
-            <IconContainer type='plus' size='xs' colour='darkGreen' />
-            <IconContainer type='fruits' size='xl' colour='mango' />
-
+            <IconContainer icon='settings' size={24} colour='#900' />
+            <IconContainer icon='calendar' size={24} colour='#0a3fff' />
+            <IconContainer icon='food' size='xs' />
 
 
         </View>
