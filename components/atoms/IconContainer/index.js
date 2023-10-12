@@ -1,52 +1,17 @@
 import { View, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useEffect, useState } from "react"
-import orangeCalendar from "../../../assets/icons/calendar/orange.png"
-import mango from "../../../assets/icons/fruits/Mango.png"
-import darkGreenPlus from "../../../assets/icons/plus/darkGreen.png"
+import { Iconify } from 'react-native-iconify';
 
-// designed for small icons
+import food from "../../../assets/icons/fruits/Food.png"
 
-export default function IconContainer({ type, size, colour }) {
-    const [source, setSource] = useState('')
-
-    const data = [
-        {
-            category: 'calendar',
-            colour: 'orange',
-            source: orangeCalendar
-        },
-        {
-            category: 'fruits',
-            colour: 'mango',
-            source: mango
-        },
-        {
-            category: 'plus',
-            colour: 'darkGreen',
-            source: darkGreenPlus
-        }
-    ]
-
-    function returnIcon() {
-        const icon = data.filter(item => {
-            return item.category === type && item.colour === colour
-        })
-
-        const link = icon[0].source
-
-        setSource(link)
-    }
-
-    useEffect(() => {
-        returnIcon()
-    }, [])
-
+export default function IconContainer({ icon, size, colour }) {
     return (
         <>
             <View style={styles.container} >
-                {size === 'xs' ? <Image style={styles.xs} source={source} contentFit="contain" /> :
-                    size === 'xl' ? <Image style={styles.xl} source={source} contentFit="contain" /> : <></>}
+                {icon === 'settings' ? <Iconify icon='uil:setting' size={size} color={colour} />
+                    : icon === 'calendar' ? <Iconify icon='uil:schedule' size={size} color={colour} />
+                        : icon === 'food' ? <Image source={food} alt='' style={styles.xs} contentFit="contain" />
+                            : <></>}
             </View>
         </>
     )
