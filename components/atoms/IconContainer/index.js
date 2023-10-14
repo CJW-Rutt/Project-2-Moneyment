@@ -6,7 +6,12 @@ export default function IconContainer({ icon, size, colour }) {
     const imageSources = {
         settings: <Iconify icon='uil:setting' size={size} color={colour} />,
         calendar: <Iconify icon='uil:schedule' size={size} color={colour} />,
+        wallet: <Iconify icon='zondicons:wallet' size={size} color={colour} />,
+        notification: <Iconify icon='mdi:bell-notification-outline' size={size} color={colour} />,
         food: <Image source={require("../../../assets/icons/fruits/Food.png")} alt='' style={styles.xs} contentFit="contain" />,
+        forest: <Image source={require("../../../assets/icons/forest/black.png")} alt='' style={styles.xs} contentFit="contain" />,
+        robot: <Image source={require("../../../assets/icons/robot/black.png")} alt='' style={styles.xs} contentFit="contain" />,
+
     };
 
     return (
