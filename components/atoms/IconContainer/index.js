@@ -8,7 +8,7 @@ export default function IconContainer({ icon, size, colour }) {
         calendar: <Iconify icon='uil:schedule' size={size} color={colour} />,
         wallet: <Iconify icon='zondicons:wallet' size={size} color={colour} />,
         notification: <Iconify icon='mdi:bell-notification-outline' size={size} color={colour} />,
-        food: <Image source={require("../../../assets/icons/fruits/Food.png")} alt='' style={styles.xs} contentFit="contain" />,
+        food: <Image source={require("../../../assets/icons/category/Food.png")} alt='' style={styles.xs} contentFit="contain" />,
         forest: <Image source={require("../../../assets/icons/forest/black.png")} alt='' style={styles.xs} contentFit="contain" />,
         robot: <Image source={require("../../../assets/icons/robot/black.png")} alt='' style={styles.xs} contentFit="contain" />,
 
@@ -26,9 +26,9 @@ const styles = StyleSheet.create({
         width: 45,
         height: 45
     },
-    xs: {
-        width: 28,
-        height: 28
+    xs: { // size of icons in balance category bars
+        width: 20,
+        height: 20
     },
     xl: {
         width: 50,
