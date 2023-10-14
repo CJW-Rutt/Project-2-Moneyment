@@ -25,9 +25,11 @@ export default function Home({ navigation }) {
             {/* <User size='xs' url={userAvatar} /> */}
             <IconContainer icon='settings' size={24} colour='#900' />
             <IconContainer icon='calendar' size={24} colour='#0a3fff' />
-            <IconContainer icon='food' size='xs' />
+            <IconContainer icon='food' size='l' />
+            <IconContainer icon='forest' size='l' />
+            <IconContainer icon='robot' size='l' />
 
-
+            
         </View>
     );
 }
