@@ -8,9 +8,9 @@ export default function IconContainer({ icon, size, colour }) {
         calendar: <Iconify icon='uil:schedule' size={size} color={colour} />,
         wallet: <Iconify icon='zondicons:wallet' size={size} color={colour} />,
         notification: <Iconify icon='mdi:bell-notification-outline' size={size} color={colour} />,
-        food: <Image source={require("../../../assets/icons/category/Food.png")} alt='' style={styles.xs} contentFit="contain" />,
-        forest: <Image source={require("../../../assets/icons/forest/black.png")} alt='' style={styles.xs} contentFit="contain" />,
-        robot: <Image source={require("../../../assets/icons/robot/black.png")} alt='' style={styles.xs} contentFit="contain" />,
+        food: <Image source={require("../../../assets/graphics/category/Food.png")} alt='' style={styles.l} contentFit="contain" />,
+        forest: <Image source={require("../../../assets/icons/forest/black.png")} alt='' style={styles.l} contentFit="contain" />,
+        robot: <Image source={require("../../../assets/icons/robot/black.png")} alt='' style={styles.l} contentFit="contain" />,
 
     };
 
@@ -26,12 +26,20 @@ const styles = StyleSheet.create({
         width: 45,
         height: 45
     },
-    xs: { // size of icons in balance category bars
-        width: 20,
-        height: 20
+    xs: { 
+        width: 12,
+        height: 12
+    },
+    s: {
+        width: 16,
+        height: 16
+    },
+    l: {
+        width: 24,
+        height: 24
     },
     xl: {
-        width: 50,
-        height: 50
+        width: 44,
+        height: 44
     }
 })
