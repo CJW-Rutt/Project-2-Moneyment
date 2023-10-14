@@ -26,8 +26,8 @@ export default function Home({ navigation }) {
             <IconContainer icon='settings' size={24} colour='#900' />
             <IconContainer icon='calendar' size={24} colour='#0a3fff' />
             <IconContainer icon='food' size='xs' />
-
-
+            <IconContainer icon='forest' size='xs' />
+            <IconContainer icon='robot' size='xs' />
         </View>
     );
 }
