@@ -16,7 +16,7 @@ export default function GraphicContainer({ graphic, size }) {
       try {
         const asset = Asset.fromModule(require(assetPath));
         if (asset.localUri) {
-          return asset.localUri; // Found asset
+          return asset.localUri;
         }
       } catch (error) {
         console.error(`Error requiring asset: ${assetPath}`, error);
