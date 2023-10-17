@@ -10,7 +10,6 @@ export default function IconContainer({ icon, size, colour }) {
         notification: <Iconify icon='mdi:bell-notification-outline' size={size} color={colour} />,
         forest: <Image source={require("../../../assets/icons/forest/black.png")} alt='' style={styles.l} contentFit="contain" />,
         robot: <Image source={require("../../../assets/icons/robot/black.png")} alt='' style={styles.l} contentFit="contain" />,
-
     };
 
     return (
