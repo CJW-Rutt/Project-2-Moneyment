@@ -2,7 +2,6 @@ import { View, StyleSheet } from "react-native";
 import { Image } from "expo-image";
 import { Asset } from "expo-asset";
 
-// Define the asset paths outside the component function
 const categoryAssetPath = "../../../assets/graphics/category/";
 const stickersAssetPath = "../../../assets/graphics/stickers/";
 
@@ -11,12 +10,10 @@ export default function GraphicContainer({ graphic, size }) {
     console.log('graphicName: ' + graphicName);
     const folderPaths = [categoryAssetPath, stickersAssetPath];
 
-    // Try to find the asset in each base path.
     for (const folderPath of folderPaths) {
       const assetPath = `${folderPath}${graphicName}.png`;
       console.log(assetPath);
       try {
-        // Attempt to require the asset and handle any potential errors.
         const asset = Asset.fromModule(require(assetPath));
         if (asset.localUri) {
           return asset.localUri; // Found asset
@@ -34,7 +31,7 @@ export default function GraphicContainer({ graphic, size }) {
   const imageSize = size === "small" ? styles.smallImage : styles.defaultImage;
 
   if (!graphicSource) {
-    return null; // Return null if the gfx is not found in either folder
+    return null;
   }
 
   return (
@@ -51,10 +48,10 @@ export default function GraphicContainer({ graphic, size }) {
 
 const styles = StyleSheet.create({
     container: {
-      // Common style for the container
+      //style
     },
     image: {
-      // Common style for the image
+      // style
     },
     defaultImage: {
 
