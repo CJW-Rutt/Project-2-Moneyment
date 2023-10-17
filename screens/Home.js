@@ -25,8 +25,6 @@ export default function Home({ navigation }) {
             <IconContainer icon='food' size='l' />
             <IconContainer icon='forest' size='l' />
             <IconContainer icon='robot' size='l' />
-            <Text>TESTING: Coffee</Text>
-            <GraphicContainer graphic='coffee' size='defaultImage' />
         </View>
     );
 }

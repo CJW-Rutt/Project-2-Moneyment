@@ -58,9 +58,7 @@ export default function GraphicContainer({ graphic, size }) {
 
   const imageSize = size === "small" ? styles.smallImage : styles.defaultImage;
 
-  if (!graphicSource) {
-    return null; 
-  } 
+  if (!graphicSource) (
 
   return (
     <View style={styles.container}>
@@ -76,10 +74,10 @@ export default function GraphicContainer({ graphic, size }) {
 
 const styles = StyleSheet.create({
     container: {
-      // Common style for the container
+      //style
     },
     image: {
-      // Common style for the image
+      // style
     },
     defaultImage: {
       width: 50,
