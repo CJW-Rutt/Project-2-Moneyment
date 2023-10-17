@@ -33,3 +33,7 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# JS Testing File
+screens/testing.js
+screens/Home.js

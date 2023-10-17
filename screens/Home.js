@@ -6,6 +6,7 @@ import userAvatar from '../assets/images/sampleAvatar.png'
 
 import User from '../components/atoms/Avatar';
 import IconContainer from '../components/atoms/IconContainer';
+import GraphicContainer from '../components/atoms/GraphicContainer';
 
 export default function Home({ navigation }) {
     const colorScheme = useColorScheme();
@@ -18,17 +19,12 @@ export default function Home({ navigation }) {
         <View style={[styles.container, themeContainerStyle]}>
             <Text style={[styles.text, themeTextStyle]}>Your current theme is: {colorScheme}</Text>
             <StatusBar style="auto" />
-            {/* <Button
-                title="Go to about page"
-                onPress={() => navigation.push('About')}
-            /> */}
             {/* <User size='xs' url={userAvatar} /> */}
             <IconContainer icon='settings' size={24} colour='#900' />
             <IconContainer icon='calendar' size={24} colour='#0a3fff' />
             <IconContainer icon='food' size='l' />
             <IconContainer icon='forest' size='l' />
             <IconContainer icon='robot' size='l' />
-
             
         </View>
     );
