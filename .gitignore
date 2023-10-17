@@ -36,4 +36,3 @@ yarn-error.*
 
 # JS Testing File
 screens/testing.js
-screens/Home.js
