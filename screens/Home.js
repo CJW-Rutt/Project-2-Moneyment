@@ -7,6 +7,8 @@ import userAvatar from '../assets/images/sampleAvatar.png'
 import User from '../components/atoms/Avatar';
 import IconContainer from '../components/atoms/IconContainer';
 import GraphicContainer from '../components/atoms/GraphicContainer';
+import HorizontalProgressBar from '../components/atoms/HorizontalProgressBar';
+import BudgetBottomSheet from '../components/atoms/BudgetBottomSheet';
 
 export default function Home({ navigation }) {
     const colorScheme = useColorScheme();
@@ -22,9 +24,7 @@ export default function Home({ navigation }) {
             {/* <User size='xs' url={userAvatar} /> */}
             <IconContainer icon='settings' size={24} colour='#900' />
             <IconContainer icon='calendar' size={24} colour='#0a3fff' />
-            <IconContainer icon='food' size='l' />
             <IconContainer icon='forest' size='l' />
-            <IconContainer icon='robot' size='l' />
         </View>
     );
 }

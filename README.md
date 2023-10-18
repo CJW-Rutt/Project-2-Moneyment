@@ -7,4 +7,5 @@ npx expo start
 - npx expo install expo-image
 - npx expo install expo-asset
 - npm install react-native-iconify
+- npm install react-native-progress --save
 - expo install react-native-svg
