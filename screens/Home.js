@@ -9,6 +9,7 @@ import IconContainer from '../components/atoms/IconContainer';
 import GraphicContainer from '../components/atoms/GraphicContainer';
 import HorizontalProgressBar from '../components/atoms/HorizontalProgressBar';
 import BudgetBottomSheet from '../components/atoms/BudgetBottomSheet';
+import NavButton from '../components/atoms/NavButton';
 
 export default function Home({ navigation }) {
     const colorScheme = useColorScheme();
@@ -25,6 +26,7 @@ export default function Home({ navigation }) {
             <IconContainer icon='settings' size={24} colour='#900' />
             <IconContainer icon='calendar' size={24} colour='#0a3fff' />
             <IconContainer icon='forest' size='l' />
+            <NavButton icon='wallet' active />
         </View>
     );
 }
