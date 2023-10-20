@@ -1,110 +1,65 @@
 import { Image } from "expo-image"
 import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from "react-native"
+import CategoryContainer from "../../../atoms/CategoryContainer"
+import { useEffect, useState } from "react"
 
-export default function CategoryCard ({ icon, size,} ) {
+export default function CategoryCard({ text, size, amount }) {
+
+    const [active, setActive] = useState(false)
+    category = text.toLowerCase()
+
+    const handlePress = () => {
+        active ? setActive(false) : setActive(true)
+        console.log(active)
+    }
 
     return (
-      <View style={styles.container}>
-<View style={styles.row}>
-<Image source={require("../../../../assets/graphics/category/Food.png")} style={styles.xl} alt="food"/>
-<View style={styles.col}>
-<Text style={styles.titlecard}>Food</Text>
-</View>
-<View style={styles.balancecontainer}>
-<View style={styles.col}>
-<Text style={styles.balance}>$200</Text>
-</View>
-</View>
-</View>
-<View style={styles.row}>
-<Image source={require("../../../../assets/graphics/category/Groceries.png")} style={styles.xl} alt="groceries"/>
-<View style={styles.col}>
-<Text style={styles.titlecard}>Groceries</Text>
-</View>
-<View style={styles.balancecontainer}>
-<View style={styles.col}>
-<Text style={styles.balance}>$200</Text>
-</View>
-</View>
-</View>
-<View style={styles.row}>
-<Image source={require("../../../../assets/graphics/category/Coffee.png")} style={styles.xl} alt="Coffee"/>
-<View style={styles.col}>
-<Text style={styles.titlecard}>Coffee</Text>
-</View>
-<View style={styles.balancecontainer}>
-<View style={styles.col}>
-<Text style={styles.balance}>$200</Text>
-</View>
-</View>
-</View>
-<View style={styles.row}>
-<Image source={require("../../../../assets/graphics/category/Shopping.png")} style={styles.xl} alt="shopping"/>
-<View style={styles.col}>
-<Text style={styles.titlecard}>Shopping</Text>
-</View>
-<View style={styles.balancecontainer}>
-<View style={styles.col}>
-<Text style={styles.balance}>$200</Text>
-</View>
-</View>
-</View>
-
-      </View>
+        <TouchableOpacity onPress={() => handlePress()}>
+            <View style={styles.container}>
+                <View style={styles.cardContainer}>
+                    {active ? <View style={[styles.active, styles.selected]}></View> : <View style={[styles.selected]}></View>}
+                    <View style={styles.iconContainer}>
+                        <CategoryContainer category={category} size={size} />
+                        <Text style={styles.category}>{text}</Text>
+                    </View>
+                    <Text style={styles.amount}>${amount}</Text>
+                </View>
+            </View>
+        </TouchableOpacity>
     )
 }
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
-        height: "auto",
         backgroundColor: "#fff",
-        
+        flexDirection: 'row',
+        width: 390,
+        height: 45,
     },
-    balancecontainer: {
-        marginLeft: 50,
-        flexDirection: "row",
-        alignItems: "center",
-     
-        
+    cardContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        justifyContent: 'space-between'
     },
-    balance: {
-       fontSize: 16,
-       textAlign: "right"
+    iconContainer: {
+        flexDirection: 'row',
+        paddingLeft: 22,
+        maxWidth: 390 - 253
     },
-    row: {
-flexDirection: "row",
-alignItems: "center",
-paddingTop: 20,
-paddingBottom: 20,
-justifyContent: "space-around",
-borderBottomWidth: 1,
-borderBottomColor: "#d3d3d3"
+    amount: {
+        textAlign: 'right',
+        paddingRight: 20
     },
-    col: {
-width: 100,
+    category: {
+        textAlign: 'left'
     },
-    xs: { 
-        width: 12,
-        height: 12,
-    
+    active: {
+        backgroundColor: 'black',
     },
-    s: {
-        width: 16,
-        height: 16,
-
-    },
-    l: {
-        width: 24,
-        height: 24,
-
-    },
-    xl: {
-        width: 36,
-        height: 36,
-      
-    },
-    titlecard: {
-        fontSize: 24,
+    selected: {
+        width: 7,
+        height: '100%',
+        position: 'absolute'
     }
 
 })
