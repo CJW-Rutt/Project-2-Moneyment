@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, ScrollView, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { Appearance, useColorScheme } from 'react-native';
 import { useState } from 'react';
 import userAvatar from '../assets/images/sampleAvatar.png'
@@ -10,8 +10,6 @@ import GraphicContainer from '../components/atoms/GraphicContainer';
 import HorizontalProgressBar from '../components/atoms/HorizontalProgressBar';
 import BudgetBottomSheet from '../components/atoms/BudgetBottomSheet';
 import NavButton from '../components/atoms/NavButton';
-import PhotoFrame from '../components/atoms/PhotoFrame';
-
 
 export default function Home({ navigation }) {
     const colorScheme = useColorScheme();
@@ -21,20 +19,18 @@ export default function Home({ navigation }) {
         colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
     return (
-
         <View style={[styles.container, themeContainerStyle]}>
             <Text style={[styles.text, themeTextStyle]}>Your current theme is: {colorScheme}</Text>
             <StatusBar style="auto" />
-            <User size='xs' url={userAvatar} />
+            {/* <User size='xs' url={userAvatar} /> */}
             <IconContainer icon='settings' size={24} colour='#900' />
             <IconContainer icon='calendar' size={24} colour='#0a3fff' />
             <IconContainer icon='forest' size='l' />
-
+            <NavButton icon='wallet' active />
 
         </View>
-
     );
-} //<NavButton icon='wallet' active />
+}
 
 const styles = StyleSheet.create({
     container: {

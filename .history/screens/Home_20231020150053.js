@@ -21,18 +21,19 @@ export default function Home({ navigation }) {
         colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
     return (
+        <ScrollView>
+            <View style={[styles.container, themeContainerStyle]}>
+                <Text style={[styles.text, themeTextStyle]}>Your current theme is: {colorScheme}</Text>
+                <StatusBar style="auto" />
+                {/* <User size='xs' url={userAvatar} /> */}
+                <IconContainer icon='settings' size={24} colour='#900' />
+                <IconContainer icon='calendar' size={24} colour='#0a3fff' />
+                <IconContainer icon='forest' size='l' />
+                <InputField />
+                <PhotoFrame />
 
-        <View style={[styles.container, themeContainerStyle]}>
-            <Text style={[styles.text, themeTextStyle]}>Your current theme is: {colorScheme}</Text>
-            <StatusBar style="auto" />
-            <User size='xs' url={userAvatar} />
-            <IconContainer icon='settings' size={24} colour='#900' />
-            <IconContainer icon='calendar' size={24} colour='#0a3fff' />
-            <IconContainer icon='forest' size='l' />
-
-
-        </View>
-
+            </View>
+        </ScrollView>
     );
 } //<NavButton icon='wallet' active />
 
