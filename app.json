@@ -25,6 +25,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "fonts": {
+      "Montserrat-Italic": "./assets/fonts/Montserrat-Italic-VariableFont_wght.ttf",
+      "Montserrat": "./assets/fonts/Montserrat-VariableFont_wght.ttf"
     }
   }
 }
