@@ -3,11 +3,17 @@ import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
 
 import Home from './screens/Home';
-import About from './screens/About';
+import Add from './screens/Add';
+import Budget from './screens/Budget';
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    'Montserrat': require('./assets/fonts/Montserrat-VariableFont_wght.ttf'),
+  });
+  
   const Stack = createNativeStackNavigator();
 
   return (
@@ -28,7 +34,8 @@ export default function App() {
               },
             }}
           />
-          <Stack.Screen name="About" component={About} />
+          <Stack.Screen name="Add" component={Add} />
+          <Stack.Screen name="Budget" component={Budget} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
