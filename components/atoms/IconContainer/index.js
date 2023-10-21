@@ -14,6 +14,9 @@ export default function IconContainer({ icon, size, colour }) {
         check: <Iconify icon='tabler:check' size={size} color={colour} />,
         arrowUp: <Iconify icon='tabler:arrow-up' size={size} color={colour} />,
         add: <Iconify icon='material-symbols:add' size={size} color={colour} />,
+        fullTime: <Iconify icon='maki:suitcase' size={size} color={colour} />,
+        partTime: <Iconify icon='entypo:tools' size={size} color={colour} />,
+        investment: <Iconify icon='teenyicons:adjust-vertical-alt-solid' size={size} color={colour} />,
         forest: <Image source={require("../../../assets/icons/forest/black.png")} alt='' style={styles.l} contentFit="contain" />,
         robot: <Image source={require("../../../assets/icons/robot/black.png")} alt='' style={styles.l} contentFit="contain" />,
         sortUp: <Image source={require("../../../assets/icons/sort/up.png")} alt='' style={styles.l} contentFit="contain" />,
@@ -22,6 +25,12 @@ export default function IconContainer({ icon, size, colour }) {
         setGoalGray: <Image source={require("../../../assets/icons/setGoal/gray.png")} alt='' style={styles.l} contentFit="contain" />,
         setGoalWhite: <Image source={require("../../../assets/icons/setGoal/white.png")} alt='' style={styles.l} contentFit="contain" />,
         setGoalButton: <Image source={require("../../../assets/icons/setGoal/SetButton.png")} alt='' style={styles.l} contentFit="contain" />,
+        td: <Image source={require("../../../assets/icons/bank/td.png")} alt='' style={styles.xl} contentFit="contain" />,
+        cibc: <Image source={require("../../../assets/icons/bank/cibc.png")} alt='' style={styles.xl} contentFit="contain" />,
+        rbc: <Image source={require("../../../assets/icons/bank/rbc.png")} alt='' style={styles.xl} contentFit="contain" />,
+        cash: <Image source={require("../../../assets/icons/bank/cash.png")} alt='' style={styles.xl} contentFit="contain" />,
+
+
     };
 
     return (
@@ -33,12 +42,13 @@ export default function IconContainer({ icon, size, colour }) {
 
 const styles = StyleSheet.create({
     container: {
-        width: 45,
-        height: 45
+        flex: 1,
+        // width: 45,
+        // height: 45
     },
     xs: {
-        width: 12,
-        height: 12
+        width: 14,
+        height: 14
     },
     s: {
         width: 16,
@@ -49,7 +59,7 @@ const styles = StyleSheet.create({
         height: 24
     },
     xl: {
-        width: 44,
-        height: 44
+        width: 45,
+        height: 45
     }
 })
