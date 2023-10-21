@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: 390,
         height: 45,
+        borderBottomColor: '#E2E2E2',
+        borderBottomWidth: 1
     },
     cardContainer: {
         flexDirection: 'row',
