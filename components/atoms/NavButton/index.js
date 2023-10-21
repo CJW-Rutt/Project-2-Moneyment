@@ -1,13 +1,12 @@
-import { View } from 'react-native'
-import { StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 import { Image } from "expo-image"
-import { Iconify } from 'react-native-iconify'
+import { Iconify } from 'react-native-iconify';
 
-export default function NavButton( icon, active ) {
 
+export default function NavButton({ icon, active }) {
     const iconSources = {
-        wallet: <Iconify icon='ph:wallet-bold' color='#000000' /> ,
-        budget: <Iconify icon='ph:wallet-bold'  color='#000000' /> ,
+        wallet: <Iconify icon='ph:wallet-bold' width={20} height={17.04} color='#707070' />,
+        budget: <Iconify icon='fa-solid:piggy-bank' width={22.67} height={20} color='#707070' />,
         add: <Image source={require("../../../assets/add-logo.png")} alt='' style={styles.image} contentFit="contain" />,
     }
 
@@ -19,21 +18,21 @@ export default function NavButton( icon, active ) {
 
 
     return (
-        <View style={styles.container}>
-            <View style={[styles.iconContainer, active && styles.activeIconContainer]}>
-                {iconSources[icon] || <></>}
+        <Pressable onPress={onPress}>
+            <View style={styles.container} >
+                <View style={[styles.iconContainer, active && styles.activeIconContainer]}>
+                    {iconSources[icon] || <></>}
+                </View>
+                <View style={styles.textContainer}>
+                    {
+
+                        textLabels[icon] && <Text style={{ fontFamily: 'Montserrat', fontSize: 12, fontWeight: '600', }}>{textLabels[icon]}</Text>
+                    
+                    }
+                </View>
             </View>
-            <View style={styles.textContainer}>
-                {/* 
-                    icon === 'wallet' ? 'Wallet' : 
-                    icon === 'budget' ? 'Budget' : 
-                    icon === 'add' ? 'Add' : null 
-                 */
-                    textLabels[icon] && <Text>{textLabels[icon]}</Text>
-                
-                }
-            </View>
-        </View>
+        </ Pressable>
+
     )
 }
 
@@ -41,12 +40,16 @@ const styles = StyleSheet.create({
     container: {
         height: 75,
         width: 75,
-        borderWidth: 1,
-        borderColor: 'black', 
+        flex: 0,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     iconContainer: {
-        height: 32,
-        weight: 65,
+        flex: 0,
+    },
+    textContainer: {
+        maxHeight: 15,
+        marginTop: 13,
     },
     activeIconContainer: {
         backgroundColor: 'Black',

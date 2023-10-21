@@ -9,3 +9,4 @@ npx expo start
 - npm install react-native-iconify
 - npm install react-native-progress --save
 - expo install react-native-svg
+- expo install expo-font

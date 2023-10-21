@@ -32,6 +32,7 @@
     "react-native-svg-charts": "^5.4.0",
     "recharts": "^2.9.0",
     "react-native-reanimated": "~3.3.0"
+    "expo-font": "~11.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
