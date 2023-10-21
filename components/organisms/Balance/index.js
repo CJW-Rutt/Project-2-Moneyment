@@ -10,6 +10,9 @@ export default function Balance() {
     const [count, setCount] = useState(3)
     const [topic, setTopic] = useState('accounts')
     const [num, setNum] = useState(0)
+    const [accNum, setAccNum] = useState(0)
+    const [incNum, setIncNum] = useState(0)
+    const [expNum, setExpNum] = useState(0)
 
     return (
         <View style={styles.container}>
@@ -40,13 +43,33 @@ export default function Balance() {
                 },
             ]} />
             {
-                topic === 'accounts' ? <Text>Account info here</Text> :
-                    topic === 'income' ? <Text>Income info here</Text> :
+                topic === 'accounts' ?
+                    <View>
+                        <CategoryCard arr={
+                            [{ text: 'Chequing', amount: '3650', type: 'icon', icon: 'td', onPress: () => setAccNum(0), number:{accNum} },
+                            { text: 'Saving', amount: '600', type: 'icon', icon: 'rbc', onPress: () => setAccNum(1), number:{accNum}  },
+                            { text: 'GIC', amount: '250', type: 'icon', icon: 'cibc', onPress: () => setAccNum(2), number:{accNum}  },
+                            { text: 'Cash', amount: '250', type: 'icon', icon: 'cash', onPress: () => setAccNum(3), number:{accNum}  },
+                            ]
+                        } />
+                    </View> :
+                    topic === 'income' ?
+                        <View>
+                            <CategoryCard arr={
+                                [{ text: 'Full Time', amount: '3650', type: 'icon', icon: 'fullTime', onPress: () => setIncNum(0), number:{incNum}  },
+                                { text: 'Part Time', amount: '600', type: 'icon', icon: 'partTime', onPress: () => setIncNum(1), number:{incNum}  },
+                                { text: 'Investment', amount: '250', type: 'icon', icon: 'investment', onPress: () => setIncNum(2), number:{incNum}  }
+                                ]
+                            } />
+                        </View> :
                         topic === 'expenses' ?
                             <View>
-                                <CategoryCard text='Food' size='s' amount='200' />
-                                <CategoryCard text='Groceries' size='s' amount='200' />
-                                <CategoryCard text='Coffee' size='s' amount='20' />
+                                <CategoryCard arr={
+                                    [{ text: 'Food', amount: '300', type: 'category', onPress: () => setExpNum(0), number:{expNum}  },
+                                    { text: 'Groceries', amount: '70', type: 'category', onPress: () => setExpNum(1), number:{expNum}   },
+                                    { text: 'Coffee', amount: '1000', type: 'category', onPress: () => setExpNum(2), number:{expNum}   }
+                                    ]
+                                } />
                             </View>
                             : <></>
             }
