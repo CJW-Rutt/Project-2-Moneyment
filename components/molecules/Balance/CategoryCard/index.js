@@ -1,31 +1,46 @@
 import { Image } from "expo-image"
 import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from "react-native"
 import CategoryContainer from "../../../atoms/CategoryContainer"
+import IconContainer from "../../../atoms/IconContainer"
+
 import { useEffect, useState } from "react"
 
-export default function CategoryCard({ text, size, amount }) {
+export default function CategoryCard({ arr = [{
+    text: 'food', amount: '20'
+}, {
+    text: 'groceries', amount: '200'
+}]
+}) {
 
-    const [active, setActive] = useState(false)
-    category = text.toLowerCase()
-
-    const handlePress = () => {
-        active ? setActive(false) : setActive(true)
-        console.log(active)
+    const handlePress = (index, func) => {
+        func()
     }
 
     return (
-        <TouchableOpacity onPress={() => handlePress()}>
-            <View style={styles.container}>
-                <View style={styles.cardContainer}>
-                    {active ? <View style={[styles.active, styles.selected]}></View> : <View style={[styles.selected]}></View>}
-                    <View style={styles.iconContainer}>
-                        <CategoryContainer category={category} size={size} />
-                        <Text style={styles.category}>{text}</Text>
-                    </View>
-                    <Text style={styles.amount}>${amount}</Text>
-                </View>
-            </View>
-        </TouchableOpacity>
+        <View>
+            {
+                arr.map((item, index) => {
+                    category = item.text.toLowerCase()
+                    return (
+                        <TouchableOpacity onPress={() => handlePress(index, item.onPress)} key={index}>
+                            <View style={styles.container}>
+                                <View style={styles.cardContainer}>
+                                    {item.number.accNum === index || item.number.incNum === index|| item.number.expNum === index ? <View style={[styles.active, styles.selected]}></View> : <View style={[styles.selected]}></View>}
+                                    <View style={styles.iconContainer}>
+                                        {item.type === 'category' ? <CategoryContainer category={category} size='s' /> :
+                                            item.type === 'icon' ? <IconContainer icon={item.icon} size={16} colour='black' /> : <></>}
+                                        <Text style={styles.category}>{item.text}</Text>
+                                    </View>
+                                    <Text style={styles.amount}>${item.amount}</Text>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+
+                    )
+                })
+            }
+        </View>
+
     )
 }
 const styles = StyleSheet.create({
@@ -44,7 +59,8 @@ const styles = StyleSheet.create({
     iconContainer: {
         flexDirection: 'row',
         paddingLeft: 22,
-        maxWidth: 390 - 253
+        maxWidth: 390 - 253,
+        alignItems: 'center'
     },
     amount: {
         textAlign: 'right',
