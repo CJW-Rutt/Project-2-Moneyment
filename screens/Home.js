@@ -1,15 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { Appearance, useColorScheme } from 'react-native';
-import { useState } from 'react';
-import userAvatar from '../assets/images/sampleAvatar.png'
 
-import User from '../components/atoms/Avatar';
-import IconContainer from '../components/atoms/IconContainer';
-import GraphicContainer from '../components/atoms/GraphicContainer';
-import HorizontalProgressBar from '../components/atoms/HorizontalProgressBar';
-import BudgetBottomSheet from '../components/atoms/BudgetBottomSheet';
-import NavButton from '../components/atoms/NavButton';
+import WalletTemplate from '../components/templates/WalletTemplate';
 
 export default function Home({ navigation }) {
     const colorScheme = useColorScheme();
@@ -20,12 +13,9 @@ export default function Home({ navigation }) {
 
     return (
         <View style={[styles.container, themeContainerStyle]}>
-            <Text style={[styles.text, themeTextStyle]}>Your current theme is: {colorScheme}</Text>
             <StatusBar style="auto" />
-            {/* <User size='xs' url={userAvatar} /> */}
-            <IconContainer icon='settings' size={24} colour='#900' />
-            <IconContainer icon='calendar' size={24} colour='#0a3fff' />
-            <IconContainer icon='forest' size='l' />
+            <WalletTemplate />
+
         </View>
     );
 }
@@ -37,7 +27,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     lightContainer: {
-        backgroundColor: '#d0d0c0',
+        backgroundColor: '#ffffff',
     },
     darkContainer: {
         backgroundColor: '#242c40',
