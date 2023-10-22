@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import NavBar from './components/molecules/NavBar';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import Header from './components/molecules/Header';
 
 Icon.loadFont();
 
@@ -22,6 +23,7 @@ export default function App() {
     <PaperProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
+          <Header displayBack={false} />
           <NavBar />
         </NavigationContainer>
       </SafeAreaView>
