@@ -65,8 +65,6 @@ export default function Balance() {
     return (
         <View>
             <View style={styles.headerChartContainer}>
-                <Text style={styles.track}>Track your progress</Text>
-                <Text style={styles.gainInsight}>Gain insights with dynamic, interactive visualizations</Text>
                 <View style={styles.container}>
                     <BezLineChart num={data} view={view} />
                 </View>

@@ -29,8 +29,10 @@ export default function IconContainer({ icon, size, colour }) {
         cibc: <Image source={require("../../../assets/icons/bank/cibc.png")} alt='' style={styles.xl} contentFit="contain" />,
         rbc: <Image source={require("../../../assets/icons/bank/rbc.png")} alt='' style={styles.xl} contentFit="contain" />,
         cash: <Image source={require("../../../assets/icons/bank/cash.png")} alt='' style={styles.xl} contentFit="contain" />,
-
-
+        tdMiniCard: <Image source={require("../../../assets/icons/minicard/TD.png")} alt='' style={styles.tdMini} contentFit="contain" />,
+        rbcMiniCard: <Image source={require("../../../assets/icons/minicard/RBC.png")} alt='' style={styles.rbcMini} contentFit="contain" />,
+        cibcMiniCard: <Image source={require("../../../assets/icons/minicard/CIBC.png")} alt='' style={styles.cibcMini} contentFit="contain" />,
+        cashMiniCard: <Image source={require("../../../assets/icons/minicard/Cash.png")} alt='' style={styles.cashMini} contentFit="contain" />,
     };
 
     return (
@@ -61,5 +63,21 @@ const styles = StyleSheet.create({
     xl: {
         width: 45,
         height: 45
+    },
+    tdMini: {
+        width: 20,
+        height: 17
+    },
+    rbcMini: {
+        width: 35,
+        height: 17
+    },
+    cibcMini: {
+        width: 40,
+        height: 17
+    },
+    cashMini: {
+        width: 40,
+        height: 17
     }
 })
