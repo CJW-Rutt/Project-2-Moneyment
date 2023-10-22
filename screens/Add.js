@@ -6,7 +6,6 @@ export default function Add({navigation}) {
         <View style={styles.container}>
             <Text>Add Your Things Please!</Text>
             <StatusBar style="auto" />
-            <Button title="Go Back" onPress={() => navigation.goBack()}/>
         </View>
     );
 }

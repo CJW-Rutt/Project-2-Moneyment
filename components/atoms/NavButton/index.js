@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { Image } from "expo-image"
 import { Iconify } from 'react-native-iconify';
 
@@ -18,21 +18,18 @@ export default function NavButton({ icon, active }) {
 
 
     return (
-        <Pressable onPress={onPress}>
             <View style={styles.container} >
                 <View style={[styles.iconContainer, active && styles.activeIconContainer]}>
-                    {iconSources[icon] || <></>}
+                    {
+                        iconSources[icon] || <></>
+                    }
                 </View>
                 <View style={styles.textContainer}>
                     {
-
                         textLabels[icon] && <Text style={{ fontFamily: 'Montserrat', fontSize: 12, fontWeight: '600', }}>{textLabels[icon]}</Text>
-                    
                     }
                 </View>
             </View>
-        </ Pressable>
-
     )
 }
 
