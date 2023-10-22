@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import { Image } from "expo-image"
 import { Iconify } from 'react-native-iconify';
+import { Icon } from '@iconify/react';
 
 
 export default function NavButton({ icon, active }) {
@@ -18,18 +19,18 @@ export default function NavButton({ icon, active }) {
 
 
     return (
-            <View style={styles.container} >
-                <View style={[styles.iconContainer, active && styles.activeIconContainer]}>
-                    {
-                        iconSources[icon] || <></>
-                    }
-                </View>
-                <View style={styles.textContainer}>
-                    {
-                        textLabels[icon] && <Text style={{ fontFamily: 'Montserrat', fontSize: 12, fontWeight: '600', }}>{textLabels[icon]}</Text>
-                    }
-                </View>
+        <View style={styles.container} >
+            <View style={[styles.iconContainer, active && styles.activeIconContainer]}>
+                {
+                    iconSources[icon] || <></>
+                }
             </View>
+            <View style={styles.textContainer}>
+                {
+                    textLabels[icon] && <Text style={{ fontFamily: 'Montserrat', fontSize: 12, fontWeight: '600', }}>{textLabels[icon]}</Text>
+                }
+            </View>
+        </View>
     )
 }
 

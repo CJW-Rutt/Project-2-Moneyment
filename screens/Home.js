@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, ScrollView, Text, View, Button } from 'react-native';
 import { Appearance, useColorScheme } from 'react-native';
-
 import WalletTemplate from '../components/templates/WalletTemplate';
 
 export default function Home({ navigation }) {
@@ -12,13 +11,14 @@ export default function Home({ navigation }) {
         colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
     return (
+
         <View style={[styles.container, themeContainerStyle]}>
             <StatusBar style="auto" />
             <WalletTemplate />
-
         </View>
+
     );
-}
+} //<NavButton icon='wallet' active />
 
 const styles = StyleSheet.create({
     container: {
