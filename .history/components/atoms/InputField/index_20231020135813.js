@@ -1,0 +1,1 @@
+import { View, TextInput } from 'react-native';

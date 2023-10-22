@@ -5,11 +5,12 @@ import { PaperProvider } from 'react-native-paper';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 
+
 import NavBar from './components/molecules/NavBar';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Header from './components/molecules/Header';
 
-Icon.loadFont(); 
+Icon.loadFont();
 
 export default function App() {
 
@@ -18,6 +19,7 @@ export default function App() {
   });
 
   return (
+
     <PaperProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
@@ -26,6 +28,7 @@ export default function App() {
         </NavigationContainer>
       </SafeAreaView>
     </PaperProvider>
+
   );
 
 }
