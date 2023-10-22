@@ -4,7 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { PaperProvider } from 'react-native-paper';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
-
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, Layout } from '@ui-kitten/components';
 
 import NavBar from './components/molecules/NavBar';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -18,7 +19,7 @@ export default function App() {
   });
 
   return (
-
+    <ApplicationProvider/>
     <PaperProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
@@ -26,7 +27,6 @@ export default function App() {
         </NavigationContainer>
       </SafeAreaView>
     </PaperProvider>
-
   );
 
 }
