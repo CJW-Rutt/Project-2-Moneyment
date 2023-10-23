@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { PaperProvider } from 'react-native-paper';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
+import { useState } from 'react';
 
 
 import NavBar from './components/molecules/NavBar';
@@ -23,7 +24,7 @@ export default function App() {
     <PaperProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
-          <Header displayBack={false} />
+          <Header />
           <NavBar />
         </NavigationContainer>
       </SafeAreaView>

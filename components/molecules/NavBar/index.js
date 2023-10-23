@@ -4,6 +4,7 @@ import { BottomNavigation, Text, Image } from 'react-native-paper';
 import Home from '../../../screens/Home';
 import Add from '../../../screens/Add';
 import Budget from '../../../screens/Budget';
+import Header from '../Header';
 
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
@@ -60,14 +61,13 @@ export default function NavBar() {
     };
 
     return (
-            <BottomNavigation
-                navigationState={{ index, routes }}
-                onIndexChange={setIndex}
-                renderScene={renderScene}
-                renderIcon={renderIcon}
-                barStyle={{ backgroundColor: '#F4F4F4', borderTopLeftRadius: 20, borderTopRightRadius: 20, }}
-                keyboardHidesNavigationBar={true}             
-
-            />   
+        <BottomNavigation
+            navigationState={{ index, routes }}
+            onIndexChange={setIndex}
+            renderScene={renderScene}
+            renderIcon={renderIcon}
+            barStyle={{ backgroundColor: '#F4F4F4', borderTopLeftRadius: 20, borderTopRightRadius: 20, }}
+            keyboardHidesNavigationBar={true}
+        />
     );
 }
