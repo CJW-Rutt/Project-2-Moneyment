@@ -1,6 +1,8 @@
 import { Text, Pressable, StyleSheet } from "react-native"
 
-export default function ButtonComponent({ text }) {
+// Returns Pressable element (basically a button that allows for stylizing) depending on text prop (string)
+
+export default function ButtonLong({ text }) {
     return (
         <>
             {text && text === 'view' ? <Pressable style={[styles.button, styles.black]}>
@@ -24,7 +26,7 @@ styles = StyleSheet.create({
         alignContent: 'center',
         borderRadius: 10,
         shadowColor: 'black',
-        shadowOffset: {width: 0, height: -1},
+        shadowOffset: { width: 0, height: -1 },
         shadowOpacity: 0.25,
         shadowRadius: 6
     },

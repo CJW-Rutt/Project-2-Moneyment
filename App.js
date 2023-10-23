@@ -1,38 +1,37 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { PaperProvider } from 'react-native-paper';
+import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
+import { useState } from 'react';
 
-import Home from './screens/Home';
-import About from './screens/About';
+
+import NavBar from './components/molecules/NavBar';
+import Icon from 'react-native-vector-icons/FontAwesome'
+import Header from './components/molecules/Header';
+
+Icon.loadFont();
 
 export default function App() {
-  const Stack = createNativeStackNavigator();
+
+  const [fontsLoaded] = useFonts({
+    'Montserrat': require('./assets/fonts/Montserrat-VariableFont_wght.ttf'),
+  });
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName='Home'>
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{
-              title: 'Homepage',
-              headerStyle: {
-                backgroundColor: '#EE8E3A',
-              },
-              headerTintColor: '#fff',
-              headerTitleStyle: {
-                fontWeight: 'bold',
-              },
-            }}
-          />
-          <Stack.Screen name="About" component={About} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
+
+    <PaperProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <Header />
+          <NavBar />
+        </NavigationContainer>
+      </SafeAreaView>
+    </PaperProvider>
+
   );
+
 }
 
 const styles = StyleSheet.create({
