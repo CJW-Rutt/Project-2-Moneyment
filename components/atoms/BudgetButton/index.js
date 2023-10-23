@@ -4,9 +4,9 @@ import { StyleSheet } from "react-native";
 export default function ManageBudget() {
     return (
         <>
-        <Pressable style={[styles.button, styles.budgetbutton,styles.shadow]}>
-<Text style={styles.buttontext}>Manage Budget</Text>
-        </Pressable>
+            <Pressable style={[styles.button, styles.budgetbutton,styles.shadow]}>
+                <Text style={styles.buttontext}>Manage Budget</Text>
+            </Pressable>
         </>
     )
 }
