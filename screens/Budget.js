@@ -21,8 +21,6 @@ export default function Budget({ navigation }) {
         <View style={[styles.container, themeContainerStyle]} >
             <BudgetSingleTemplate />
             <StatusBar style="auto" />
-            <BudgetDropdown />
-            <Switch />
         </View>
     );
 }
