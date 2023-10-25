@@ -2,16 +2,10 @@ import InputField from "../../atoms/InputField";
 import BudgetDropdown from "../../atoms/BudgetDropdown";
 import ToggleSwitch from "../../atoms/Switch";
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, ScrollView, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, View, ScrollView } from "react-native";
 
 
 export default function BudgetForm() {
- 
-    const [isContentVisible, setContentVisible] = useState(false);
-  
-    const toggleVisibility = () => {
-      setContentVisible(!isContentVisible);
-    }
   return (
     <>
    
@@ -23,18 +17,9 @@ export default function BudgetForm() {
       </View>
       <View style={styles.dropdownContainer}>
    <View style={styles.row}>
-      <Text onPress={toggleVisibility} style={styles.title}>Recurrence</Text>
-      <TouchableOpacity onPress={toggleVisibility}>
-      <ToggleSwitch onPress={toggleVisibility}/>
-
-      </TouchableOpacity>
+      <Text style={styles.title}>Recurrence</Text>
       </View>
-      {isContentVisible && (
-        <View style={styles.content}>
               <BudgetDropdown/>
-        </View>
-      )}
-
       </View>
       </ScrollView>
     </View>
