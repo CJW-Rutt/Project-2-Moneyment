@@ -3,8 +3,8 @@ import { View, Text, StyleSheet } from "react-native";
 export default function Message({ header, bodyCopy }) {
     return (
         <View style={styles.container}>
-            <Text style={[styles.header, styles.text]}>{header}</Text>
-            <Text style={[styles.bodyCopy, styles.text]}>{bodyCopy}</Text>
+            {header && <Text style={[styles.header, styles.text]}>{header}</Text>}
+            {bodyCopy && <Text style={[styles.bodyCopy, styles.text]}>{bodyCopy}</Text>}
         </View>
     )
 }
