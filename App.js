@@ -5,6 +5,8 @@ import { PaperProvider } from 'react-native-paper';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { useState } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 
 
 import NavBar from './components/molecules/NavBar';
@@ -22,12 +24,14 @@ export default function App() {
   return (
 
     <PaperProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-        <NavigationContainer>
-          <Header />
-          <NavBar />
-        </NavigationContainer>
-      </SafeAreaView>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <NavigationContainer>
+            <Header />
+            <NavBar />
+          </NavigationContainer>
+        </SafeAreaView>
+      </GestureHandlerRootView>
     </PaperProvider>
 
   );

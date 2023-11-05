@@ -1,23 +1,18 @@
-import { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Modal, Pressable } from 'react-native';
-import { Image } from "expo-image"
-import Icon from 'react-native-vector-icons/FontAwesome5'
+import { StyleSheet, View } from 'react-native';
 
 import AddTransactionSingle from '../components/organisms/Add/AddTransactionSingle';
-import LongTextButton from '../components/atoms/LongTextButton';
 
 
 export default function Add({ navigation }) {
-    const [isAddTransactionVisible, setAddTransactionVisible] = useState(false);
+    // const [isAddTransactionVisible, setAddTransactionVisible] = useState(false);
     
-    const openAddTransaction = () => {
-        setAddTransactionVisible(true);
-    };
+    // const openAddTransaction = () => {
+    //     setAddTransactionVisible(true);
+    // };
 
-    const closeAddTransaction = () => {
-        setAddTransactionVisible(false);
-    };
+    // const closeAddTransaction = () => {
+    //     setAddTransactionVisible(false);
+    // };
     
     return (
 

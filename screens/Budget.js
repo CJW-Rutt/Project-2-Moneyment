@@ -7,51 +7,113 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import BudgetSingle from '../components/organisms/Budget/BudgetSingle';
 import BudgetCard from '../components/molecules/BudgetCard';
 import ManageBudgetCard from '../components/molecules/ManageBudgetCard';
-import { ScrollView } from 'react-native-gesture-handler';
 import BudgetSingleTemplate from '../components/templates/Budget/BudgetSingleTemplate';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Budget({ navigation }) {
-    const colorScheme = useColorScheme();
+    const [budgets, setBudgets] = useState([
+        {
+            budgetTitle: "Coffee",
+            budgetCategory: "Coffee",
+            totalPrice: 50.45,
+            totalBudget: 500.00
+        },
+        {
+            budgetTitle: "Food",
+            budgetCategory: "Food",
+            totalPrice: 578.00,
+            totalBudget: 1500.00
+        },
+        {
+            budgetTitle: "Cheese",
+            budgetCategory: "Cheese",
+            totalPrice: 1570.00,
+            totalBudget: 5000.00
+        },
+        {
+            budgetTitle: "Wine",
+            budgetCategory: "Wine",
+            totalPrice: 4570.00,
+            totalBudget: 5000.00
+        },
+    ]);
 
-    const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
+    const totalBudgetSum = budgets.reduce((acc, budget) => acc + budget.totalBudget, 0);
+    const totalPriceSum = budgets.reduce((acc, budget) => acc + budget.totalPrice, 0);
+    const remainingBudget = totalBudgetSum - totalPriceSum;
 
-    const themeContainerStyle =
-        colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
-
-    const [visible, setVisible] = useState(false);
-
-    const [isAddTransactionVisible, setAddTransactionVisible] = useState(false);
-    
-    const openAddTransaction = () => {
-        setAddTransactionVisible(true);
+    const calculateProgress = (totalBudget, totalPrice) => {
+        const budget = parseFloat(totalBudget);
+        const spent = parseFloat(totalPrice);
+        return spent / budget;
     };
 
-    const closeAddTransaction = () => {
-        setAddTransactionVisible(false);
+    const [activeModalIndex, setActiveModalIndex] = useState(null);
+
+    const openModal = (index) => {
+        setActiveModalIndex(index);
+    };
+
+    const closeModal = () => {
+        setActiveModalIndex(null);
+    };
+
+    const addBudget = (newBudget) => {
+        setBudgets([...budgets, newBudget]);
     };
 
     return (
 
-        <View style={styles.container}>
-            <Text style={styles.title}>Smart Budgeting</Text>
-            <Text style={styles.desc}>Visualizing your budgets and analyze your remaining spending within specific timeframes</Text>
-            <ManageBudgetCard />
-            <BudgetCard onPress={openAddTransaction} />
-            <BudgetCard onPress={openAddTransaction} />
-            <Modal animationType="slide" transparent={false} visible={isAddTransactionVisible}>
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalHeader}>
-                        <Pressable style={styles.closeButton} onPress={closeAddTransaction}>
-                            <Icon name='arrow-left' size={25} color='#000' />
-                        </Pressable>
-                        <Text style={styles.headerTitle}>Coffee</Text>
-                    </View>
-                    <BudgetSingleTemplate />
-                    <BudgetSingle />
-                </View>
-            </Modal>
-        </View>
+            <View style={styles.container}>
+                <Text style={styles.title}>Smart Budgeting</Text>
+                <Text style={styles.desc}>Visualize your budgets and analyze your remaining spending within specific timeframes</Text>
+                <ManageBudgetCard 
+                    onAddBudget={addBudget}  
+                    totalBudget={totalBudgetSum} 
+                    remainingBudget={remainingBudget} 
+                />
+                <ScrollView>
+                    { budgets.map((budgetItem, index) => (
+                        <View key={index}>
+                            <BudgetCard             
+                                budget={{
+                                    budgetTitle: budgetItem.budgetTitle,
+                                    totalBudget: budgetItem.totalBudget,
+                                    totalPrice: budgetItem.totalPrice,
+                                    progress: calculateProgress(budgetItem.totalBudget, budgetItem.totalPrice),
 
+                                }}
+                                onPress={() => openModal(index)}
+                            />
+                            {/* Modal Popup - Budget Single */}
+                            <Modal
+                                animationType="slide"
+                                transparent={false}
+                                visible={activeModalIndex === index}
+                                onRequestClose={closeModal}
+                            >
+                                <View style={styles.modalContainer}>
+                                    <View style={styles.modalHeader}>
+                                        <Pressable style={styles.closeButton} onPress={closeModal}>
+                                            <Icon name='arrow-left' size={25} color='#000' />
+                                        </Pressable>
+                                        <Text style={styles.headerTitle}>{budgetItem.budgetTitle}</Text>
+                                    </View>
+                                    <BudgetSingleTemplate                                
+                                        budget={{
+                                        budgetTitle: budgetItem.budgetTitle,
+                                        totalBudget: budgetItem.totalBudget,
+                                        totalPrice: budgetItem.totalPrice,
+                                        progress: calculateProgress(budgetItem.totalBudget, budgetItem.totalPrice),
+
+                                    }} />
+                                </View>
+                            </Modal>
+                        </View>
+                    ))}
+                </ScrollView>
+                <StatusBar />
+            </View>
     );
 }
 
@@ -60,8 +122,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingBottom: 44,
+        justifyContent: 'flex-start',
     },
     title: {
         fontSize: 18,
@@ -78,13 +139,12 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     modalContainer: {
-        flex: 1,
-       
+        flex: 1, 
     },
     modalHeader:{
         flex: 1,
         flexDirection: 'row',
-        maxHeight: 100,
+        maxHeight: 86,
         width: '100%',
         borderBottomWidth: 1,
         borderColor: 'lightgray',
