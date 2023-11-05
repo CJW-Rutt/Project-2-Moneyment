@@ -22,7 +22,7 @@ export default function Add({ navigation }) {
     return (
 
         <View style={styles.container}>
-            <Text style={styles.title}>Integrations</Text>
+            {/* <Text style={styles.title}>Integrations</Text>
             <Text style={styles.desc}>Explore a seamless options to input your information into the app, tailored just the way you need it!</Text>
             <View style={styles.buttonContainer}>
                 <LongTextButton type="transactions" onPress={openAddTransaction} />
@@ -39,7 +39,8 @@ export default function Add({ navigation }) {
                     </View>
                     <AddTransactionSingle />
                 </View>
-            </Modal>
+            </Modal> */}
+            <AddTransactionSingle />
         </View>
     );
 }

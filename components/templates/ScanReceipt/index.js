@@ -32,55 +32,58 @@ export default function ScanReceipt() {
 
     return (
         <>
-            {
-                photoTaken ? <Message header={message.photoTaken.header} bodyCopy={message.photoTaken.body} /> :
-                    <Message header={message.takePhoto.header} bodyCopy={message.takePhoto.body} />}
             <View style={styles.container}>
-                <View style={styles.borderSheet}>
+                {
+                    photoTaken ? <Message header={message.photoTaken.header} bodyCopy={message.photoTaken.body} /> :
+                        <Message header={message.takePhoto.header} bodyCopy={message.takePhoto.body} />}
+                <View style={styles.container}>
+                    <View style={styles.borderSheet}>
 
-                    {
-                        showCamera && photoTaken === false ?
-                            <>
-                                <Text>Camera display here</Text>
-                            </> :
-                            showCamera && photoTaken ?
+                        {
+                            showCamera && photoTaken === false ?
                                 <>
-                                    <Text>Scanned OCR here</Text>
+                                    <Text>Camera display here</Text>
                                 </> :
-                                <>
-                                    <Text style={[styles.text, styles.header]}>
-                                        Example
-                                    </Text>
-                                    <Image source={require('../../../assets/graphics/receiptExample.png')} contentFit="contain" style={styles.image} />
-                                    <Text style={styles.text}>
-                                        Note: Sometimes the date is at the bottom of the receipt
-                                    </Text>
-                                </>}
+                                showCamera && photoTaken ?
+                                    <>
+                                        <Text>Scanned OCR here</Text>
+                                    </> :
+                                    <>
+                                        <Text style={[styles.text, styles.header]}>
+                                            Example
+                                        </Text>
+                                        <Image source={require('../../../assets/graphics/receiptExample.png')} contentFit="contain" style={styles.image} />
+                                        <Text style={styles.text}>
+                                            Note: Sometimes the date is at the bottom of the receipt
+                                        </Text>
+                                    </>}
+                    </View>
+
+                    <Pressable onPress={handleCamera} style={styles.button}>
+                        {
+                            showCamera && photoTaken ?
+                                <Text style={styles.buttonText} onPress={() => setShowForm(true)}>Next</Text> :
+                                showCamera && photoTaken === false ?
+                                    <Text style={styles.buttonText} onPress={() => setPhotoTaken(true)}>Take photo</Text> :
+                                    <Text style={styles.buttonText}>Open Camera</Text>}
+                    </Pressable>
+
+                    <Modal animationType="slide" transparent={false} visible={showForm}>
+                        <View style={styles.modalContainer}>
+                            <View style={styles.modalHeader}>
+                                <Pressable style={styles.closeButton} onPress={handleForm}>
+                                    <Icon name='arrow-left' size={25} color='#000' />
+                                </Pressable>
+                                <Text style={styles.headerTitle}>Confirmation</Text>
+                            </View>
+                            <AddTransactionForm />
+                        </View>
+                    </Modal>
+
                 </View>
 
-                <Pressable onPress={handleCamera} style={styles.button}>
-                    {
-                        showCamera && photoTaken ?
-                            <Text style={styles.buttonText} onPress={() => setShowForm(true)}>Next</Text> :
-                            showCamera && photoTaken === false ?
-                                <Text style={styles.buttonText} onPress={() => setPhotoTaken(true)}>Take photo</Text> :
-                                <Text style={styles.buttonText}>Open Camera</Text>}
-                </Pressable>
-
-                <Modal animationType="slide" transparent={false} visible={showForm}>
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalHeader}>
-                            <Pressable style={styles.closeButton} onPress={handleForm}>
-                                <Icon name='arrow-left' size={25} color='#000' />
-                            </Pressable>
-                            <Text style={styles.headerTitle}>Confirmation</Text>
-                        </View>
-                        <AddTransactionForm />
-                    </View>
-                </Modal>
 
             </View>
-
         </>
     )
 }
