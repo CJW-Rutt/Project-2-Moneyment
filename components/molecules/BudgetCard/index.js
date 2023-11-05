@@ -3,15 +3,13 @@ import { Text, StyleSheet, View, Pressable } from "react-native";
 import { Image } from "expo-image"
 import HorizontalProgressBar from "../../atoms/HorizontalProgressBar";
 
-
-export default function BudgetCard({ onPress }) {
-
+export default function BudgetCard({ budget, onPress }) {
     return (
         <Pressable onPress={onPress}>
             <View style={styles.container}>
                 <View style={styles.top_content}>
                     <Image
-                        source={require("../../../assets/graphics/category/Coffee.png")}
+                        source={require("../../../assets/graphics/category/Coffee.png")} // make this dynamic
                         alt=''
                         style={styles.img}
                         contentFit="contain"
@@ -19,22 +17,13 @@ export default function BudgetCard({ onPress }) {
                         height={40}
                     />
                     <View>
-                        <Text style={styles.budget_name}>Coffee</Text>
-                        <Text style={styles.budget_recurrence}>Weekly</Text>
+                        <Text style={styles.budget_name}>{budget.budgetTitle}</Text>
+                        <Text style={styles.budget_recurrence}>Weekly</Text> 
                     </View>
                 </View>
-                <View
-                    style={{
-                        borderBottomColor: '#DDDDDD',
-                        borderBottomWidth: 1,
-                        marginBottom: 10,
-                        marginLeft: 15,
-                        marginRight: 15,
-                    }}
-                />
                 <View style={styles.bottom_content}>
                     <View style={styles.container_price_text}>
-                        <Text style={styles.bottom_content_price}>$500</Text>
+                        <Text style={styles.bottom_content_price}>${budget.totalBudget}</Text>
                         <Text style={styles.bottom_content_text}>Total budget</Text>
                     </View>
                     <View
@@ -46,14 +35,14 @@ export default function BudgetCard({ onPress }) {
                         }}
                     />
                     <View>
-                        <Text style={styles.bottom_content_price}>$550</Text>
+                        <Text style={styles.bottom_content_price}>${budget.totalPrice}</Text>
                         <Text style={styles.bottom_content_text}>Total spent</Text>
                     </View>
                 </View>
-                <HorizontalProgressBar progress={100}/>
+                <HorizontalProgressBar progress={budget.progress}/>
             </View>
         </Pressable>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
