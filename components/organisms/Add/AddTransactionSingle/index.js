@@ -14,25 +14,29 @@ export default function AddTransactionSingle() {
     }
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>What works better for you!</Text>
-            <Text style={styles.desc}>Choose the method tailored to your unique needs</Text>
-            <View style={styles.buttonContainer}>
-                <LongTextButton type="scan" onPress={() => setShowScan(true)} />
-                <LongTextButton type="manual" />
-                <LongTextButton type="statements" />
-            </View>
-            <Image source={require("../../../../assets/graphics/people/zombie.png")} alt='' style={{ width: 338, height: 240, marginTop: 10, }} contentFit="contain" />
+
+            {/* <Image source={require("../../../../assets/graphics/people/zombie.png")} alt='' style={{ width: 338, height: 240, marginTop: 10, }} contentFit="contain" />
             <Modal animationType="slide" transparent={false} visible={showScan}>
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalHeader}>
-                        <Pressable style={styles.closeButton} onPress={handleScan}>
-                            <Icon name='arrow-left' size={25} color='#000' />
-                        </Pressable>
-                        <Text style={styles.headerTitle}>Scan Receipt</Text>
-                    </View>
-                    <ScanReceipt />
+                <View style={styles.modalContainer}> */}
+            {showScan ? <>
+                <View style={styles.modalHeader}>
+                    <Pressable style={styles.closeButton} onPress={handleScan}>
+                        <Icon name='arrow-left' size={25} color='#000' />
+                    </Pressable>
+                    <Text style={styles.headerTitle}>Scan Receipt</Text>
                 </View>
-            </Modal>
+                <ScanReceipt />
+            </> : <>
+                <Text style={styles.title}>What works better for you!</Text>
+                <Text style={styles.desc}>Choose the method tailored to your unique needs</Text>
+                <View style={styles.buttonContainer}>
+                    <LongTextButton type="scan" onPress={() => setShowScan(true)} />
+                    <LongTextButton type="manual" />
+                    <LongTextButton type="statements" />
+                </View>
+            </>}
+            {/* </View>
+            </Modal> */}
         </View>
     );
 }
