@@ -33,12 +33,13 @@ export default function ScanReceipt() {
     return (
         <>
             <View style={styles.container}>
+
                 {
-                    photoTaken ? <Message header={message.photoTaken.header} bodyCopy={message.photoTaken.body} /> :
+                    photoTaken ?
+                        <Message header={message.photoTaken.header} bodyCopy={message.photoTaken.body} /> :
                         <Message header={message.takePhoto.header} bodyCopy={message.takePhoto.body} />}
                 <View style={styles.container}>
                     <View style={styles.borderSheet}>
-
                         {
                             showCamera && photoTaken === false ?
                                 <>
@@ -56,16 +57,23 @@ export default function ScanReceipt() {
                                         <Text style={styles.text}>
                                             Note: Sometimes the date is at the bottom of the receipt
                                         </Text>
-                                    </>}
+                                    </>
+                        }
                     </View>
 
                     <Pressable onPress={handleCamera} style={styles.button}>
                         {
                             showCamera && photoTaken ?
-                                <Text style={styles.buttonText} onPress={() => setShowForm(true)}>Next</Text> :
+                                <Text style={styles.buttonText} onPress={() => setShowForm(true)}>
+                                    Next
+                                </Text> :
                                 showCamera && photoTaken === false ?
-                                    <Text style={styles.buttonText} onPress={() => setPhotoTaken(true)}>Take photo</Text> :
-                                    <Text style={styles.buttonText}>Open Camera</Text>}
+                                    <Text style={styles.buttonText} onPress={() => setPhotoTaken(true)}>
+                                        Take photo
+                                    </Text> :
+                                    <Text style={styles.buttonText}>
+                                        Open Camera
+                                    </Text>}
                     </Pressable>
 
                     <Modal animationType="slide" transparent={false} visible={showForm}>
@@ -74,14 +82,15 @@ export default function ScanReceipt() {
                                 <Pressable style={styles.closeButton} onPress={handleForm}>
                                     <Icon name='arrow-left' size={25} color='#000' />
                                 </Pressable>
-                                <Text style={styles.headerTitle}>Confirmation</Text>
+                                <Text style={styles.headerTitle}>
+                                    Confirmation
+                                </Text>
                             </View>
                             <AddTransactionForm />
                         </View>
                     </Modal>
 
                 </View>
-
 
             </View>
         </>
@@ -132,5 +141,20 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         color: '#ffffff',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'space-between',
+    },
+    modalHeader: {
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 100,
+        width: '100%',
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        paddingBottom: 15,
     },
 })
