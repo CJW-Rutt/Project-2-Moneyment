@@ -9,6 +9,7 @@ import BudgetCard from '../components/molecules/BudgetCard';
 import ManageBudgetCard from '../components/molecules/ManageBudgetCard';
 import BudgetSingleTemplate from '../components/templates/Budget/BudgetSingleTemplate';
 import { ScrollView } from 'react-native-gesture-handler';
+import StackedChart from '../components/atoms/StackedBarChart'
 
 export default function Budget({ navigation }) {
     const [budgets, setBudgets] = useState([
@@ -81,6 +82,9 @@ export default function Budget({ navigation }) {
                 totalBudget={totalBudgetSum}
                 remainingBudget={remainingBudget}
             />
+            <View styles={styles.chart}>
+                <StackedChart totalBudget={totalBudgetSum} totalSpent={totalPriceSum} />
+            </View>
             <ScrollView>
                 {budgets.map((budgetItem, index) => (
                     <View key={index}>
@@ -148,6 +152,8 @@ const styles = StyleSheet.create({
         maxWidth: 355,
         width: '100%',
     },
+
+
     modalContainer: {
         flex: 1,
     },
