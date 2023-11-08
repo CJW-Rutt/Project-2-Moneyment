@@ -37,3 +37,4 @@ yarn-error.*
 
 # JS Testing File
 screens/testing.js
+yarn.lock

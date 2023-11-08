@@ -22,7 +22,7 @@ export default function BarGraph() {
                     <IconContainer icon='chevronUp' size={17} colour='black' />
                 </View>
             </View>
-            <View style={{ height: 231, width: 336, padding: 20, flexDirection: 'row' }}>
+            <View style={{ height: 200, width: 300, flexDirection: 'row' }}>
                 <YAxis
                     data={yAxis}
                     numberOfTicks={6}
@@ -34,7 +34,7 @@ export default function BarGraph() {
                         style={{ flex: 1 }}
                         data={data}
                         gridMin={0}
-                        svg={{ fill: '#52A49A', width: 20, borderRadius: 5 }}
+                        svg={{ fill: '#52A49A', width: 5, borderRadius: 5 }}
                         spacing={0.8}
                     />
                     <XAxis

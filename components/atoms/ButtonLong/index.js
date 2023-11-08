@@ -13,6 +13,10 @@ export default function ButtonLong({ text }) {
                 </Pressable> :
                     text === 'saveGoal' ? <Pressable style={[styles.button, styles.green]}>
                         <Text style={styles.text}>Save</Text>
+                    </Pressable> : text === 'camera' ? <Pressable style={[styles.button, styles.primary]}>
+                        <Text style={styles.text}>Open Camera</Text>
+                    </Pressable> : text === 'photo' ? <Pressable style={[styles.button, styles.primary]}>
+                        <Text style={styles.text}>Take photo</Text>
                     </Pressable> : <></>}
         </>
     )
@@ -43,5 +47,8 @@ styles = StyleSheet.create({
     },
     green: {
         backgroundColor: '#508C46'
+    },
+    primary: {
+        backgroundColor: '#429488'
     }
 })
