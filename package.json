@@ -29,6 +29,7 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-native": "0.72.5",
+    "react-native-chart-kit": "^6.12.0",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-iconify": "^0.2.10",
     "react-native-paper": "^5.11.0",
