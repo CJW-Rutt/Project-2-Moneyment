@@ -5,36 +5,36 @@ import TransactionSpending from "../../atoms/TransactionSpending";
 export default function TransactionsCard({
     arr = [{
         today: [{
-            category: 'Coffee',
+            category: 'Credit Card',
             location: 'Starbucks',
             amount: '3.10',
-            payment: 'td'
+
         },
         {
-            category: 'Food',
+            category: 'Credit Card',
             location: 'Subway',
             amount: '7.60',
-            payment: 'rbc'
+
         },
         ],
         Saturday: [{
-            category: 'Coffee',
+            category: 'Credit Card',
             location: 'Starbucks',
             amount: '3.10',
-            payment: 'td'
+
         },
         ],
         Friday: [{
-            category: 'Shopping',
+            category: 'Credit Card',
             location: 'Best Buy',
             amount: '83.10',
-            payment: 'cibc'
+
         },
         {
-            category: 'Food',
+            category: 'Credit Card',
             location: 'Pizza Hut',
             amount: '3.10',
-            payment: 'cash'
+
         }
         ],
     }
@@ -46,18 +46,18 @@ export default function TransactionsCard({
 
     return (
         <View style={styles.container}>
-            <View style={[styles.sheet, {width: windowWidth}]}>
-                <Text style={styles.title}>Transactions</Text>
+            <View style={[styles.sheet, { width: windowWidth }]}>
+
                 <ScrollView>
                     <View>
-                        <Text style={styles.date}>Today</Text>
+                        <Text style={styles.date}>October 26</Text>
                         {
                             datesObj.today.map((item, index) => {
                                 return (
                                     <View key={index}>
                                         <TransactionSpending
-                                            category={item.category}
                                             location={item.location} amount={item.amount}
+                                            category={item.category}
                                             payment={item.payment} />
                                     </View>
                                 )
@@ -71,7 +71,7 @@ export default function TransactionsCard({
                         marginBottom: 19
                     }}></View>
                     <View>
-                        <Text style={styles.date}>Saturday</Text>
+                        <Text style={styles.date}>October 13</Text>
                         {
                             datesObj.Saturday.map((item, index) => {
                                 return (
@@ -92,7 +92,7 @@ export default function TransactionsCard({
                         marginBottom: 19
                     }}></View>
                     <View>
-                        <Text style={styles.date}>Friday</Text>
+                        <Text style={styles.date}>October 10</Text>
                         {
                             datesObj.Friday.map((item, index) => {
                                 return (
@@ -118,10 +118,8 @@ const styles = StyleSheet.create({
         height: 400,
         minHeight: 400,
         maxHeight: 400,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        borderColor: 'gray',
-        borderWidth: 1
+
+
     },
     container: {
         flex: 1,
