@@ -25,7 +25,9 @@ export default function TransactionSpending({ category = 'Credit Card', location
 
                 </View>
 
+
             </View>
+
         </View>
     )
 }
