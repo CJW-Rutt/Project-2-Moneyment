@@ -20,7 +20,7 @@ export default function StackedChart({ totalBudget, totalSpent }) {
         backgroundGradientTo: "#fff",
         backgroundGradientToOpacity: 0.5,
         color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-        barPercentage: 0.5,
+        barPercentage: 1.5,
         barRadius: 5,
         propsForLabels: { fill: "transparent", }
 

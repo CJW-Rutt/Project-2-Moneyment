@@ -89,7 +89,7 @@ export default function BudgetSingleSegment({ budget }) {
                     topic === 'overview' ?
                         <View style={styles.budgetContainer}>
                             <BudgetCard budget={budget} />
-                            <Text style={styles.transactionsTitle}>Transactions</Text>
+
                         </View> :
                         topic === 'details' ?
                             <View style={styles.barGraphContainer}>

@@ -112,6 +112,7 @@ export default function Budget({ navigation }) {
                                     </Pressable>
                                     <Text style={styles.headerTitle}>{budgetItem.budgetTitle}</Text>
                                     <EditButton style={styles.editButton} onPress={() => openEdit()} />
+
                                 </View>
                                 <BudgetSingleTemplate
                                     budget={{
@@ -127,7 +128,8 @@ export default function Budget({ navigation }) {
                 ))}
             </ScrollView>
             <StatusBar />
-        </View>
+
+        </View >
     );
 }
 
