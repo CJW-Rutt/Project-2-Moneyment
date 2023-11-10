@@ -12,12 +12,13 @@ import { Text, StyleSheet } from 'react-native';
 
 
 export default function BezLineChart({
-    num = [1200, 6100, 15000, 20532], view = 'Balance'
+    num = [1200, 6100, 15000, 749], view = 'Total Expenses'
 }) {
 
     const axesSvg = { fontSize: 12, fill: 'black' };
-    const verticalContentInset = { top: 10, bottom: 10 }
-    const xAxisHeight = 30
+    const verticalContentInset = { top: 10, bottom: 0 }
+    const xAxisHeight = 10
+    const yAxisHeight = 10
 
     const keys = ['Sept 4', 'Sept 25', 'Oct 2', 'Oct 16']
     const data = num
@@ -45,13 +46,14 @@ export default function BezLineChart({
             <Text style={styles.viewText}>{view}</Text>
             <Text style={styles.balance}>${currentBalance.toLocaleString()}</Text>
 
-            <View style={{ height: 200, width: 340, padding: 20, flexDirection: 'row' }}>
+            <View style={{ height: 240, width: 400, padding: 30, flexDirection: 'row' }}>
                 <YAxis
                     data={data}
-                    style={{ marginBottom: xAxisHeight }}
+                    style={{ marginBottom: yAxisHeight }}
                     contentInset={verticalContentInset}
                     svg={axesSvg}
                     numberOfTicks={data.length}
+
                 />
                 <View style={{ flex: 1, marginLeft: 10 }}>
                     <AreaChart
@@ -60,9 +62,9 @@ export default function BezLineChart({
                         style={{ flex: 1 }}
                         data={data}
                         contentInset={verticalContentInset}
-                        svg={{ fill: 'rgba(106,180,172, 0.4)' }}>
+                        svg={{ fill: 'rgba(66, 148, 136, 0.1)' }}>
                         <CustomLine />
-                        {/* <Grid/> */}
+
                     </AreaChart>
                     <XAxis
                         style={{ marginHorizontal: -10, height: xAxisHeight }}
@@ -81,10 +83,13 @@ export default function BezLineChart({
 const styles = StyleSheet.create({
     balance: {
         fontSize: 36,
-        fontWeight: '600'
+        fontWeight: '600',
+        marginLeft: 20
+
     },
     viewText: {
         fontSize: 14,
-        color: '#707070'
+        color: '#707070',
+        marginLeft: 20
     }
 })
