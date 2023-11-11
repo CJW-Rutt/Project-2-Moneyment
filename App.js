@@ -25,12 +25,12 @@ export default function App() {
 
     <PaperProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <SafeAreaView style={{ flex: 1 }}>
-          <NavigationContainer>
+        <SafeAreaView>
             <Header />
-            <NavBar />
+          <NavigationContainer>
           </NavigationContainer>
         </SafeAreaView>
+        <NavBar />
       </GestureHandlerRootView>
     </PaperProvider>
 
