@@ -1,6 +1,7 @@
 import Segmented from "../../../atoms/Segmented";
 import BudgetCard from "../../../molecules/BudgetCard";
 import BarGraph from "../../../atoms/BarGraph";
+import ManageBudgetCard from "../../../molecules/ManageBudgetCard";
 
 import { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Dimensions } from "react-native";
@@ -88,9 +89,11 @@ export default function BudgetSingleSegment({ budget }) {
                     topic === 'overview' ?
                         <View style={styles.budgetContainer}>
                             <BudgetCard budget={budget} />
+
                         </View> :
                         topic === 'details' ?
                             <View style={styles.barGraphContainer}>
+
                                 <BarGraph />
                             </View> : <></>
                 }
@@ -122,5 +125,11 @@ const styles = StyleSheet.create({
     },
     budgetContainer: {
         height: 200,
+    },
+    transactionsTitle: {
+        marginTop: 50,
+        fontSize: 18,
+
+
     }
 })

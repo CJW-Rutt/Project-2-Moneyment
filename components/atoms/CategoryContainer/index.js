@@ -4,10 +4,10 @@ import { Image } from "expo-image";
 
 export default function CategoryContainer({ category, size }) {
   const imageSources = {
-    coffee: require("../../../assets/graphics/category/Coffee.png"),
-    food: require("../../../assets/graphics/category/Food.png"),
-    groceries: require("../../../assets/graphics/category/Groceries.png"),
-    shopping: require("../../../assets/graphics/category/Shopping.png"),
+    Coffee: require("../../../assets/graphics/category/Coffee.png"),
+    Food: require("../../../assets/graphics/category/Food.png"),
+    Groceries: require("../../../assets/graphics/category/Groceries.png"),
+    Shopping: require("../../../assets/graphics/category/Shopping.png"),
   };
 
   const iconStyle = size === "s" ? styles.s : styles.m;
@@ -20,15 +20,15 @@ export default function CategoryContainer({ category, size }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    s: {
-        width: 20,
-        height: 20,
-    },
-    m: {
-        width: 28,
-        height: 28,
-    },
+  container: {
+    flex: 1,
+  },
+  s: {
+    width: 20,
+    height: 20,
+  },
+  m: {
+    width: 28,
+    height: 28,
+  },
 });
