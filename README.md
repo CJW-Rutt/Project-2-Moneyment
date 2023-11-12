@@ -14,3 +14,4 @@
 - expo install expo-font
 - npm install --save react-native-vector-icons
 - yarn add react-native-picker/picker
+- npm install react-native-select-dropdown- 
