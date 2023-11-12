@@ -1,6 +1,7 @@
 import { View, TextInput, StyleSheet, Text } from "react-native"
 import { useState } from "react"
 import { Divider } from "react-native-paper"
+import TransactionType from "../../atoms/TransactionType"
 
 export default function AddTransactionForm() {
     const [store, setStore] = useState('')
@@ -11,7 +12,9 @@ export default function AddTransactionForm() {
 
     return (
         <>
-            <Text style={styles.reviewText}>Review your transaction</Text>
+        <View style={styles.maincontainer}>
+            <View style={styles.container}>
+            <Text style={styles.reviewText}>Review your Transaction</Text>
             <View>
                 <View>
                     <Text>Store *</Text>
@@ -47,8 +50,9 @@ export default function AddTransactionForm() {
                     <Text>
                         Transaction Type
                     </Text>
-
+<TransactionType/>
                 </View>
+      
                 <View>
                     <Text>
                         Budget Name *
@@ -57,7 +61,9 @@ export default function AddTransactionForm() {
                         style={styles.input}
                         value={budget}
                         onChangeText={text => setBudget(text)}
+                        
                     />
+                    </View>
                 </View>
             </View>
 
@@ -68,11 +74,18 @@ export default function AddTransactionForm() {
                     OCR info here
                 </Text>
             </View>
+            </View>
         </>
     )
 }
 
 const styles = StyleSheet.create({
+    maincontainer: {
+flex: 1,
+    },
+    container: {
+        padding: 5,
+    },
     input: {
         height: 35,
         width: 350,
@@ -84,4 +97,11 @@ const styles = StyleSheet.create({
         borderColor: '#707070'
 
     },
+    reviewText: {
+        fontSize: 18,
+        fontWeight: "700",
+        paddingTop: 20,
+        paddingBottom: 20,
+
+    }
 })

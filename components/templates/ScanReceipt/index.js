@@ -144,7 +144,6 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         flex: 1,
-        justifyContent: 'space-between',
     },
     modalHeader: {
         flex: 1,
@@ -153,8 +152,18 @@ const styles = StyleSheet.create({
         width: '100%',
         borderBottomWidth: 1,
         borderColor: 'lightgray',
-        justifyContent: 'center',
+        justifyContent: "center",
         alignItems: 'flex-end',
         paddingBottom: 15,
     },
+    closeButton: {
+        paddingLeft: 80
+    },
+    headerTitle: {
+        fontSize: 18,
+        textAlign: 'left',
+        fontWeight: 'bold',
+        width: '100%',
+        paddingLeft: 80
+    }
 })
