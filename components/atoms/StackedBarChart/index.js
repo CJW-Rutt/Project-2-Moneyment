@@ -30,7 +30,7 @@ export default function StackedChart({ totalBudget, totalSpent }) {
         <View>
             <StackedBarChart
                 data={data}
-                width={screenWidth}
+                width={350}
                 height={220}
                 chartConfig={chartConfig} />
 

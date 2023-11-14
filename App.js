@@ -1,41 +1,52 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { PaperProvider } from 'react-native-paper';
-import { useFonts } from 'expo-font';
-import { NavigationContainer } from '@react-navigation/native';
-import { useState } from 'react';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
-
+import { useFonts } from 'expo-font';  // Import useFonts from expo-font
 
 import NavBar from './components/molecules/NavBar';
-import Icon from 'react-native-vector-icons/FontAwesome'
 import Header from './components/molecules/Header';
 
-Icon.loadFont();
-
 export default function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setDarkMode((prevMode) => !prevMode);
+  };
+
+  const theme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: darkMode ? 'black' : 'white',
+      text: darkMode ? 'white' : 'black',
+      // Add more theme-specific colors
+    },
+  };
 
   const [fontsLoaded] = useFonts({
     'Montserrat': require('./assets/fonts/Montserrat-VariableFont_wght.ttf'),
   });
 
-  return (
+  // Check if fonts are loaded before rendering the app
+  if (!fontsLoaded) {
+    return null; // Or render a loading indicator
+  }
 
-    <PaperProvider>
+  return (
+    <PaperProvider theme={theme}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1 }}>
           <NavigationContainer>
             <Header />
-            <NavBar />
+            <NavBar toggleTheme={toggleTheme} />
           </NavigationContainer>
         </SafeAreaView>
       </GestureHandlerRootView>
     </PaperProvider>
-
   );
-
 }
 
 const styles = StyleSheet.create({
@@ -43,5 +54,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
 });
