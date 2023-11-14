@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { View, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { Text } from "react-native-paper";
 import CategoryContainer from "../../atoms/CategoryContainer";
 
 import TransactionSpending from "../../atoms/TransactionSpending";
@@ -84,7 +85,7 @@ export default function TransactionsCardHome({
 
 const styles = StyleSheet.create({
     sheet: {
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         minHeight: 400,
         maxHeight: 10000,
         marginLeft: 15

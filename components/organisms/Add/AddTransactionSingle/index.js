@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, Button, Modal, Pressable } from 'react-native';
+import { StyleSheet, View, Button, Modal, Pressable } from 'react-native';
 import { useState } from 'react';
+import { Text } from 'react-native-paper';
 import { Image } from "expo-image"
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import ScanReceipt from '../../../templates/ScanReceipt';
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
     },
     title: {
         fontSize: 18,

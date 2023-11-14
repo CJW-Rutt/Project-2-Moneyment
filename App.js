@@ -1,54 +1,59 @@
-import React, { useState } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+import { Provider as PaperProvider, useTheme } from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
-import { useFonts } from 'expo-font';  // Import useFonts from expo-font
+import { useMaterial3Theme } from '@pchmn/expo-material3-theme';
+import { useColorScheme } from 'react-native';
+import { MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
+import { useFonts } from 'expo-font';
 import { SIZES } from './constants';
-
 import NavBar from './components/molecules/NavBar';
-import Header from './components/molecules/Header';
+import { DarkModeContext, DarkModeProvider } from './context/darkMode';
 
 export default function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  // const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+  const colorScheme = useColorScheme();
+  const { theme } = useMaterial3Theme();
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const toggleTheme = () => {
-    setDarkMode((prevMode) => !prevMode);
+  const paperTheme =
+    isDarkMode
+      ? { ...MD3DarkTheme, colors: theme.dark, mode: 'adaptive' }
+      : { ...MD3LightTheme, colors: theme.light };
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prevMode) => !prevMode);
   };
 
-  const theme = {
-    ...DefaultTheme,
-    colors: {
-      ...DefaultTheme.colors,
-      background: darkMode ? 'black' : 'white',
-      text: darkMode ? 'white' : 'black',
-      // Add more theme-specific colors
-    },
-  };
+  useEffect(() => {
+    // Additional logic or side effects based on dark mode changes can be placed here
+    console.log('Dark Mode:', isDarkMode);
+  }, [isDarkMode]);
 
+
+  //FONTS
   const [fontsLoaded] = useFonts({
     'Montserrat': require('./assets/fonts/Montserrat-VariableFont_wght.ttf'),
   });
-
   // Check if fonts are loaded before rendering the app
   if (!fontsLoaded) {
     return null; // Or render a loading indicator
   }
 
   return (
-    <PaperProvider theme={theme}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <SafeAreaView >
-        <Header />
-          <NavigationContainer>
-          </NavigationContainer>
-        </SafeAreaView>
-
-        <NavBar toggleTheme={toggleTheme}/>
-      </GestureHandlerRootView>
-    </PaperProvider>
+    <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+      <PaperProvider theme={paperTheme}>
+        {/* <DarkModeProvider> */}
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <SafeAreaView >
+          </SafeAreaView>
+          <NavBar />
+        </GestureHandlerRootView>
+        {/* </DarkModeProvider> */}
+      </PaperProvider>
+    </DarkModeContext.Provider>
   );
 }
 
