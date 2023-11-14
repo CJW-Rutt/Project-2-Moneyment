@@ -15,3 +15,4 @@
 - npm install --save react-native-vector-icons
 - yarn add react-native-picker/picker
 - expo-image-picker
+- npm install react-native-select-dropdown- 

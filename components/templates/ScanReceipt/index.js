@@ -83,13 +83,13 @@ export default function ScanReceipt() {
     return (
         <>
             <View style={styles.container}>
+
                 {
                     photoTaken ? <Message header={message.photoTaken.header} bodyCopy={message.photoTaken.body} /> :
                         <Message header={message.takePhoto.header} bodyCopy={message.takePhoto.body} />
                 }
                 <View style={styles.container}>
                     <View style={imageUri ? styles.borderSheetWithImage : styles.borderSheet}>
-
                         {
                             showCamera && photoTaken === false ?
                                 <>
@@ -129,7 +129,9 @@ export default function ScanReceipt() {
                     {/* <Pressable style={styles.button}>
                         {
                             showCamera && photoTaken ?
-                                <Text style={styles.buttonText} onPress={() => setShowForm(true)}>Next</Text> :
+                                <Text style={styles.buttonText} onPress={() => setShowForm(true)}>
+                                    Next
+                                </Text> :
                                 showCamera && photoTaken === false ?
                                     <Text style={styles.buttonText} onPress={() => setPhotoTaken(true)}>Take photo</Text> :
                                     <GalleryButton onImageSelect={setImageUri} />
@@ -150,7 +152,9 @@ export default function ScanReceipt() {
                                 <Pressable style={styles.closeButton} onPress={() => setShowForm(false)}>
                                     <Icon name='arrow-left' size={25} color='#000' />
                                 </Pressable>
-                                <Text style={styles.headerTitle}>Confirmation</Text>
+                                <Text style={styles.headerTitle}>
+                                    Confirmation
+                                </Text>
                             </View>
                             {ocrData && <GptReview data={ocrData} />}
                         </View>
@@ -220,6 +224,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#ffffff',
     },
+    modalContainer: {
+        flex: 1,
+    },
     modalHeader: {
         flex: 1,
         flexDirection: 'row',
@@ -232,4 +239,14 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         paddingBottom: 15,
     },
+    closeButton: {
+        paddingLeft: 80
+    },
+    headerTitle: {
+        fontSize: 18,
+        textAlign: 'left',
+        fontWeight: 'bold',
+        width: '100%',
+        paddingLeft: 80
+    }
 })

@@ -2,41 +2,32 @@ import { View, StyleSheet, Text } from "react-native"
 import CategoryContainer from "../CategoryContainer"
 import IconContainer from "../IconContainer"
 
-export default function TransactionSpending({ category = 'Food', location = 'Starbucks', amount = '13.70', payment = 'td' }) {
+export default function TransactionSpending({ category = 'Credit Card', location = 'Starbucks', amount = '13.70' }) {
 
     let categoryIcon = category.toLowerCase()
-    const paymentObj = {
-        td: 'tdMiniCard',
-        cibc: 'cibcMiniCard',
-        rbc: 'rbcMiniCard',
-        cash: 'cashMiniCard'
-    }
+
 
     return (
         <View style={styles.container}>
             <View style={styles.cardContainer}>
                 <View style={styles.leftContainer}>
-                    <View style={styles.icon}>
-                        <CategoryContainer category={categoryIcon} size='m' />
-                    </View>
+
                     <View style={styles.transactionInfo}>
-                        <Text style={styles.itemText}>{category}</Text>
+                        <Text style={styles.itemText}>{location}</Text>
                         <View style={styles.transactionDetails}>
-                            <View>
-                                <IconContainer icon={paymentObj[payment]} />
-                            </View>
-                            <Text style={{ paddingLeft: 3 }}>{location}</Text>
+
+                            <Text style={{ paddingLeft: 3 }}>{category}</Text>
                         </View>
                     </View>
                 </View>
                 <View style={styles.amountContainer}>
                     <Text style={styles.amount}>-${amount}</Text>
-                    <View style={styles.rightChevron} >
-                        <IconContainer icon='chevronUp' size={17} colour='black' />
-                    </View>
+
                 </View>
 
+
             </View>
+
         </View>
     )
 }
@@ -58,7 +49,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
-        marginLeft: 20,
+        marginLeft: 10,
         gap: 15,
         alignContent: 'center'
     },
@@ -72,7 +63,7 @@ const styles = StyleSheet.create({
         maxWidth: 87,
     },
     itemText: {
-        fontSize: 16
+        fontSize: 16,
     },
     amount: {
         fontSize: 16,
@@ -82,10 +73,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         maxWidth: 70,
-        marginRight: 20,
         gap: 5
     },
-    rightChevron: {
-        transform: [{ rotate: '90deg' }],
-    },
+
 })

@@ -1,4 +1,4 @@
-import { useState }  from 'react';
+import { useState } from 'react';
 import { BottomNavigation, Text, Image } from 'react-native-paper';
 
 import Home from '../../../screens/Home';
@@ -20,23 +20,23 @@ export default function NavBar() {
     const inactiveColor = '#707070';
 
     const [routes] = useState([
-        { 
-            key: 'home', 
-            title: 'Wallet', 
+        {
+            key: 'home',
+            title: 'Transactions',
             focusedIcon: 'wallet',
             unfocusedIcon: 'wallet',
             color: '#707070'
         },
-        { 
-            key: 'add', 
-            title: 'Add', 
+        {
+            key: 'add',
+            title: 'Add',
             focusedIcon: 'plus',
             unfocusedIcon: 'plus-circle',
             color: '#707070'
         },
-        { 
-            key: 'budget', 
-            title: 'Budget', 
+        {
+            key: 'budget',
+            title: 'Budget',
             focusedIcon: 'piggy-bank',
             unfocusedIcon: 'piggy-bank',
             color: '#707070'
@@ -51,12 +51,12 @@ export default function NavBar() {
 
     const renderIcon = ({ route, focused }) => {
         return (
-          <Icon
-            name={focused ? route.focusedIcon : route.unfocusedIcon}
-            routeName={route.key}
-            size={20}
-            color={focused ? activeColor: inactiveColor}
-          />
+            <Icon
+                name={focused ? route.focusedIcon : route.unfocusedIcon}
+                routeName={route.key}
+                size={20}
+                color={focused ? activeColor : inactiveColor}
+            />
         );
     };
 

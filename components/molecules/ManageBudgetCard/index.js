@@ -3,8 +3,9 @@ import { StyleSheet, Text, View, Pressable, Modal } from 'react-native';
 import { useState } from "react";
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import BudgetForm from "../BudgetForm";
+import StackedChart from "../../atoms/StackedBarChart";
 
-export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBudget }) {
+export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBudget, totalSpent }) {
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -18,29 +19,29 @@ export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBu
 
     return (
         <View style={styles.manageContainer}>
-              <View style={styles.manageLeftCol}>
-                <View style={styles.totalRow}>
-                    <Text style={styles.budgetTotal}>Total Budget: </Text>
-                    <Text style={styles.budgetTotal}>${totalBudget.toFixed(2)}</Text>
-                </View>
+
+            <View style={styles.manageLeftCol}>
+
                 <View style={styles.budgetRow}>
                     <Text style={styles.remainingTitle}>Remaining Budget:</Text>
                     <Text style={styles.remainingAmt}>${remainingBudget.toFixed(2)}</Text>
                 </View>
+
             </View>
             <Pressable onPress={() => openModal()}>
                 <View style={styles.manageRightCol}>
-                    <Text 
+                    <Text
                         style={{
-                            color: '#fff', 
-                            borderWidth: 1, 
-                            borderColor: '#fff', 
-                            borderRadius: 25, 
+                            color: '#000',
+                            borderWidth: 1,
+                            borderColor: '#000',
+                            borderRadius: 25,
                             padding: 10,
                         }}
                     >Add Budget</Text>
                 </View>
             </Pressable>
+
             {/* Modal Begins */}
             <Modal
                 animationType="slide"
@@ -59,7 +60,9 @@ export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBu
                 </View>
             </Modal>
             {/* Modal Ends */}
+
         </View>
+
     );
 }
 
@@ -68,36 +71,35 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: '#6AB4AC',
-        borderBottomLeftRadius: 15,
-        borderTopRightRadius: 15,
+
+
         padding: 20,
         marginTop: 20,
         width: 349,
-        height: 200,
-        minHeight: 200,
+        height: 100,
+        minHeight: 100,
     },
     totalRow: {
         flex: 1,
         flexDirection: 'row',
     },
     budgetTotal: {
-        color: '#fff',
+
         fontSize: 12,
     },
     remainingTitle: {
         fontSize: 14,
-        color: '#fff',
+
     },
     remainingAmt: {
         fontSize: 40,
         fontWeight: 'bold',
-        color: '#fff',
-    },    
-    modalContainer: {
-        flex: 1, 
+
     },
-    modalHeader:{
+    modalContainer: {
+        flex: 1,
+    },
+    modalHeader: {
         flex: 1,
         flexDirection: 'row',
         maxHeight: 86,
