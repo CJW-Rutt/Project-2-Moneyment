@@ -16,7 +16,7 @@ export default function Home() {
 
         <View style={[styles.container, themeContainerStyle]}>
             <StatusBar style="auto" />
-            <Text style={styles.title}>Transactions</Text>
+            <Text style={styles.title}>Track Your Transactions!</Text>
             <Text style={styles.desc}>Understand your finances with simple charts</Text>
             <View style={styles.content}>
                 <BezLineChart />
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         maxWidth: 355,
         width: '100%',
+        marginBottom: 30
     },
     lightContainer: {
         backgroundColor: '#ffffff',

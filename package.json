@@ -32,6 +32,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-native": "0.72.5",
     "react-native-chart-kit": "^6.12.0",
+    "react-native-event-listeners": "^1.0.7",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-iconify": "^0.2.10",
     "react-native-paper": "^5.11.0",
@@ -42,6 +43,7 @@
     "react-native-select-dropdown": "^3.4.0",
     "react-native-svg": "^13.14.0",
     "react-native-svg-charts": "^5.4.0",
+    "react-native-svg-uri": "^1.2.3",
     "react-native-vector-icons": "^10.0.0",
     "react-native-windows": "^0.72.16",
     "recharts": "^2.9.0"
