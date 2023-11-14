@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, Text, View, Button } from 'react-native';
 import { Appearance, useColorScheme } from 'react-native';
 import WalletTemplate from '../components/templates/WalletTemplate';
 
-export default function Home({ navigation }) {
+export default function Home() {
     const colorScheme = useColorScheme();
 
     const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;

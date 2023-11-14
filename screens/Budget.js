@@ -10,7 +10,7 @@ import ManageBudgetCard from '../components/molecules/ManageBudgetCard';
 import BudgetSingleTemplate from '../components/templates/Budget/BudgetSingleTemplate';
 import { ScrollView } from 'react-native-gesture-handler';
 
-export default function Budget({ navigation }) {
+export default function Budget() {
     const [budgets, setBudgets] = useState([
         {
             budgetTitle: "Coffee",

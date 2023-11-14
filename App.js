@@ -7,8 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-
-
+import { SIZES } from './constants';
 import NavBar from './components/molecules/NavBar';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Header from './components/molecules/Header';
@@ -43,5 +42,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    height: SIZES.height
   }
 });

@@ -2,12 +2,13 @@ import { View, TextInput, StyleSheet, Text } from "react-native"
 import { useState } from "react"
 import { Divider } from "react-native-paper"
 
-export default function AddTransactionForm() {
-    const [store, setStore] = useState('')
+export default function AddTransactionForm({ initialValues }) {
+    console.log(initialValues);
+    const [store, setStore] = useState(initialValues.purchasePlace || '');
     const [date, setDate] = useState('')
-    const [time, setTime] = useState('')
+    const [price, setPrice] = useState(initialValues.totalAmount || '');
     const [transaction, setTransaction] = useState('')
-    const [budget, setBudget] = useState('')
+    const [budget, setBudget] = useState(initialValues.purchaseType || '');
 
     return (
         <>
@@ -34,12 +35,12 @@ export default function AddTransactionForm() {
                     </View>
                     <View>
                         <Text>
-                            Time
+                            Amount
                         </Text>
                         <TextInput
                             style={styles.input}
-                            value={time}
-                            onChangeText={text => setTime(text)}
+                            value={price}
+                            onChangeText={text => setPrice(text)}
                         />
                     </View>
                 </View>
@@ -82,6 +83,5 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         border: 1,
         borderColor: '#707070'
-
     },
 })
