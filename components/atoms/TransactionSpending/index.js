@@ -1,6 +1,7 @@
-import { View, StyleSheet, Text } from "react-native"
+import { View, StyleSheet } from "react-native"
 import CategoryContainer from "../CategoryContainer"
 import IconContainer from "../IconContainer"
+import { Text } from "react-native-paper"
 
 export default function TransactionSpending({ category = 'Credit Card', location = 'Starbucks', amount = '13.70' }) {
 
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
         height: 45,
         width: 382,
         maxWidth: 382,
-        backgroundColor: 'white'
+        // backgroundColor: 'white'
     },
     cardContainer: {
         width: '100%',
