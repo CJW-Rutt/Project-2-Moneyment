@@ -3,12 +3,13 @@ import { useState } from "react"
 import { Divider } from "react-native-paper"
 import TransactionType from "../../atoms/TransactionType"
 
-export default function AddTransactionForm() {
-    const [store, setStore] = useState('')
+export default function AddTransactionForm({ initialValues }) {
+    console.log(initialValues);
+    const [store, setStore] = useState(initialValues.purchasePlace || '');
     const [date, setDate] = useState('')
-    const [time, setTime] = useState('')
+    const [price, setPrice] = useState(initialValues.totalAmount || '');
     const [transaction, setTransaction] = useState('')
-    const [budget, setBudget] = useState('')
+    const [budget, setBudget] = useState(initialValues.purchaseType || '');
 
     return (
         <>

@@ -11,7 +11,7 @@ import BudgetSingleTemplate from '../components/templates/Budget/BudgetSingleTem
 import { ScrollView } from 'react-native-gesture-handler';
 import StackedChart from '../components/atoms/StackedBarChart'
 
-export default function Budget({ navigation }) {
+export default function Budget() {
     const [budgets, setBudgets] = useState([
         {
             budgetTitle: "Coffee",
