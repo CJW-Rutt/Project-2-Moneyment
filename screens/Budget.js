@@ -11,7 +11,7 @@ import BudgetSingleTemplate from '../components/templates/Budget/BudgetSingleTem
 import { ScrollView } from 'react-native-gesture-handler';
 import StackedChart from '../components/atoms/StackedBarChart'
 
-export default function Budget({ navigation }) {
+export default function Budget() {
     const [budgets, setBudgets] = useState([
         {
             budgetTitle: "Coffee",
@@ -77,15 +77,19 @@ export default function Budget({ navigation }) {
         <View style={styles.container}>
             <Text style={styles.title}>Smart Budgeting</Text>
             <Text style={styles.desc}>Visualize your budgets and analyze your remaining spending within specific timeframes</Text>
+            <ScrollView>
             <ManageBudgetCard
                 onAddBudget={addBudget}
                 totalBudget={totalBudgetSum}
                 remainingBudget={remainingBudget}
             />
+            
             <View styles={styles.chart}>
                 <StackedChart totalBudget={totalBudgetSum} totalSpent={totalPriceSum} />
             </View>
-            <ScrollView>
+       
+                <View style={styles.budgetcontainer}>
+                <ScrollView>
                 {budgets.map((budgetItem, index) => (
                     <View key={index}>
                         <BudgetCard
@@ -126,10 +130,13 @@ export default function Budget({ navigation }) {
                         </Modal>
                     </View>
                 ))}
-            </ScrollView>
+                   </ScrollView>
+                </View>
+         
             <StatusBar />
-
+  </ScrollView>
         </View >
+      
     );
 }
 
@@ -189,6 +196,12 @@ const styles = StyleSheet.create({
 
 
 
+    },
+    budgetcontainer: {
+        padding: 5,
+        borderTopWidth: 1, 
+        borderTopColor: '#A9A9A9',
+        maxHeight: 250,
     }
 
 });

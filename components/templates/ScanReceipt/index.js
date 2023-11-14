@@ -1,10 +1,12 @@
 import { View, StyleSheet, Text, Pressable, Modal } from "react-native"
-import Message from "../../atoms/Message"
-import ButtonLong from "../../atoms/ButtonLong"
 import { Image } from "expo-image"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+
+import Message from "../../atoms/Message"
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import AddTransactionForm from "../AddTransactionForm"
+import GalleryButton from "../../atoms/GalleryButton"
+import { processOCR } from "../../../api/apiOCR"
+import GptReview from "../GptReview"
 
 export default function ScanReceipt() {
     const message = {
@@ -21,6 +23,54 @@ export default function ScanReceipt() {
     const [showCamera, setShowCamera] = useState(false)
     const [photoTaken, setPhotoTaken] = useState(false)
     const [showForm, setShowForm] = useState(false)
+    const [imageUri, setImageUri] = useState(null);
+    const [ocrData, setOcrData] = useState(null);
+    const [error, setError] = useState(null);
+
+    const [reviewResults, setReviewResults] = useState({
+        totalAmount: '',
+        purchaseType: '',
+        purchasePlace: ''
+    });
+
+    const handleOCRProcessing = async (uri) => {
+
+        try {
+            const ocrParsedResult = await processOCR(uri);
+
+            if (ocrParsedResult.IsErroredOnProcessing) {
+                setError(ocrParsedResult.ErrorMessage);
+            } else {
+                const parsedResults = ocrParsedResult["ParsedResults"];
+                let pageText = '';
+
+                if (parsedResults && Array.isArray(parsedResults)) {
+                    parsedResults.forEach((value) => {
+                    const exitCode = value["FileParseExitCode"];
+                    const parsedText = value["ParsedText"];
+                    const errorMessage = value["ParsedTextFileName"];
+
+                    switch (+exitCode) {
+                        case 1:
+                            pageText = parsedText;
+                        break;
+                        default:
+                            pageText += "Error: " + errorMessage;
+                        break;
+                    }
+                    });
+                } else {
+                    pageText = "No parsed results available";
+                }
+                setOcrData(pageText);
+                console.log('ocr:' + ocrData)
+                setShowForm(true);
+
+            }
+        } catch (error) {
+            setError('OCR processing failed: ' + error.message);
+        }
+    };
 
     const handleCamera = () => {
         showCamera ? setShowCamera(false) : setShowCamera(true)
@@ -35,11 +85,11 @@ export default function ScanReceipt() {
             <View style={styles.container}>
 
                 {
-                    photoTaken ?
-                        <Message header={message.photoTaken.header} bodyCopy={message.photoTaken.body} /> :
-                        <Message header={message.takePhoto.header} bodyCopy={message.takePhoto.body} />}
+                    photoTaken ? <Message header={message.photoTaken.header} bodyCopy={message.photoTaken.body} /> :
+                        <Message header={message.takePhoto.header} bodyCopy={message.takePhoto.body} />
+                }
                 <View style={styles.container}>
-                    <View style={styles.borderSheet}>
+                    <View style={imageUri ? styles.borderSheetWithImage : styles.borderSheet}>
                         {
                             showCamera && photoTaken === false ?
                                 <>
@@ -50,48 +100,66 @@ export default function ScanReceipt() {
                                         <Text>Scanned OCR here</Text>
                                     </> :
                                     <>
-                                        <Text style={[styles.text, styles.header]}>
-                                            Example
-                                        </Text>
-                                        <Image source={require('../../../assets/graphics/receiptExample.png')} contentFit="contain" style={styles.image} />
-                                        <Text style={styles.text}>
-                                            Note: Sometimes the date is at the bottom of the receipt
-                                        </Text>
+                                        {
+                                            imageUri ? <></> : 
+                                                <Text style={[styles.text, styles.header]}>
+                                                    Example
+                                                </Text>
+                                        }
+                                        {
+                                            imageUri ?
+                                                <Image
+                                                    source={{ uri: imageUri }}
+                                                    style={{ width: 360, height: 520, marginBottom: 10 }}
+                                                /> :
+                                                    <Image source={require('../../../assets/graphics/receiptExample.png')} style={styles.image} />
+                                        }
+
+                                        {
+                                            imageUri ? <></> : 
+                                                <Text style={[styles.text, styles.header]}>
+                                                    Note: Sometimes the date is at the bottom of the receipt.
+                                                </Text>
+                                        }
                                     </>
+                                    
                         }
                     </View>
 
-                    <Pressable onPress={handleCamera} style={styles.button}>
+                    {/* <Pressable style={styles.button}>
                         {
                             showCamera && photoTaken ?
                                 <Text style={styles.buttonText} onPress={() => setShowForm(true)}>
                                     Next
                                 </Text> :
                                 showCamera && photoTaken === false ?
-                                    <Text style={styles.buttonText} onPress={() => setPhotoTaken(true)}>
-                                        Take photo
-                                    </Text> :
-                                    <Text style={styles.buttonText}>
-                                        Open Camera
-                                    </Text>}
+                                    <Text style={styles.buttonText} onPress={() => setPhotoTaken(true)}>Take photo</Text> :
+                                    <GalleryButton onImageSelect={setImageUri} />
+                        }
+                    </Pressable> */}
+
+                    <Pressable style={styles.button}>
+                        {
+                            imageUri ?
+                                <Text style={styles.buttonText} onPress={() => handleOCRProcessing(imageUri)}>Next</Text> :
+                                <GalleryButton onImageSelect={setImageUri} />
+                        }
                     </Pressable>
 
                     <Modal animationType="slide" transparent={false} visible={showForm}>
                         <View style={styles.modalContainer}>
                             <View style={styles.modalHeader}>
-                                <Pressable style={styles.closeButton} onPress={handleForm}>
+                                <Pressable style={styles.closeButton} onPress={() => setShowForm(false)}>
                                     <Icon name='arrow-left' size={25} color='#000' />
                                 </Pressable>
                                 <Text style={styles.headerTitle}>
                                     Confirmation
                                 </Text>
                             </View>
-                            <AddTransactionForm />
+                            {ocrData && <GptReview data={ocrData} />}
                         </View>
                     </Modal>
-
                 </View>
-
             </View>
         </>
     )
@@ -108,7 +176,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 15,
         marginTop: 20,
-        marginBottom: 13
+        marginBottom: 13,
+        overflow: 'hidden',
+    },
+    borderSheetWithImage: {
+        borderWidth: 5,
+        borderColor: '#429488',
+        borderRadius: 15,
+        width: 360,
+        height: 520,
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 15,
+        marginTop: 20,
+        marginBottom: 13,
+        overflow: 'hidden',
     },
     image: {
         width: 211,
@@ -144,12 +226,12 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         flex: 1,
-        justifyContent: 'space-between',
     },
     modalHeader: {
         flex: 1,
         flexDirection: 'row',
         maxHeight: 100,
+        minHeight: 100,
         width: '100%',
         borderBottomWidth: 1,
         borderColor: 'lightgray',
@@ -157,4 +239,14 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         paddingBottom: 15,
     },
+    closeButton: {
+        paddingLeft: 80
+    },
+    headerTitle: {
+        fontSize: 18,
+        textAlign: 'left',
+        fontWeight: 'bold',
+        width: '100%',
+        paddingLeft: 80
+    }
 })

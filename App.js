@@ -4,7 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 import { useFonts } from 'expo-font';  // Import useFonts from expo-font
+import { SIZES } from './constants';
 
 import NavBar from './components/molecules/NavBar';
 import Header from './components/molecules/Header';
@@ -38,12 +40,13 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView >
+        <Header />
           <NavigationContainer>
-            <Header />
-            <NavBar toggleTheme={toggleTheme} />
           </NavigationContainer>
         </SafeAreaView>
+
+        <NavBar toggleTheme={toggleTheme}/>
       </GestureHandlerRootView>
     </PaperProvider>
   );
@@ -54,5 +57,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
+    height: SIZES.height
+  }
 });

@@ -5,7 +5,7 @@ import WalletTemplate from '../components/templates/WalletTemplate';
 import BezLineChart from '../components/atoms/BezLineChart';
 import TransactionsCardHome from '../components/molecules/TransactionsCardHome';
 
-export default function Home({ navigation }) {
+export default function Home() {
     const colorScheme = useColorScheme();
 
     const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
