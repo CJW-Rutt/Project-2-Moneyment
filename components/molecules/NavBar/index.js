@@ -5,6 +5,7 @@ import Home from '../../../screens/Home';
 import Add from '../../../screens/Add';
 import Budget from '../../../screens/Budget';
 import Header from '../Header';
+import Settings from '../../../screens/Settings';
 
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
@@ -41,12 +42,20 @@ export default function NavBar() {
             unfocusedIcon: 'piggy-bank',
             color: '#707070'
         },
+        {
+            key: 'settings',
+            title: 'Settings',
+            focusedIcon: 'cog',
+            unfocusedIcon: 'cog',
+            color: '#707070'
+        },
     ]);
 
     const renderScene = BottomNavigation.SceneMap({
         home: Home,
         add: Add,
         budget: Budget,
+        settings: Settings
     });
 
     const renderIcon = ({ route, focused }) => {

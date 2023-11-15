@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, Button, Modal, Pressable } from 'react-native';
+import { StyleSheet, View, Button, Modal, Pressable } from 'react-native';
 import { useState } from 'react';
+import { Text } from 'react-native-paper';
 import { Image } from "expo-image"
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import ScanReceipt from '../../../templates/ScanReceipt';
@@ -40,7 +41,6 @@ export default function AddTransactionSingle() {
                         <View style={styles.buttonContainer}>
                             <LongTextButton type="scan" onPress={() => setShowScan(true)} />
                             <LongTextButton type="manual" />
-                            {/* <LongTextButton type="statements" /> */}
                         </View>
                     </>
             }
@@ -53,13 +53,12 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff'
+        // backgroundColor: '#fff',
     },
     title: {
         fontSize: 18,
         maxWidth: 355,
         fontWeight: 'bold',
-        alignItems: 'flex-start',
         width: '100%',
         marginTop: 10,
     },

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Modal, useColorScheme, Pressable } from 'react-native';
+import { StyleSheet, View, Modal, useColorScheme, Pressable } from 'react-native';
 import { useState } from 'react';
 import { Image } from 'expo-image';
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -10,8 +10,10 @@ import ManageBudgetCard from '../components/molecules/ManageBudgetCard';
 import BudgetSingleTemplate from '../components/templates/Budget/BudgetSingleTemplate';
 import { ScrollView } from 'react-native-gesture-handler';
 import StackedChart from '../components/atoms/StackedBarChart'
+import TopHeader from '../components/molecules/TopHeader';
+import { Text } from 'react-native-paper';
 
-export default function Budget({ navigation }) {
+export default function Budget() {
     const [budgets, setBudgets] = useState([
         {
             budgetTitle: "Coffee",
@@ -75,6 +77,7 @@ export default function Budget({ navigation }) {
     return (
 
         <View style={styles.container}>
+            <TopHeader title='Budget' />
             <Text style={styles.title}>Smart Budgeting</Text>
             <Text style={styles.desc}>Visualize your budgets and analyze your remaining spending within specific timeframes</Text>
             <ScrollView>
@@ -143,7 +146,7 @@ export default function Budget({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
@@ -183,8 +186,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         width: '50%',
         paddingLeft: 90,
-
-
     },
     closeButton: {
         paddingLeft: 20

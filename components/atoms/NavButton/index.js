@@ -15,6 +15,7 @@ export default function NavButton({ icon, active }) {
         wallet: 'Wallet',
         budget: 'Budget',
         add: 'Add',
+        settings: 'Settings'
     };
 
 
