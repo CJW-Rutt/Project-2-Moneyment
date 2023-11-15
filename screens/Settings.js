@@ -25,7 +25,7 @@ export default function Settings() {
                             onPress: () => {
                                 setIsDark(false)
                                 toggleDarkMode()
-                                console.log(isDark)
+                                // console.log(isDark)
                             },
                             number: 0,
                         },
@@ -34,7 +34,7 @@ export default function Settings() {
                             onPress: () => {
                                 setIsDark(true)
                                 toggleDarkMode()
-                                console.log(isDark)
+                                // console.log(isDark)
                             },
                             number: 1,
                         }
