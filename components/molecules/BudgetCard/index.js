@@ -1,6 +1,7 @@
 import React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import { Image } from "expo-image"
+import { Text } from "react-native-paper";
 import HorizontalProgressBar from "../../atoms/HorizontalProgressBar";
 
 
