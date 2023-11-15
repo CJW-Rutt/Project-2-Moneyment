@@ -16,9 +16,9 @@ export default function Settings() {
     return (
         <View>
             <TopHeader title='Settings' />
-            <View>
-                <View>
-                    <Text variant="titleMedium">Display</Text>
+            <View style={styles.container}>
+                <View style={styles.subContainer}>
+                    <Text style={styles.title} variant="titleMedium">Display</Text>
                     <Segmented arr={[
                         {
                             title: 'Light',
@@ -41,15 +41,15 @@ export default function Settings() {
                     ]} />
                 </View>
                 {
-                    isDark || darkMode ? <Text>it's dark!</Text> : <Text>it's not</Text>
+                    // isDark || darkMode ? <Text>it's dark!</Text> : <Text>it's not</Text>
                 }
-                <View>
-                    <View>
-                        <Text variant="titleMedium">We are not financial advisors</Text>
-                        <Text>Moneyment provides AI-generated financial suggestions and should be used for informational purposes only. All financial decisions remain ultimately your responsibility.</Text>
-                        <Text>Seek professional advice for complex financial matters.</Text>
+                <View style={styles.secondContainer}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.subTitle} variant="titleMedium">We are not financial advisors</Text>
+                        <Text style={styles.body}>Moneyment provides AI-generated financial suggestions and should be used for informational purposes only. All financial decisions remain ultimately your responsibility.</Text>
+                        <Text style={styles.body}>Seek professional advice for complex financial matters.</Text>
                     </View>
-                    <View>
+                    <View style={styles.logoContainer}>
                         <Image source={require('../assets/refined-version.png')} style={{ width: 191, height: 29 }} />
                     </View>
                 </View>
@@ -59,5 +59,44 @@ export default function Settings() {
     );
 }
 const styles = StyleSheet.create({
-
+    container: {
+        display: "flex",
+        flexDirection: "column",
+        padding: 20,
+        justifyContent: "space-between",
+        height: '94%'
+    },
+    subContainer: {
+        display: "flex",
+        flexDirection: "column",
+        gap: 10
+    },
+    secondContainer: {
+        display: "flex",
+        flexDirection: "column",
+        gap: 40
+    },
+    textContainer: {
+        display: "flex",
+        flexDirection: "column",
+        gap: 8
+    },
+    logoContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center'
+    },
+    title: {
+        fontWeight: '800'
+    },
+    subTitle: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        // color: "#707070"
+    },
+    body: {
+        fontSize: 12,
+        // color: "#707070"
+    }
 })

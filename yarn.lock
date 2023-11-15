@@ -6332,11 +6332,6 @@ paths-js@^0.4.10:
   resolved "https://registry.yarnpkg.com/paths-js/-/paths-js-0.4.11.tgz#b2a9d5f94ee9949aa8fee945f78a12abff44599e"
   integrity sha512-3mqcLomDBXOo7Fo+UlaenG6f71bk1ZezPQy2JCmYHy2W2k5VKpP+Jbin9H0bjXynelTbglCqdFhSEkeIkKTYUA==
 
-picker@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/picker/-/picker-0.1.4.tgz#101b890d34dc387823236af9ba7067660b48d9e8"
-  integrity sha512-M9fNs3FYg3buWWGrxtZWBngshiD4cQWqvnO1YIPet/P3VaSrcEkg9I9SwiNXpLhPVkP5b+eLoaWc3DLrRL/VUA==
-
 picocolors@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.0.tgz#cb5bdc74ff3f51892236eaf79d68bc44564ab81c"
