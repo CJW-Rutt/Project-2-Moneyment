@@ -46,14 +46,14 @@ export default function Segmented({
               {item.number === 0 ?
                 !selected ?
                   <View style={styles.buttonContainer}>
-                    <Image source={require('../../../assets/icons/setting/light_reverse.png')} style={{ width: 20, height: 20 }} />
-                    <Text >
+                    <Image source={require('../../../assets/icons/setting/light.png')} style={{ width: 20, height: 20 }} />
+                    <Text style={styles.active}>
                       {item.title}
                     </Text>
                   </View> :
                   <View style={styles.buttonContainer}>
-                    <Image source={require('../../../assets/icons/setting/light.png')} style={{ width: 20, height: 20 }} />
-                    <Text style={styles.active}>
+                    <Image source={require('../../../assets/icons/setting/light_reverse.png')} style={{ width: 20, height: 20 }} />
+                    <Text >
                       {item.title}
                     </Text>
                   </View> :
