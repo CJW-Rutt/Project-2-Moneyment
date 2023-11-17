@@ -21,11 +21,11 @@ export default function CategoryContainer({ category, size }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+
   },
   s: {
-    width: 20,
-    height: 20,
+    width: 24,
+    height: 24,
   },
   m: {
     width: 28,
