@@ -5,7 +5,7 @@ import { useState, useContext } from 'react';
 import Segmented from '../components/atoms/Segmented';
 import { Text } from 'react-native-paper';
 import TopHeader from '../components/molecules/TopHeader';
-import { DarkModeContext, DarkModeProvider } from '../context/darkMode';
+import { DarkModeContext } from '../context/darkMode';
 
 
 export default function Settings() {
@@ -50,7 +50,9 @@ export default function Settings() {
                         <Text style={styles.body}>Seek professional advice for complex financial matters.</Text>
                     </View>
                     <View style={styles.logoContainer}>
-                        <Image source={require('../assets/refined-version.png')} style={{ width: 191, height: 29 }} />
+                        {isDark
+                            ? <Image source={require('../assets/logo/lightLogo.png')} style={{ width: 191, height: 29 }} />
+                            : <Image source={require('../assets/refined-version.png')} style={{ width: 191, height: 29 }} />}
                     </View>
                 </View>
             </View>
