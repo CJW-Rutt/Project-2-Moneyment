@@ -1,13 +1,16 @@
 import { StyleSheet, View, Button, Modal, Pressable } from 'react-native';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Text } from 'react-native-paper';
 import { Image } from "expo-image"
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import ScanReceipt from '../../../templates/ScanReceipt';
 import LongTextButton from '../../../atoms/LongTextButton';
+import { DarkModeContext } from '../../../../context/darkMode';
 
 export default function AddTransactionSingle() {
     const [showScan, setShowScan] = useState(false)
+    const { isDarkMode } = useContext(DarkModeContext);
+
 
     const handleScan = () => {
         showScan ? setShowScan(false) : setShowScan(true)
@@ -35,13 +38,15 @@ export default function AddTransactionSingle() {
                         </Modal>
                     </> :
                     <>
-                        <Image source={require("../../../../assets/graphics/people/zombie.png")} alt='' style={{ width: 338, height: 240, marginTop: 10, }} contentFit="contain" />
+                        {console.log('add transaction', isDarkMode)}
                         <Text style={styles.title}>What works better for you!</Text>
                         <Text style={styles.desc}>Choose the method tailored to your unique needs</Text>
                         <View style={styles.buttonContainer}>
                             <LongTextButton type="scan" onPress={() => setShowScan(true)} />
                             <LongTextButton type="manual" />
                         </View>
+                        {isDarkMode === true ? <Image source={require("../../../../assets/graphics/people/selfieDark.png")} alt='' style={{ width: 338, height: 240, marginTop: 10, }} contentFit="contain" />
+                            : <Image source={require("../../../../assets/graphics/people/selfie.png")} alt='' style={{ width: 338, height: 240, marginTop: 10, }} contentFit="contain" />}
                     </>
             }
         </View>
