@@ -1,11 +1,18 @@
 import InputField from "../../atoms/InputField";
 import BudgetDropdown from "../../atoms/BudgetDropdown";
 import ToggleSwitch from "../../atoms/Switch";
-import React, { useState } from 'react';
-import { Text, StyleSheet, View, ScrollView, TextInput } from "react-native";
+import React, { useState, useContext } from 'react';
+import { StyleSheet, View, ScrollView, TextInput } from "react-native";
 import SaveButton from "../../atoms/SaveButton";
+import { Image } from "expo-image";
+import { DarkModeContext } from '../../../context/darkMode';
+import { Text } from "react-native-paper";
+import { useTheme } from "react-native-paper";
+
 
 export default function BudgetForm({ onAddBudget, closeModal }) {
+    const theme = useTheme()
+    const { isDarkMode } = useContext(DarkModeContext);
 
     const [budgetTitle, setBudgetTitle] = useState('');
     const [budgetCategory, setBudgetCategory] = useState('');
@@ -19,22 +26,24 @@ export default function BudgetForm({ onAddBudget, closeModal }) {
             totalBudget: parseFloat(totalBudget) || 0,
         };
         onAddBudget(newBudget);
-		closeModal();
+        closeModal();
     };
 
     return (
-        <View style={styles.mainContainer}>
+        <View style={[styles.mainContainer, { backgroundColor: theme.colors.background }]}>
             <View style={styles.inputContainer}>
                 <Text style={styles.title}>General Information</Text>
-                <TextInput 
-                    style={styles.input} 
+                <TextInput
+                    style={[styles.input, { borderColor: theme.colors.primaryLight }]}
                     placeholder="Budget Title"
+                    placeholderTextColor={theme.colors.primaryLight}
                     value={budgetTitle}
                     onChangeText={setBudgetTitle}
                 />
-                <TextInput 
-                    style={styles.input} 
+                <TextInput
+                    style={[styles.input, { borderColor: theme.colors.primaryLight }]}
                     placeholder="Total Budget"
+                    placeholderTextColor={theme.colors.primaryLight}
                     value={totalBudget}
                     keyboardType="numeric"
                     onChangeText={setTotalBudget}
@@ -44,8 +53,11 @@ export default function BudgetForm({ onAddBudget, closeModal }) {
                 <View style={styles.row}>
                     <Text style={styles.title}>Recurrence</Text>
                 </View>
-                <BudgetDropdown/>
+                <BudgetDropdown />
             </View>
+            {isDarkMode
+                ? <Image source={require("../../../assets/graphics/people/chillingDark.png")} alt='' style={{ width: 292, height: 186 }} contentFit="contain" />
+                : <Image source={require("../../../assets/graphics/people/chilling.png")} alt='' style={{ width: 292, height: 186 }} contentFit="contain" />}
             <SaveButton onSave={handleSave} />
         </View>
     );
