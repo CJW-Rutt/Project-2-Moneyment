@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 
 import AddTransactionSingle from '../components/organisms/Add/AddTransactionSingle';
+import TopHeader from '../components/molecules/TopHeader';
 
 
 export default function Add() {
@@ -8,6 +9,7 @@ export default function Add() {
     return (
 
         <View style={styles.container}>
+            <TopHeader title='Add' />
             <AddTransactionSingle />
         </View>
     );
@@ -16,7 +18,7 @@ export default function Add() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
