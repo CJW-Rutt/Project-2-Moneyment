@@ -1,11 +1,18 @@
 import ManageBudget from "../../atoms/BudgetButton";
-import { StyleSheet, Text, View, Pressable, Modal } from 'react-native';
+import { StyleSheet, View, Pressable, Modal } from 'react-native';
 import { useState } from "react";
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import BudgetForm from "../BudgetForm";
 import StackedChart from "../../atoms/StackedBarChart";
+import { Text } from "react-native-paper";
+import { DarkModeContext } from '../../../context/darkMode';
+import { useContext } from "react";
+import { useTheme } from "react-native-paper";
+import TopHeader from "../TopHeader";
 
 export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBudget, totalSpent }) {
+    const { isDarkMode } = useContext(DarkModeContext);
+    const theme = useTheme();
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -17,9 +24,24 @@ export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBu
         setModalVisible(false);
     };
 
+    const darkButton = {
+        color: '#fff',
+        borderWidth: 1,
+        borderColor: '#fff',
+        borderRadius: 25,
+        padding: 10,
+    }
+    const lightButton = {
+        color: '#000',
+        borderWidth: 1,
+        borderColor: '#000',
+        borderRadius: 25,
+        padding: 10,
+    }
+
     return (
         <View style={styles.manageContainer}>
-
+            {console.log('Theme: ', theme.colors)}
             <View style={styles.manageLeftCol}>
 
                 <View style={styles.budgetRow}>
@@ -31,13 +53,7 @@ export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBu
             <Pressable onPress={() => openModal()}>
                 <View style={styles.manageRightCol}>
                     <Text
-                        style={{
-                            color: '#000',
-                            borderWidth: 1,
-                            borderColor: '#000',
-                            borderRadius: 25,
-                            padding: 10,
-                        }}
+                        style={isDarkMode ? darkButton : lightButton}
                     >Add Budget</Text>
                 </View>
             </Pressable>
@@ -48,14 +64,14 @@ export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBu
                 transparent={false}
                 visible={modalVisible}
                 onRequestClose={closeModal}
+                // contentContainerStyle={{ backgroundColor: theme.colors.background }}
             >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalHeader}>
-                        <Pressable style={styles.closeButton} onPress={closeModal}>
-                            <Icon name='arrow-left' size={25} color='#000' />
-                        </Pressable>
-                        <Text style={styles.headerTitle}>Add Budget</Text>
-                    </View>
+                <View style={[styles.modalContainer, {backgroundColor: theme.colors.background}]}>
+                    <TopHeader
+                        title='New Budget'
+                        type='close'
+                        func={closeModal}
+                    />
                     <BudgetForm onAddBudget={onAddBudget} closeModal={closeModal} />
                 </View>
             </Modal>

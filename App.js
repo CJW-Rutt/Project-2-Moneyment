@@ -20,7 +20,19 @@ export default function App() {
 
   const paperTheme =
     isDarkMode
-      ? { ...MD3DarkTheme, colors: theme.dark, mode: 'adaptive' }
+      ? {
+        ...MD3DarkTheme, colors: {
+          ...MD3DarkTheme.colors,
+          primaryDark: '#212121',
+          secondaryDark: '#323232',
+          tertiaryDark: '#535353',
+          primaryLight: '#CFCFCF',
+          secondaryLight: '#E8E8E8',
+          blue: '#95D6CD',
+          primaryOrange: '#E98869',
+          secondaryOrange: '#C35434'
+        }, mode: 'exact', myOwnProperty: true
+      }
       : { ...MD3LightTheme, colors: theme.light };
 
   const toggleDarkMode = () => {

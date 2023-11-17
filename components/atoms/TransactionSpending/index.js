@@ -41,10 +41,12 @@ const styles = StyleSheet.create({
         // backgroundColor: 'white'
     },
     cardContainer: {
-        width: '100%',
+        // width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginLeft: 13,
+        marginRight: 44
     },
     leftContainer: {
         flex: 1,

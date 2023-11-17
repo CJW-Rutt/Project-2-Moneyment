@@ -56,13 +56,17 @@ export default function TransactionsCardHome({
                             <Text style={styles.date}>{date}</Text>
                             {transactions.map((item, transactionIndex) => (
                                 <View style={styles.transaction} key={transactionIndex}>
-                                    <CategoryContainer style={styles.icon} category={item.category} size="m" />
-                                    <TransactionSpending
-                                        category={item.category}
-                                        location={item.location}
-                                        amount={item.amount}
-                                        payment={item.payment}
-                                    />
+                                    <View style={styles.icon} >
+                                        <CategoryContainer category={item.category} size="s" />
+                                    </View>
+                                    <View>
+                                        <TransactionSpending
+                                            category={item.category}
+                                            location={item.location}
+                                            amount={item.amount}
+                                            payment={item.payment}
+                                        />
+                                    </View>
 
                                 </View>
 
@@ -109,16 +113,18 @@ const styles = StyleSheet.create({
 
     },
     transaction: {
-        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignContent: 'center',
-
-
+        alignItems: 'center',
+        display: 'flex'
     },
     date: {
         paddingLeft: 18,
         paddingBottom: 16,
         fontWeight: '500'
+    },
+    icon: {
+        marginLeft: 40,
+        marginTop: 6
     }
 })

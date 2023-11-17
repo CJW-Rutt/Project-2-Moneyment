@@ -1,8 +1,12 @@
 import { StackedBarChart } from "react-native-chart-kit";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { View, Dimensions, StyleSheet } from "react-native";
+import { Text } from "react-native-paper";
+import { DarkModeContext } from '../../../context/darkMode';
+import { useContext } from "react";
 
 const screenWidth = Dimensions.get("window").width;
 export default function StackedChart({ totalBudget, totalSpent }) {
+    const { isDarkMode } = useContext(DarkModeContext);
 
     const data = {
         labels: ["Coffee", "Entertainment", "Dineout"],
@@ -14,7 +18,7 @@ export default function StackedChart({ totalBudget, totalSpent }) {
         barColors: ["#E58331", "#429488", "#B04121",]
 
     };
-    const chartConfig = {
+    const chartConfigLight = {
         backgroundGradientFrom: "#fff",
         backgroundGradientFromOpacity: 0,
         backgroundGradientTo: "#fff",
@@ -23,16 +27,27 @@ export default function StackedChart({ totalBudget, totalSpent }) {
         barPercentage: 1.5,
         barRadius: 5,
         propsForLabels: { fill: "transparent", }
-
-
     }
+
+    const chartConfigDark = {
+        backgroundGradientFrom: "#000",
+        backgroundGradientFromOpacity: 0,
+        backgroundGradientTo: "#000",
+        backgroundGradientToOpacity: 0,
+        color: (opacity = 1) => `rgba(207, 207, 207, ${opacity})`,
+        barPercentage: 1.5,
+        barRadius: 5,
+        propsForLabels: { fill: "transparent", }
+    }
+
     return (
         <View>
+            {console.log(isDarkMode)}
             <StackedBarChart
                 data={data}
                 width={350}
                 height={220}
-                chartConfig={chartConfig} />
+                chartConfig={isDarkMode ? chartConfigDark : chartConfigLight} />
 
             <View style={styles.legend}>
                 <View style={styles.budgetColor} />

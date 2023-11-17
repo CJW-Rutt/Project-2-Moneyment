@@ -1,6 +1,7 @@
 import React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import { Image } from "expo-image"
+import { Text } from "react-native-paper";
 import HorizontalProgressBar from "../../atoms/HorizontalProgressBar";
 
 
@@ -82,11 +83,11 @@ const styles = StyleSheet.create({
     },
     budget_name: {
         fontSize: 18,
-        color: '#000'
+        // color: '#000'
     },
     budget_recurrence: {
         fontSize: 12,
-        color: '#707070'
+        // color: '#707070'
     },
     top_content: {
         display: 'flex',
