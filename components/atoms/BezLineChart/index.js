@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
-import { Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from "react-native";
+import { Text } from 'react-native-paper';
 
 const screenWidth = Dimensions.get("window").width;
 
