@@ -17,7 +17,7 @@ export default function Segmented({
   const bgLeft = useSharedValue(0)
 
   const segStyle = {
-    width: 385
+    width: 350
   }
 
   const bgStyle = {
@@ -29,7 +29,12 @@ export default function Segmented({
 
   const handlePress = (index, func) => {
     func()
-    bgLeft.value = withTiming(index * bgStyle.width, { duration: 150 })
+    bgLeft.value !== 0 ? (
+      bgLeft.value = withTiming(0 * bgStyle.width, { duration: 150 })
+    ) :
+      (
+        bgLeft.value = withTiming(1 * bgStyle.width, { duration: 150 })
+      )
     setSelected(!selected)
   }
 

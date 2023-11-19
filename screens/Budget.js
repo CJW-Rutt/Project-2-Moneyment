@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Modal, useColorScheme, Pressable } from 'react-native';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Image } from 'expo-image';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import EditButton from '../components/atoms/EditButton'
@@ -12,8 +12,47 @@ import { ScrollView } from 'react-native-gesture-handler';
 import StackedChart from '../components/atoms/StackedBarChart'
 import TopHeader from '../components/molecules/TopHeader';
 import { Text } from 'react-native-paper';
+import { DarkModeContext } from '../context/darkMode';
+import { useTheme } from "react-native-paper";
+import BudgetForm from "../components/molecules/BudgetForm";
+
 
 export default function Budget() {
+
+    const { isDarkMode } = useContext(DarkModeContext);
+    const theme = useTheme();
+
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const openNewModal = () => {
+        setModalVisible(true);
+    };
+
+    const closeNewModal = () => {
+        setModalVisible(false);
+    };
+
+    const darkButton = {
+        color: '#fff',
+        // borderWidth: 1,
+        // borderColor: '#fff',
+        // borderRadius: 25,
+        padding: 5,
+        paddingRight: 15,
+        fontSize: 12,
+        fontWeight: 'bold'
+    }
+    const lightButton = {
+        color: '#000',
+        // borderWidth: 1,
+        // borderColor: '#000',
+        // borderRadius: 25,
+        padding: 5,
+        paddingRight: 15,
+        fontSize: 12,
+        fontWeight: 'bold'
+    }
+
     const [budgets, setBudgets] = useState([
         {
             budgetTitle: "Coffee",
@@ -78,94 +117,127 @@ export default function Budget() {
 
         <View style={styles.container}>
             <TopHeader title='Budget' />
-            <Text style={styles.title}>Smart Budgeting</Text>
-            <Text style={styles.desc}>Visualize your budgets and analyze your remaining spending within specific timeframes</Text>
-            <ScrollView>
-            <ManageBudgetCard
-                onAddBudget={addBudget}
-                totalBudget={totalBudgetSum}
-                remainingBudget={remainingBudget}
-            />
-            
-            <View styles={styles.chart}>
-                <StackedChart totalBudget={totalBudgetSum} totalSpent={totalPriceSum} />
-            </View>
-       
-                <View style={styles.budgetcontainer}>
+            <View style={styles.topContainer}>
+                <View style={styles.textContainer}>
+                    <Text style={styles.title}>Smart Budgeting</Text>
+                    <Text style={styles.desc}>Visualize your budgets and analyze your remaining spending within specific timeframes</Text>
+                </View>
                 <ScrollView>
-                {budgets.map((budgetItem, index) => (
-                    <View key={index}>
-                        <BudgetCard
-                            budget={{
-                                budgetTitle: budgetItem.budgetTitle,
-                                totalBudget: budgetItem.totalBudget,
-                                totalPrice: budgetItem.totalPrice,
-                                progress: calculateProgress(budgetItem.totalBudget, budgetItem.totalPrice),
+                    <ManageBudgetCard
+                        // onAddBudget={addBudget}
+                        totalBudget={totalBudgetSum}
+                        remainingBudget={remainingBudget}
+                    />
+                    <View styles={styles.chart}>
+                        <StackedChart totalBudget={totalBudgetSum} totalSpent={totalPriceSum} />
+                    </View>
 
-                            }}
-                            onPress={() => openModal(index)}
-                        />
-                        {/* Modal Popup - Budget Single */}
+                    <View style={styles.budgetcontainer}>
+
+                        <Pressable onPress={() => openNewModal()}>
+                            <View style={styles.manageRightCol}>
+                                <Text
+                                    style={isDarkMode ? darkButton : lightButton}
+                                >+ New Budget</Text>
+                            </View>
+                        </Pressable>
+
+                        {/* Modal Begins */}
                         <Modal
                             animationType="slide"
                             transparent={false}
-                            visible={activeModalIndex === index}
-                            onRequestClose={closeModal}
+                            visible={modalVisible}
+                            onRequestClose={closeNewModal}
+                        // contentContainerStyle={{ backgroundColor: theme.colors.background }}
                         >
-                            <View style={styles.modalContainer}>
-                                <View style={styles.modalHeader}>
-                                    <Pressable style={styles.closeButton} onPress={closeModal}>
-                                        <Icon name='arrow-left' size={25} color='#000' />
-                                    </Pressable>
-                                    <Text style={styles.headerTitle}>{budgetItem.budgetTitle}</Text>
-                                    <EditButton style={styles.editButton} onPress={() => openEdit()} />
+                            <View style={[styles.modalContainer, { backgroundColor: theme.colors.background }]}>
+                                <TopHeader
+                                    title='New Budget'
+                                    type='close'
+                                    func={closeNewModal}
+                                />
+                                <BudgetForm onAddBudget={addBudget} closeModal={closeNewModal} />
+                            </View>
+                        </Modal>
+                        {/* Modal Ends */}
 
-                                </View>
-                                <BudgetSingleTemplate
+
+                        {budgets.map((budgetItem, index) => (
+                            <View key={index}>
+                                <BudgetCard
                                     budget={{
                                         budgetTitle: budgetItem.budgetTitle,
                                         totalBudget: budgetItem.totalBudget,
                                         totalPrice: budgetItem.totalPrice,
                                         progress: calculateProgress(budgetItem.totalBudget, budgetItem.totalPrice),
 
-                                    }} />
+                                    }}
+                                    onPress={() => openModal(index)}
+                                />
+                                {/* Modal Popup - Budget Single */}
+                                <Modal
+                                    animationType="slide"
+                                    transparent={false}
+                                    visible={activeModalIndex === index}
+                                    onRequestClose={closeModal}
+                                >
+                                    <View style={styles.modalContainer}>
+                                        <View style={styles.modalHeader}>
+                                            <Pressable style={styles.closeButton} onPress={closeModal}>
+                                                <Icon name='arrow-left' size={25} color='#000' />
+                                            </Pressable>
+                                            <Text style={styles.headerTitle}>{budgetItem.budgetTitle}</Text>
+                                            <EditButton style={styles.editButton} onPress={() => openEdit()} />
+
+                                        </View>
+                                        <BudgetSingleTemplate
+                                            budget={{
+                                                budgetTitle: budgetItem.budgetTitle,
+                                                totalBudget: budgetItem.totalBudget,
+                                                totalPrice: budgetItem.totalPrice,
+                                                progress: calculateProgress(budgetItem.totalBudget, budgetItem.totalPrice),
+
+                                            }} />
+                                    </View>
+                                </Modal>
                             </View>
-                        </Modal>
+                        ))}
                     </View>
-                ))}
-                   </ScrollView>
-                </View>
-         
-            <StatusBar />
-  </ScrollView>
+
+                    <StatusBar />
+                </ScrollView>
+            </View>
         </View >
-      
+
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    title: {
-        fontSize: 18,
-        maxWidth: 355,
-        fontWeight: 'bold',
-        alignItems: 'flex-start',
+    topContainer: {
         width: '100%',
-        marginTop: 10,
+        display: "flex",
+        flexDirection: "column",
+        padding: 20,
+        paddingBottom: 10,
+        gap: 15,
+        height: 655
+    },
+    textContainer: {
+        gap: 3,
+    },
+    title: {
+        fontSize: 16,
+        fontWeight: 'bold',
     },
     desc: {
         fontSize: 12,
-        marginTop: 10,
-        maxWidth: 355,
-        width: '100%',
+        color: "#707070"
     },
-
-
     modalContainer: {
         flex: 1,
     },
@@ -192,17 +264,18 @@ const styles = StyleSheet.create({
 
     },
     editButton: {
-
-
-
-
-
     },
     budgetcontainer: {
-        padding: 5,
-        borderTopWidth: 1, 
-        borderTopColor: '#A9A9A9',
-        maxHeight: 250,
+        borderTopWidth: 1,
+        borderTopColor: '#F4F4F4',
+        paddingTop: 5,
+        marginTop: 5
+    },
+    manageRightCol: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        width: "100%"
     }
 
 });
