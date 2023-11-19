@@ -12,12 +12,10 @@ export default function TransactionSpending({ category = 'Credit Card', location
         <View style={styles.container}>
             <View style={styles.cardContainer}>
                 <View style={styles.leftContainer}>
-
                     <View style={styles.transactionInfo}>
                         <Text style={styles.itemText}>{location}</Text>
                         <View style={styles.transactionDetails}>
-
-                            <Text style={{ paddingLeft: 3 }}>{category}</Text>
+                            <Text style={styles.transactionCategory}>{category}</Text>
                         </View>
                     </View>
                 </View>
@@ -36,47 +34,43 @@ export default function TransactionSpending({ category = 'Credit Card', location
 const styles = StyleSheet.create({
     container: {
         height: 45,
-        width: 382,
-        maxWidth: 382,
-        // backgroundColor: 'white'
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'row',
+        lignContent: 'center',
+        paddingRight: 10,
     },
     cardContainer: {
-        // width: '100%',
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginLeft: 13,
-        marginRight: 44
     },
     leftContainer: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
-        marginLeft: 10,
-        gap: 15,
-        alignContent: 'center'
+        alignContent: 'center',
     },
     transactionInfo: {
         flexDirection: 'column',
-        flex: 1,
-        maxWidth: 400
     },
     transactionDetails: {
         flexDirection: 'row',
-        maxWidth: 87,
+    },
+    transactionCategory: {
+        fontSize: 12,
+        color: "#707070"
     },
     itemText: {
-        fontSize: 16,
+        fontSize: 14,
+        fontWeight: '800'
     },
     amount: {
-        fontSize: 16,
+        fontSize: 14,
         textAlign: 'right'
     },
     amountContainer: {
-        flex: 1,
         flexDirection: 'row',
-        maxWidth: 70,
-        gap: 5
     },
 
 })

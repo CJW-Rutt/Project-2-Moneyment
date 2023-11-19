@@ -25,20 +25,26 @@ export default function BezLineChart() {
         backgroundGradientTo: "#fff",
         backgroundGradientToOpacity: 0,
         color: (opacity = 1) => `rgba(66,148,136, ${opacity})`,
+        labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.5,
-        useShadowColorFromDataset: false // optional
+        useShadowColorFromDataset: false // optional,
     };
 
     return (
         <>
-            <Text style={styles.viewText}>Total expenses</Text>
+            <Text style={styles.viewText}>Total Expenses</Text>
             <Text style={styles.balance}>$749</Text>
             <LineChart
                 data={data}
-                width={screenWidth}
-                height={220}
+                width={screenWidth + 20}
+                height={180}
                 chartConfig={chartConfig}
+                fromZero={true}
+                withHorizontalLines={false}
+                withVerticalLines={false}
+                yLabelsOffset={25}
+                bezier
             />
         </>
 
@@ -114,13 +120,11 @@ export default function BezLineChart() {
 const styles = StyleSheet.create({
     balance: {
         fontSize: 36,
-        fontWeight: '600',
-        marginLeft: 20
-
+        fontWeight: '800',
+        marginBottom: 10
     },
     viewText: {
         fontSize: 14,
         color: '#707070',
-        marginLeft: 20
     }
 })

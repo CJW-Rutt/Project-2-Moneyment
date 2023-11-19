@@ -11,6 +11,7 @@ import { useTheme } from "react-native-paper";
 import TopHeader from "../TopHeader";
 
 export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBudget, totalSpent }) {
+
     const { isDarkMode } = useContext(DarkModeContext);
     const theme = useTheme();
 
@@ -43,30 +44,28 @@ export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBu
         <View style={styles.manageContainer}>
             {console.log('Theme: ', theme.colors)}
             <View style={styles.manageLeftCol}>
-
                 <View style={styles.budgetRow}>
-                    <Text style={styles.remainingTitle}>Remaining Budget:</Text>
+                    <Text style={styles.remainingTitle}>Remaining Budget</Text>
                     <Text style={styles.remainingAmt}>${remainingBudget.toFixed(2)}</Text>
                 </View>
-
             </View>
-            <Pressable onPress={() => openModal()}>
+            {/* <Pressable onPress={() => openModal()}>
                 <View style={styles.manageRightCol}>
                     <Text
                         style={isDarkMode ? darkButton : lightButton}
                     >Add Budget</Text>
                 </View>
-            </Pressable>
+            </Pressable> */}
 
             {/* Modal Begins */}
-            <Modal
+            {/* <Modal
                 animationType="slide"
                 transparent={false}
                 visible={modalVisible}
                 onRequestClose={closeModal}
-                // contentContainerStyle={{ backgroundColor: theme.colors.background }}
+            // contentContainerStyle={{ backgroundColor: theme.colors.background }}
             >
-                <View style={[styles.modalContainer, {backgroundColor: theme.colors.background}]}>
+                <View style={[styles.modalContainer, { backgroundColor: theme.colors.background }]}>
                     <TopHeader
                         title='New Budget'
                         type='close'
@@ -74,7 +73,7 @@ export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBu
                     />
                     <BudgetForm onAddBudget={onAddBudget} closeModal={closeModal} />
                 </View>
-            </Modal>
+            </Modal> */}
             {/* Modal Ends */}
 
         </View>
@@ -87,13 +86,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-
-
-        padding: 20,
-        marginTop: 20,
-        width: 349,
-        height: 100,
-        minHeight: 100,
     },
     totalRow: {
         flex: 1,
@@ -105,12 +97,12 @@ const styles = StyleSheet.create({
     },
     remainingTitle: {
         fontSize: 14,
-
+        color: '#707070',
     },
     remainingAmt: {
-        fontSize: 40,
-        fontWeight: 'bold',
-
+        fontSize: 36,
+        fontWeight: '800',
+        marginBottom: 10
     },
     modalContainer: {
         flex: 1,

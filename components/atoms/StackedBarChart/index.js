@@ -46,8 +46,9 @@ export default function StackedChart({ totalBudget, totalSpent }) {
             <StackedBarChart
                 data={data}
                 width={350}
-                height={220}
-                chartConfig={isDarkMode ? chartConfigDark : chartConfigLight} />
+                height={180}
+                chartConfig={isDarkMode ? chartConfigDark : chartConfigLight}
+            />
 
             <View style={styles.legend}>
                 <View style={styles.budgetColor} />
@@ -73,7 +74,6 @@ const styles = StyleSheet.create({
         width: 10,
         height: 10,
         borderRadius: 50,
-
     },
     spentColor: {
         backgroundColor: "#E58331",
@@ -90,7 +90,9 @@ const styles = StyleSheet.create({
 
     },
     text: {
-        margin: 10
+        margin: 10,
+        marginLeft: 5,
+        fontSize: 12
     }
 
 })
