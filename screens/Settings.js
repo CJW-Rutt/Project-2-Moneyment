@@ -47,7 +47,7 @@ export default function Settings() {
                     <View style={styles.textContainer}>
                         <Text style={styles.subTitle} variant="titleMedium">We are not financial advisors</Text>
                         <Text style={styles.body}>Moneyment provides AI-generated financial suggestions and should be used for informational purposes only. All financial decisions remain ultimately your responsibility.</Text>
-                        <Text style={styles.body}>Seek professional advice for complex financial matters.</Text>
+                        <Text style={styles.body}>Contact a financial provider to seek professional advice for complex financial matters.</Text>
                     </View>
                     <View style={styles.logoContainer}>
                         {isDark
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         fontWeight: '800'
     },
     subTitle: {
-        fontSize: 12,
+        fontSize: 21,
         fontWeight: 'bold',
         // color: "#707070"
     },

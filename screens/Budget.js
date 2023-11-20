@@ -133,7 +133,9 @@ export default function Budget() {
                     </View>
 
                     <View style={styles.budgetcontainer}>
-
+                    <View style={styles.textContainer}>
+                    <Text style={styles.title}>Budgets</Text>
+                </View>
                         <Pressable onPress={() => openNewModal()}>
                             <View style={styles.manageRightCol}>
                                 <Text
@@ -231,11 +233,11 @@ const styles = StyleSheet.create({
         gap: 3,
     },
     title: {
-        fontSize: 16,
+        fontSize: 21,
         fontWeight: 'bold',
     },
     desc: {
-        fontSize: 12,
+        fontSize: 14,
         color: "#707070"
     },
     modalContainer: {
@@ -269,7 +271,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderTopColor: '#F4F4F4',
         paddingTop: 5,
-        marginTop: 5
+        marginTop: 5,
     },
     manageRightCol: {
         display: 'flex',

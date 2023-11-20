@@ -106,12 +106,13 @@ export default function ScanReceipt() {
     return (
         <>
             <View style={styles.container}>
-
+            <View style={styles.headermessageContainer}>
                 {
                     photoTaken ? <Message header={message.photoTaken.header} bodyCopy={message.photoTaken.body} /> :
                         <Message header={message.takePhoto.header} bodyCopy={message.takePhoto.body} />
                 }
-                <View style={styles.container}>
+                </View>
+                <View style={styles.photocontainer}>
                     <View style={imageUri ? styles.borderSheetWithImage : styles.borderSheet}>
                         {
                             showCamera && photoTaken === false ?
@@ -189,18 +190,25 @@ export default function ScanReceipt() {
 }
 
 const styles = StyleSheet.create({
+    photocontainer: {
+alignItems: "center"
+    },
     borderSheet: {
         borderWidth: 5,
         borderColor: '#429488',
         borderRadius: 15,
         width: 350,
-        height: 563,
+        minHeight: 520,
+        maxHeight: 520,
         justifyContent: 'center',
         alignItems: 'center',
         gap: 15,
         marginTop: 20,
         marginBottom: 13,
         overflow: 'hidden',
+        paddingTop: 10,
+        paddingBottom: 10,
+        padding: 5,
     },
     borderSheetWithImage: {
         borderWidth: 5,
@@ -223,7 +231,7 @@ const styles = StyleSheet.create({
         color: '#34776B'
     },
     header: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 500
     },
     container: {
@@ -271,5 +279,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         width: '100%',
         paddingLeft: 80
+    },
+    headermessageContainer: {
+    paddingTop: 15,
     }
 })
