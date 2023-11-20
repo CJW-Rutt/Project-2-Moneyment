@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { View, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { Text } from "react-native-paper";
 import CategoryContainer from "../../atoms/CategoryContainer";
 
 import TransactionSpending from "../../atoms/TransactionSpending";
@@ -51,27 +52,37 @@ export default function TransactionsCardHome({
             <View style={[styles.sheet, { width: windowWidth }]}>
                 <ScrollView>
                     {Object.entries(datesObj).map(([date, transactions], index) => (
-                        <View key={index}>
+                        <View key={index} style={styles.dayContainer}>
                             <Text style={styles.date}>{date}</Text>
                             {transactions.map((item, transactionIndex) => (
-                                <View style={styles.transaction} key={transactionIndex}>
-                                    <CategoryContainer style={styles.icon} category={item.category} size="m" />
-                                    <TransactionSpending
-                                        category={item.category}
-                                        location={item.location}
-                                        amount={item.amount}
-                                        payment={item.payment}
-                                    />
-
+                                <View key={transactionIndex}>
+                                    <View style={styles.transaction} >
+                                        <CategoryContainer style={styles.icon} category={item.category} size="s" />
+                                        <TransactionSpending
+                                            category={item.category}
+                                            location={item.location}
+                                            amount={item.amount}
+                                            payment={item.payment}
+                                        />
+                                    </View>
+                                    {transactionIndex < transactions.length - 1 && (
+                                        <View style={{
+                                            borderBottomColor: '#F4F4F4',
+                                            borderBottomWidth: StyleSheet.hairlineWidth,
+                                            marginTop: 3,
+                                            marginBottom: 3,
+                                            width: { windowWidth },
+                                        }}></View>
+                                    )}
                                 </View>
-
                             ))}
                             {index < Object.entries(datesObj).length - 1 && (
                                 <View style={{
                                     borderBottomColor: 'darkGrey',
                                     borderBottomWidth: StyleSheet.hairlineWidth,
-                                    marginTop: 19,
-                                    marginBottom: 19
+                                    marginTop: 10,
+                                    marginBottom: 15,
+                                    width: { windowWidth }
                                 }}></View>
                             )}
                         </View>
@@ -84,40 +95,36 @@ export default function TransactionsCardHome({
 
 const styles = StyleSheet.create({
     sheet: {
-        backgroundColor: 'white',
-        minHeight: 400,
-        maxHeight: 10000,
-        marginLeft: 15
-
-
+        // backgroundColor: 'white',
+        minHeight: 200,
+        maxHeight: 500,
+        paddingLeft: 20,
+        paddingRIght: 20,
     },
     container: {
         flex: 1,
         alignItems: 'center',
         borderBottomColor: 'darkGrey',
-
-
-
+    },
+    dayContainer: {
+        width: 350
     },
     title: {
         fontSize: 16,
         fontWeight: '700',
-        paddingTop: 30,
-        paddingLeft: 30,
-        paddingBottom: 30,
-
     },
     transaction: {
+        justifyContent: 'flex-start',
+        alignItems: 'center',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
-        alignContent: 'center',
-
-
+        gap: 12,
+        marginTop: 2,
+        marginBottom: 2,
     },
     date: {
-        paddingLeft: 18,
-        paddingBottom: 16,
-        fontWeight: '500'
-    }
+        fontSize: 14,
+        fontWeight: '500',
+        marginBottom: 10
+    },
 })

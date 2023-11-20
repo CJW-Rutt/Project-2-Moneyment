@@ -1,6 +1,7 @@
 import React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import { Image } from "expo-image"
+import { Text } from "react-native-paper";
 import HorizontalProgressBar from "../../atoms/HorizontalProgressBar";
 
 
@@ -13,62 +14,71 @@ export default function BudgetCard({ budget, onPress }) {
     return (
         <Pressable onPress={onPress}>
             <View style={styles.container}>
-                <View style={styles.top_content}>
-                    <Image
-                        source={require("../../../assets/graphics/category/Coffee.png")} // make this dynamic
-                        alt=''
-                        style={styles.img}
-                        contentFit="contain"
-                        width={40}
-                        height={40}
-                    />
-                    <View>
-                        <Text style={styles.budget_name}>{budget.budgetTitle}</Text>
-                        <Text style={styles.budget_recurrence}>Weekly</Text>
-
-                    </View>
-                    <View style={styles.budget_status}>
-                        <Text style={[styles.budget_recurrence, spentTextStyle]}>{spentText}</Text>
-                    </View>
-                </View>
-                <View style={styles.bottom_content}>
-                    <View style={styles.container_price_text}>
-                        <Text style={styles.bottom_content_price}>${budget.totalBudget}</Text>
-                        <Text style={styles.bottom_content_text}>Budget</Text>
+                <View style={styles.main_container}>
+                    <View style={styles.top_content}>
+                        <View style={styles.text_content}>
+                            <Image
+                                source={require("../../../assets/graphics/category/Coffee.png")} // make this dynamic
+                                alt=''
+                                style={styles.img}
+                                contentFit="contain"
+                                width={24}
+                                height={24}
+                            />
+                            <View>
+                                <Text style={styles.budget_name}>{budget.budgetTitle}</Text>
+                                {/* <Text style={styles.budget_recurrence}>Weekly</Text> */}
+                            </View>
+                        </View>
+                        <View style={styles.budget_status}>
+                            <Text style={[styles.budget_recurrence, spentTextStyle]}>{spentText}</Text>
+                        </View>
                     </View>
                     <View
                         style={{
-                            borderLeftColor: '#DDDDDD',
-                            borderLeftWidth: 1,
-                            height: 34,
-                            marginRight: 20,
+                            borderTopColor: '#DDDDDD',
+                            borderTopWidth: 1,
+                            width: "100 %",
+                            marginTop: 12,
+                            marginBottom: 5
                         }}
                     />
-                    <View>
-                        <Text style={styles.bottom_content_price}>${budget.totalPrice}</Text>
-                        <Text style={styles.bottom_content_text}>Spent</Text>
-                    </View>
+                    <View style={styles.bottom_content}>
+                        <View style={styles.container_price_text_one}>
+                            <Text style={styles.bottom_content_price}>${budget.totalBudget}</Text>
+                            <Text style={styles.bottom_content_text}>Budget</Text>
+                        </View>
+                        <View
+                            style={{
+                                borderLeftColor: '#DDDDDD',
+                                borderLeftWidth: 1,
+                                height: "100 %",
+                                marginRight: 20
+                            }}
+                        />
+                        <View style={styles.container_price_text_two}>
+                            <Text style={styles.bottom_content_price}>${budget.totalPrice}</Text>
+                            <Text style={styles.bottom_content_text}>Spent</Text>
+                        </View>
 
-                    <View
-                        style={{
-                            borderLeftColor: '#DDDDDD',
-                            borderLeftWidth: 1,
-                            height: 34,
-                            marginLeft: 20,
-                            marginRight: 40
-                        }}
-                    /><View>
-                        <View>
+                        <View
+                            style={{
+                                borderLeftColor: '#DDDDDD',
+                                borderLeftWidth: 1,
+                                height: "100 %",
+                                marginRight: 20
+                            }}
+                        />
+                        <View style={styles.container_price_text_two}>
                             <Text style={styles.bottom_content_price}>${totalSpent}</Text>
                             <Text style={styles.bottom_content_text}>Left</Text>
 
                         </View>
                     </View>
                 </View>
-
                 <HorizontalProgressBar progress={budget.progress} />
             </View>
-        </Pressable>
+        </Pressable >
     );
 }
 
@@ -79,41 +89,60 @@ const styles = StyleSheet.create({
         borderColor: '#DDDDDD',
         borderRadius: 5,
         marginTop: 10,
+        height: 118,
+        justifyContent: "space-between"
     },
     budget_name: {
-        fontSize: 18,
-        color: '#000'
+        fontSize: 16,
+        fontWeight: 'bold'
+        // color: '#000'
     },
     budget_recurrence: {
         fontSize: 12,
-        color: '#707070'
+        padding: 3,
+        paddingLeft: 10,
+        paddingRight: 10
+        // color: '#707070'
+    },
+    main_container: {
+        padding: 15,
+        paddingBottom: 0
     },
     top_content: {
         display: 'flex',
         flexDirection: 'row',
+        alignItems: 'center',
         columnGap: 15,
-        padding: 15,
+        // backgroundColor: 'blue',
+        justifyContent: 'space-between'
+    },
+    text_content: {
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 10,
     },
     bottom_content: {
         display: 'flex',
         flexDirection: 'row',
-        paddingLeft: 15,
-        paddingRight: 15
+        paddingTop: 5,
+        paddingBottom: 5,
+        justifyContent: 'space-between'
     },
     bottom_content_price: {
         fontSize: 16,
+        fontWeight: 'bold'
     },
     bottom_content_text: {
         fontSize: 12,
         color: '#707070',
-        marginBottom: 10,
-
     },
-    container_price_text: {
-        marginRight: 50
+    container_price_text_one: {
+        width: "30%",
+    },
+    container_price_text_two: {
+        flex: 1,
     },
     budget_status: {
-        marginLeft: 150,
 
     },
     greenText: {
@@ -121,7 +150,6 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 12,
         backgroundColor: '#E3F1F1',
-        padding: 5,
         borderRadius: 5,
     },
     redText: {
@@ -129,7 +157,6 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 12,
         backgroundColor: '#F8E9E6',
-        padding: 5,
         borderRadius: 5,
     }
 });
