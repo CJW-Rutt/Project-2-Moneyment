@@ -1,10 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Modal, useColorScheme, Pressable } from 'react-native';
+import { StyleSheet, View, Modal, Pressable } from 'react-native';
 import { useState, useContext } from 'react';
-import { Image } from 'expo-image';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import EditButton from '../components/atoms/EditButton'
-import BudgetSingle from '../components/organisms/Budget/BudgetSingle';
 import BudgetCard from '../components/molecules/BudgetCard';
 import ManageBudgetCard from '../components/molecules/ManageBudgetCard';
 import BudgetSingleTemplate from '../components/templates/Budget/BudgetSingleTemplate';
@@ -15,6 +13,8 @@ import { Text } from 'react-native-paper';
 import { DarkModeContext } from '../context/darkMode';
 import { useTheme } from "react-native-paper";
 import BudgetForm from "../components/molecules/BudgetForm";
+import AddBudgetModal from '../components/modal/Budget/AddBudgetModal';
+import SingleBudgetOverviewModal from '../components/modal/Budget/SingleBudgetOverviewModal';
 
 
 export default function Budget() {
@@ -34,9 +34,6 @@ export default function Budget() {
 
     const darkButton = {
         color: '#fff',
-        // borderWidth: 1,
-        // borderColor: '#fff',
-        // borderRadius: 25,
         padding: 5,
         paddingRight: 15,
         fontSize: 12,
@@ -44,9 +41,6 @@ export default function Budget() {
     }
     const lightButton = {
         color: '#000',
-        // borderWidth: 1,
-        // borderColor: '#000',
-        // borderRadius: 25,
         padding: 5,
         paddingRight: 15,
         fontSize: 12,
@@ -80,6 +74,11 @@ export default function Budget() {
         },
     ]);
 
+    const addBudget = (newBudget) => {
+        setBudgets([...budgets, newBudget]);
+    };
+
+
     const totalBudgetSum = budgets.reduce((acc, budget) => acc + budget.totalBudget, 0);
     const totalPriceSum = budgets.reduce((acc, budget) => acc + budget.totalPrice, 0);
     const remainingBudget = totalBudgetSum - totalPriceSum;
@@ -91,6 +90,7 @@ export default function Budget() {
     };
 
     const [activeBudgetEdit, setActiveBudgetEdit] = useState(null);
+
     const openEdit = (index) => {
         setActiveBudgetEdit(index);
     };
@@ -109,9 +109,6 @@ export default function Budget() {
         setActiveModalIndex(null);
     };
 
-    const addBudget = (newBudget) => {
-        setBudgets([...budgets, newBudget]);
-    };
 
     return (
 
@@ -124,16 +121,13 @@ export default function Budget() {
                 </View>
                 <ScrollView>
                     <ManageBudgetCard
-                        // onAddBudget={addBudget}
                         totalBudget={totalBudgetSum}
                         remainingBudget={remainingBudget}
                     />
                     <View styles={styles.chart}>
                         <StackedChart totalBudget={totalBudgetSum} totalSpent={totalPriceSum} />
                     </View>
-
                     <View style={styles.budgetcontainer}>
-
                         <Pressable onPress={() => openNewModal()}>
                             <View style={styles.manageRightCol}>
                                 <Text
@@ -141,27 +135,11 @@ export default function Budget() {
                                 >+ New Budget</Text>
                             </View>
                         </Pressable>
-
-                        {/* Modal Begins */}
-                        <Modal
-                            animationType="slide"
-                            transparent={false}
+                        <AddBudgetModal
                             visible={modalVisible}
-                            onRequestClose={closeNewModal}
-                        // contentContainerStyle={{ backgroundColor: theme.colors.background }}
-                        >
-                            <View style={[styles.modalContainer, { backgroundColor: theme.colors.background }]}>
-                                <TopHeader
-                                    title='New Budget'
-                                    type='close'
-                                    func={closeNewModal}
-                                />
-                                <BudgetForm onAddBudget={addBudget} closeModal={closeNewModal} />
-                            </View>
-                        </Modal>
-                        {/* Modal Ends */}
-
-
+                            onClose={closeNewModal}
+                            onAddBudget={addBudget}
+                        />
                         {budgets.map((budgetItem, index) => (
                             <View key={index}>
                                 <BudgetCard
@@ -170,40 +148,20 @@ export default function Budget() {
                                         totalBudget: budgetItem.totalBudget,
                                         totalPrice: budgetItem.totalPrice,
                                         progress: calculateProgress(budgetItem.totalBudget, budgetItem.totalPrice),
-
                                     }}
                                     onPress={() => openModal(index)}
                                 />
-                                {/* Modal Popup - Budget Single */}
-                                <Modal
-                                    animationType="slide"
-                                    transparent={false}
-                                    visible={activeModalIndex === index}
-                                    onRequestClose={closeModal}
-                                >
-                                    <View style={styles.modalContainer}>
-                                        <View style={styles.modalHeader}>
-                                            <Pressable style={styles.closeButton} onPress={closeModal}>
-                                                <Icon name='arrow-left' size={25} color='#000' />
-                                            </Pressable>
-                                            <Text style={styles.headerTitle}>{budgetItem.budgetTitle}</Text>
-                                            <EditButton style={styles.editButton} onPress={() => openEdit()} />
-
-                                        </View>
-                                        <BudgetSingleTemplate
-                                            budget={{
-                                                budgetTitle: budgetItem.budgetTitle,
-                                                totalBudget: budgetItem.totalBudget,
-                                                totalPrice: budgetItem.totalPrice,
-                                                progress: calculateProgress(budgetItem.totalBudget, budgetItem.totalPrice),
-
-                                            }} />
-                                    </View>
-                                </Modal>
+                                <SingleBudgetOverviewModal 
+                                    index={index}
+                                    activeModalIndex={activeModalIndex}
+                                    onClose={closeModal}
+                                    budget={budgetItem}
+                                    onEdit={() => openEdit(index)}
+                                    calculateProgress={calculateProgress}
+                                />
                             </View>
                         ))}
                     </View>
-
                     <StatusBar />
                 </ScrollView>
             </View>
