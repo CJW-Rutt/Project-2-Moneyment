@@ -6,7 +6,9 @@ import Message from "../../atoms/Message"
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import GalleryButton from "../../atoms/GalleryButton"
 import { processOCR } from "../../../api/apiOCR"
-import GptReview from "../GptReview"
+import { gptTransactionReview } from "../../../api/gptTransactionReview"
+import AddTransactionForm from "../AddTransactionForm"
+import { retreiveOcrKey } from "../../../api/retreiveOcrKey"
 
 export default function ScanReceipt() {
     const message = {
@@ -19,6 +21,9 @@ export default function ScanReceipt() {
             body: 'Moneyment will pull the transaction information from the receipt.'
         }
     }
+
+    const gptQuestion = 'Review and analyze the receipt data and align the return with your role.';
+    const gptRole = 'You are provided with receipt data. Analyze it and extract and return Total Price:, Type:, and Place:. Type is the type of item strictly done with two words or less. Place is the type of store strictly done with two words or less. So if Vape Batteries are bought, Vape Store is the place. The response for each category CANNOT be more then 2 words. Just choose.';
 
     const [showCamera, setShowCamera] = useState(false)
     const [photoTaken, setPhotoTaken] = useState(false)
@@ -34,51 +39,69 @@ export default function ScanReceipt() {
     });
 
     const handleOCRProcessing = async (uri) => {
-
+        
         try {
             const ocrParsedResult = await processOCR(uri);
 
+            const retrieveKey = await retreiveOcrKey();
+    
             if (ocrParsedResult.IsErroredOnProcessing) {
                 setError(ocrParsedResult.ErrorMessage);
             } else {
                 const parsedResults = ocrParsedResult["ParsedResults"];
                 let pageText = '';
-
+    
                 if (parsedResults && Array.isArray(parsedResults)) {
                     parsedResults.forEach((value) => {
-                    const exitCode = value["FileParseExitCode"];
-                    const parsedText = value["ParsedText"];
-                    const errorMessage = value["ParsedTextFileName"];
-
-                    switch (+exitCode) {
-                        case 1:
-                            pageText = parsedText;
-                        break;
-                        default:
-                            pageText += "Error: " + errorMessage;
-                        break;
-                    }
+                        const exitCode = value["FileParseExitCode"];
+                        const parsedText = value["ParsedText"];
+                        const errorMessage = value["ParsedTextFileName"];
+                        switch (+exitCode) {
+                            case 1:
+                                pageText = parsedText;
+                                break;
+                            default:
+                                pageText += "Error: " + errorMessage;
+                                break;
+                        }
                     });
                 } else {
                     pageText = "No parsed results available";
                 }
-                setOcrData(pageText);
-                console.log('ocr:' + ocrData)
-                setShowForm(true);
+    
+                if (pageText) {
+                    try {
+                        const gptResponse = await gptTransactionReview(gptQuestion, pageText, gptRole);
+                        if (gptResponse) {
+                            setReviewResults({
+                                totalAmount: gptResponse.totalAmount,
+                                purchaseType: gptResponse.purchaseType,
+                                purchasePlace: gptResponse.purchasePlace,
+                            });
+                            setShowForm(true);
+                        } else {
+                            console.log('No gptResponse');
+                        }
 
+                    } catch (error) {
+                        setError('Error processing Lambda response: ' + error.message);
+                    }
+                } else {
+                    console.log('Issue with pageText. gptNot receiving response.')
+                }
             }
         } catch (error) {
             setError('OCR processing failed: ' + error.message);
         }
     };
 
-    const handleCamera = () => {
-        showCamera ? setShowCamera(false) : setShowCamera(true)
-    }
+    // const handleCamera = () => {
+    //     showCamera ? setShowCamera(false) : setShowCamera(true)
+    // }
 
-    const handleForm = () => {
-        showForm ? setShowForm(false) : setShowForm(true)
-    }
+    // const handleForm = () => {
+    //     showForm ? setShowForm(false) : setShowForm(true)
+    // }
 
     return (
         <>
@@ -156,7 +179,7 @@ export default function ScanReceipt() {
                                     Confirmation
                                 </Text>
                             </View>
-                            {ocrData && <GptReview data={ocrData} />}
+                            <AddTransactionForm initialValues={reviewResults} />
                         </View>
                     </Modal>
                 </View>
