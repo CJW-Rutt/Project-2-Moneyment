@@ -6,10 +6,16 @@ import TransactionType from "../../atoms/TransactionType"
 export default function AddTransactionForm({ initialValues }) {
     console.log(initialValues);
     const [store, setStore] = useState(initialValues.purchasePlace || '');
-    const [date, setDate] = useState('')
     const [price, setPrice] = useState(initialValues.totalAmount || '');
     const [transaction, setTransaction] = useState('')
     const [budget, setBudget] = useState(initialValues.purchaseType || '');
+
+    const formatDate = (date) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    }; 
+
+    const [date, setDate] = useState(formatDate(new Date()));
 
     return (
         <>
@@ -36,18 +42,18 @@ export default function AddTransactionForm({ initialValues }) {
                                     style={styles.inputShort}
                                     value={date}
                                     onChangeText={text => setDate(text)}
-                                    placeholder="July 9, 2023"
+                                    placeholder="Date"
                                 />
                             </View>
                             <View style={styles.smallRowContainer}>
                                 <Text>
-                                    Time
+                                    Price *
                                 </Text>
                                 <TextInput
                                     style={styles.inputShort}
-                                    value={time}
-                                    onChangeText={text => setTime(text)}
-                                    placeholder="1:26:06"
+                                    value={price}
+                                    onChangeText={text => setPrice(price)}
+                                    placeholder="$5.00"
                                 />
                             </View>
                         </View>
