@@ -10,20 +10,22 @@ export default function SingleBudgetOverviewModal ({
     index, 
     activeModalIndex, 
     onClose, 
-    budget, 
-    onEdit, 
+    budget,
     calculateProgress,
     addBudget,
-    closeNewModal, 
-    modalVisible,
-    onAddBudget
+    closeNewModal,
+    onUpdateBudget,
 }) { 
 
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
     const toggleEditModal = () => {
-        console.log('Current isEditModalVisible:', isEditModalVisible);
         setIsEditModalVisible(!isEditModalVisible);
+    };
+
+    const handleUpdateSuccess = () => {
+        setIsEditModalVisible(false);
+        onClose();
     };
 
     return (
@@ -54,6 +56,9 @@ export default function SingleBudgetOverviewModal ({
                         onClose={toggleEditModal}
                         closeNewModal={closeNewModal}
                         onAddBudget={addBudget}
+                        onUpdateBudget={onUpdateBudget}
+                        onSaveSuccess={handleUpdateSuccess}
+                        handleUpdateSuccess={handleUpdateSuccess}
                     />
                 </View>
                 <BudgetSingleTemplate

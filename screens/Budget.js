@@ -1,18 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Modal, Pressable } from 'react-native';
 import { useState, useContext } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5'
-import EditButton from '../components/atoms/EditButton'
 import BudgetCard from '../components/molecules/BudgetCard';
 import ManageBudgetCard from '../components/molecules/ManageBudgetCard';
-import BudgetSingleTemplate from '../components/templates/Budget/BudgetSingleTemplate';
 import { ScrollView } from 'react-native-gesture-handler';
 import StackedChart from '../components/atoms/StackedBarChart'
 import TopHeader from '../components/molecules/TopHeader';
 import { Text } from 'react-native-paper';
 import { DarkModeContext } from '../context/darkMode';
 import { useTheme } from "react-native-paper";
-import BudgetForm from "../components/molecules/BudgetForm";
 import AddBudgetModal from '../components/modal/Budget/AddBudgetModal';
 import SingleBudgetOverviewModal from '../components/modal/Budget/SingleBudgetOverviewModal';
 
@@ -109,6 +105,15 @@ export default function Budget() {
         setActiveModalIndex(null);
     };
 
+    const updateBudget = (updatedBudget) => {
+        const updatedBudgets = budgets.map((item) => {
+            if (item.budgetTitle === updatedBudget.budgetTitle) {
+                return updatedBudget;
+            }
+            return item;
+        });
+        setBudgets(updatedBudgets);
+    };
 
     return (
 
@@ -161,6 +166,7 @@ export default function Budget() {
                                     closeNewModal={closeNewModal}
                                     modalVisible={modalVisible} 
                                     onAddBudget={addBudget}
+                                    onUpdateBudget={updateBudget}
                                 />
                             </View>
                         ))}
