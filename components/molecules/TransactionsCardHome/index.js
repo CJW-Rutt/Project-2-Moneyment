@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions, Text } from "react-native";
+import { View, StyleSheet, ScrollView, Dimensions } from "react-native";
 import CategoryContainer from "../../atoms/CategoryContainer";
 import TransactionSpending from "../../atoms/TransactionSpending";
+import { Text } from 'react-native-paper';
 
 export default function TransactionsCardHome({ transactions }) {
     const windowWidth = Dimensions.get('window').width;
