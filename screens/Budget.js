@@ -198,11 +198,11 @@ const styles = StyleSheet.create({
         gap: 3,
     },
     title: {
-        fontSize: 16,
+        fontSize: 21,
         fontWeight: 'bold',
     },
     desc: {
-        fontSize: 12,
+        fontSize: 14,
         color: "#707070"
     },
     modalContainer: {
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderTopColor: '#F4F4F4',
         paddingTop: 5,
-        marginTop: 5
+        marginTop: 5,
     },
     manageRightCol: {
         display: 'flex',

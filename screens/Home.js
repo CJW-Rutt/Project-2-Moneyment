@@ -66,11 +66,11 @@ const styles = StyleSheet.create({
     transaction: {
     },
     title: {
-        fontSize: 16,
+        fontSize: 21,
         fontWeight: 'bold',
     },
     desc: {
-        fontSize: 12,
+        fontSize: 14,
         color: "#707070"
     },
     lightContainer: {
