@@ -7,7 +7,6 @@ export default function TransactionSpending({ category = 'Credit Card', location
 
     let categoryIcon = category.toLowerCase()
 
-
     return (
         <View style={styles.container}>
             <View style={styles.cardContainer}>

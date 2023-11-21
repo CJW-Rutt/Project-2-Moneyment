@@ -1,88 +1,43 @@
-import { View, StyleSheet, ScrollView, Dimensions } from "react-native";
-import { Text } from "react-native-paper";
+import { useEffect } from 'react';
+import { View, StyleSheet, ScrollView, Dimensions, Text } from "react-native";
 import CategoryContainer from "../../atoms/CategoryContainer";
-
 import TransactionSpending from "../../atoms/TransactionSpending";
 
-export default function TransactionsCardHome({
-    arr = [{
-        Today: [{
-            category: 'Coffee',
-            location: 'Starbucks',
-            amount: '3.10',
-
-        },
-        {
-            category: 'Food',
-            location: 'Subway',
-            amount: '7.60',
-
-        },
-        ],
-        "October 16th": [{
-            category: 'Coffee',
-            location: 'Starbucks',
-            amount: '3.10',
-
-        },
-        ],
-        "October 10th": [{
-            category: 'Shopping',
-            location: 'Best Buy',
-            amount: '83.10',
-
-        },
-        {
-            category: 'Food',
-            location: 'Pizza Hut',
-            amount: '3.10',
-
-        }
-        ],
-    }
-    ]
-}) {
-
-
-    const datesObj = arr[0];
+export default function TransactionsCardHome({ transactions }) {
     const windowWidth = Dimensions.get('window').width;
+
+    useEffect(() => {
+        console.log("Transactions updated in TransactionsCardHome:", transactions);
+    }, [transactions]);
+    
+    if (!transactions || Object.keys(transactions).length === 0) {
+        return <Text>No transactions available</Text>;
+    }
 
     return (
         <View style={styles.container}>
             <View style={[styles.sheet, { width: windowWidth }]}>
                 <ScrollView>
-                    {Object.entries(datesObj).map(([date, transactions], index) => (
+                    {Object.entries(transactions).map(([date, transactionArray], index) => (
                         <View key={index} style={styles.dayContainer}>
                             <Text style={styles.date}>{date}</Text>
-                            {transactions.map((item, transactionIndex) => (
-                                <View key={transactionIndex}>
-                                    <View style={styles.transaction} >
-                                        <CategoryContainer style={styles.icon} category={item.category} size="s" />
-                                        <TransactionSpending
-                                            category={item.category}
-                                            location={item.location}
-                                            amount={item.amount}
-                                            payment={item.payment}
-                                        />
-                                    </View>
-                                    {transactionIndex < transactions.length - 1 && (
-                                        <View style={{
-                                            borderBottomColor: '#F4F4F4',
-                                            borderBottomWidth: StyleSheet.hairlineWidth,
-                                            marginTop: 3,
-                                            marginBottom: 3,
-                                            width: { windowWidth },
-                                        }}></View>
-                                    )}
+                            {transactionArray.map((item, transactionIndex) => (
+                                <View key={transactionIndex} style={styles.transaction}>
+                                    <CategoryContainer style={styles.icon} category={item.category} size="s" />
+                                    <TransactionSpending
+                                        category={item.category}
+                                        location={item.location}
+                                        amount={item.amount}
+                                    />
                                 </View>
                             ))}
-                            {index < Object.entries(datesObj).length - 1 && (
+                            {index < Object.entries(transactions).length - 1 && (
                                 <View style={{
                                     borderBottomColor: 'darkGrey',
                                     borderBottomWidth: StyleSheet.hairlineWidth,
                                     marginTop: 10,
                                     marginBottom: 15,
-                                    width: { windowWidth }
+                                    width: windowWidth
                                 }}></View>
                             )}
                         </View>
