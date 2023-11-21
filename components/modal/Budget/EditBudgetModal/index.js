@@ -6,23 +6,27 @@ import EditButton from '../../../atoms/EditButton';
 import BudgetForm from '../../../molecules/BudgetForm';
 
 export default function EditBudgetModal ({ 
-    index, 
-    activeModalIndex, 
-    onClose, 
-    addBudget, 
+    onClose,
     budget,
-    onAddBudget,
-    visible
+    onUpdateBudget,
+    visible,
+    handleUpdateSuccess
 }) {
 
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+    
+    const handleCloseEditModal = () => {
+        setIsEditModalVisible(false);
+    };
+    
 
     const openEditModal = () => {
         setIsEditModalVisible(true);
     };
 
-    const closeEditModal = () => {
-        setIsEditModalVisible(false);
+    const closeModal = () => {
+        onClose(); // Close this modal
+        handleUpdateSuccess(); // Notify parent to close its modal
     };
 
     return (
@@ -40,7 +44,14 @@ export default function EditBudgetModal ({
                     <Text style={styles.headerTitle}>{budget.budgetTitle}</Text>
                     <EditButton style={styles.editButton} onPress={openEditModal} />
                 </View>
-                <BudgetForm onAddBudget={onAddBudget} closeModal={onClose} />
+                <BudgetForm 
+                    budgetData={budget} 
+                    onSave={onUpdateBudget} 
+                    closeModal={closeModal}
+                    onUpdateBudget={onUpdateBudget}
+                    onSaveSuccess={handleUpdateSuccess}
+                    onClose={handleCloseEditModal}
+                />
             </View>
         </Modal>
     );
