@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Pressable, Modal } from "react-native"
+import { View, StyleSheet, Text, Pressable, Modal, ActivityIndicator } from "react-native"
 import { Image } from "expo-image"
 import { useState, useEffect } from "react"
 
@@ -31,6 +31,7 @@ export default function ScanReceipt() {
     const [imageUri, setImageUri] = useState(null);
     const [ocrData, setOcrData] = useState(null);
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [reviewResults, setReviewResults] = useState({
         totalAmount: '',
@@ -39,10 +40,11 @@ export default function ScanReceipt() {
     });
 
     const handleOCRProcessing = async (uri) => {
-        
+
+        setIsLoading(true);
+
         try {
             const ocrParsedResult = await processOCR(uri);
-
             const retrieveKey = await retreiveOcrKey();
     
             if (ocrParsedResult.IsErroredOnProcessing) {
@@ -78,6 +80,7 @@ export default function ScanReceipt() {
                                 purchaseType: gptResponse.purchaseType,
                                 purchasePlace: gptResponse.purchasePlace,
                             });
+                            setIsLoading(false);
                             setShowForm(true);
                         } else {
                             console.log('No gptResponse');
@@ -112,78 +115,82 @@ export default function ScanReceipt() {
                         <Message header={message.takePhoto.header} bodyCopy={message.takePhoto.body} />
                 }
                 </View>
-                <View style={styles.photocontainer}>
-                    <View style={imageUri ? styles.borderSheetWithImage : styles.borderSheet}>
-                        {
-                            showCamera && photoTaken === false ?
-                                <>
-                                    <Text>Camera display here</Text>
-                                </> :
-                                showCamera && photoTaken ?
-                                    <>
-                                        <Text>Scanned OCR here</Text>
-                                    </> :
-                                    <>
-                                        {
-                                            imageUri ? <></> : 
-                                                <Text style={[styles.text, styles.header]}>
-                                                    Example
-                                                </Text>
-                                        }
-                                        {
-                                            imageUri ?
-                                                <Image
-                                                    source={{ uri: imageUri }}
-                                                    style={{ width: 360, height: 520, marginBottom: 10 }}
-                                                /> :
-                                                    <Image source={require('../../../assets/graphics/receiptExample.png')} style={styles.image} />
-                                        }
-
-                                        {
-                                            imageUri ? <></> : 
-                                                <Text style={[styles.text, styles.header]}>
-                                                    Note: Sometimes the date is at the bottom of the receipt.
-                                                </Text>
-                                        }
-                                    </>
-                                    
-                        }
-                    </View>
-
-                    {/* <Pressable style={styles.button}>
-                        {
-                            showCamera && photoTaken ?
-                                <Text style={styles.buttonText} onPress={() => setShowForm(true)}>
-                                    Next
-                                </Text> :
+                {isLoading ? (
+                    // Display loading indicator when processing
+                    <ActivityIndicator size="small" color="#0000ff" />
+                ) : (
+                    <View style={styles.photocontainer}>
+                        <View style={imageUri ? styles.borderSheetWithImage : styles.borderSheet}>
+                            {
                                 showCamera && photoTaken === false ?
-                                    <Text style={styles.buttonText} onPress={() => setPhotoTaken(true)}>Take photo</Text> :
-                                    <GalleryButton onImageSelect={setImageUri} />
-                        }
-                    </Pressable> */}
-
-                    <Pressable style={styles.button}>
-                        {
-                            imageUri ?
-                                <Text style={styles.buttonText} onPress={() => handleOCRProcessing(imageUri)}>Next</Text> :
-                                <GalleryButton onImageSelect={setImageUri} />
-                        }
-                    </Pressable>
-
-                    <Modal animationType="slide" transparent={false} visible={showForm}>
-                        <View style={styles.modalContainer}>
-                            <View style={styles.modalHeader}>
-                                <Pressable style={styles.closeButton} onPress={() => setShowForm(false)}>
-                                    <Icon name='arrow-left' size={25} color='#000' />
-                                </Pressable>
-                                <Text style={styles.headerTitle}>
-                                    Confirmation
-                                </Text>
-                            </View>
-                            <AddTransactionForm initialValues={reviewResults} />
+                                    <>
+                                        <Text>Camera display here</Text>
+                                    </> :
+                                    showCamera && photoTaken ?
+                                        <>
+                                            <Text>Scanned OCR here</Text>
+                                        </> :
+                                        <>
+                                            {
+                                                imageUri ? <></> : 
+                                                    <Text style={[styles.text, styles.header]}>
+                                                        Example
+                                                    </Text>
+                                            }
+                                            {
+                                                imageUri ?
+                                                    <Image
+                                                        source={{ uri: imageUri }}
+                                                        style={{ width: 360, height: 520, marginBottom: 10 }}
+                                                    /> :
+                                                        <Image source={require('../../../assets/graphics/receiptExample.png')} style={styles.image} />
+                                            }
+                                            {
+                                                imageUri ? <></> : 
+                                                    <Text style={[styles.text, styles.header]}>
+                                                        Note: Sometimes the date is at the bottom of the receipt.
+                                                    </Text>
+                                            }
+                                        </>
+                                        
+                            }
                         </View>
-                    </Modal>
-                </View>
+
+                        {/* <Pressable style={styles.button}>
+                            {
+                                showCamera && photoTaken ?
+                                    <Text style={styles.buttonText} onPress={() => setShowForm(true)}>
+                                        Next
+                                    </Text> :
+                                    showCamera && photoTaken === false ?
+                                        <Text style={styles.buttonText} onPress={() => setPhotoTaken(true)}>Take photo</Text> :
+                                        <GalleryButton onImageSelect={setImageUri} />
+                            }
+                        </Pressable> */}
+
+                        <Pressable style={styles.button}>
+                            {
+                                imageUri ?
+                                    <Text style={styles.buttonText} onPress={() => handleOCRProcessing(imageUri)}>Next</Text> :
+                                    <GalleryButton onImageSelect={setImageUri} />
+                            }
+                        </Pressable>
+
+                        <Modal animationType="slide" transparent={false} visible={showForm}>
+                            <View style={styles.modalContainer}>
+                                <View style={styles.modalHeader}>
+                                    <Pressable style={styles.closeButton} onPress={() => setShowForm(false)}>
+                                        <Icon name='arrow-left' size={25} color='#000' />
+                                    </Pressable>
+                                    <Text style={styles.headerTitle}>
+                                        Confirmation
+                                    </Text>
+                                </View>
+                                <AddTransactionForm initialValues={reviewResults} />
+                            </View>
+                        </Modal>
+                    </View>
+                )}
             </View>
         </>
     )
