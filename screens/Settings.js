@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Image } from 'expo-image'
 import { useState, useContext } from 'react';
-import Segmented from '../components/atoms/Segmented';
+import LightDarkSegment from '../components/atoms/LightDarkSegment';
 import { Text } from 'react-native-paper';
 import TopHeader from '../components/molecules/TopHeader';
 import { DarkModeContext } from '../context/darkMode';
@@ -19,7 +19,7 @@ export default function Settings() {
             <View style={styles.container}>
                 <View style={styles.subContainer}>
                     <Text style={styles.title} variant="titleMedium">Display</Text>
-                    <Segmented arr={[
+                    <LightDarkSegment arr={[
                         {
                             title: 'Light',
                             onPress: () => {

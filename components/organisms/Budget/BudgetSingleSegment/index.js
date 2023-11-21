@@ -73,7 +73,7 @@ export default function BudgetSingleSegment({ budget }) {
                             setNum(0)
                             { accData === '' ? setData(defaultAccountData) : setData(accData) }
                             setView('Overview')
-                        }, number: { num }
+                        }, number: 0
                     },
                     {
                         title: 'Details', onPress: () => {
@@ -82,18 +82,16 @@ export default function BudgetSingleSegment({ budget }) {
                             setNum(1)
                             { incData === '' ? setData(defaultIncomeData) : setData(incData) }
                             setView('Details')
-                        }, number: { num }
+                        }, number: 1
                     },
                 ]} />
                 {
                     topic === 'overview' ?
                         <View style={styles.budgetContainer}>
                             <BudgetCard budget={budget} />
-
                         </View> :
                         topic === 'details' ?
                             <View style={styles.barGraphContainer}>
-
                                 <BarGraph />
                             </View> : <></>
                 }
