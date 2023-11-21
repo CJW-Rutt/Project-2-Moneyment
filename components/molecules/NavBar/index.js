@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
-import { BottomNavigation, Text, Image } from 'react-native-paper';
+import { BottomNavigation, Text, Image, Badge } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
 
 import Home from '../../../screens/Home';
 import Add from '../../../screens/Add';
@@ -73,19 +74,30 @@ export default function NavBar() {
     const renderIcon = ({ route, focused }) => {
         return (
             <>
-                {isDarkMode
-                    ? <Icon
-                        name={focused ? route.focusedIcon : route.unfocusedIcon}
-                        routeName={route.key}
-                        size={20}
-                        color={focused ? colors.dark.activeColor : colors.dark.inactiveColor}
-                    />
-                    : <Icon
-                        name={focused ? route.focusedIcon : route.unfocusedIcon}
-                        routeName={route.key}
-                        size={20}
-                        color={focused ? colors.light.activeColor : colors.light.inactiveColor}
-                    />}
+                {
+                    isDarkMode
+                        ? <Icon
+                            name={focused ? route.focusedIcon : route.unfocusedIcon}
+                            routeName={route.key}
+                            size={20}
+                            color={focused ? colors.dark.activeColor : colors.dark.inactiveColor}
+                        />
+                        : 
+                        <View>
+                            <Icon
+                                name={focused ? route.focusedIcon : route.unfocusedIcon}
+                                routeName={route.key}
+                                size={20}
+                                color={focused ? colors.light.activeColor : colors.light.inactiveColor}
+                            />
+                            {/* <Badge size={10}></Badge> */}
+                        </View>
+
+                        
+                }
+                {/* {
+                    <Badge size={10} style={{ position: 'absolute', top: -5, right: -10 }}></Badge>
+                } */}
             </>
         );
     };
@@ -96,7 +108,9 @@ export default function NavBar() {
             onIndexChange={setIndex}
             renderScene={renderScene}
             renderIcon={renderIcon}
-            barStyle={isDarkMode ? { borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: theme.colors.secondaryDark } : { backgroundColor: '#F4F4F4', borderTopLeftRadius: 20, borderTopRightRadius: 20, }}
+            barStyle={isDarkMode
+                ? { borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: theme.colors.secondaryDark }
+                : { backgroundColor: '#F4F4F4', borderTopLeftRadius: 20, borderTopRightRadius: 20, }}
             keyboardHidesNavigationBar={true}
         />
     );
