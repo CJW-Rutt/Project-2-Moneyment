@@ -35,8 +35,5 @@ export const useBudgets = () => {
         setBudgets([...budgets, newBudget]);
     };
 
-    // Include other budget-related functionalities here
-    // ...
-
     return { budgets, addBudget };
 };

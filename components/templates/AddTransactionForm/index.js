@@ -1,14 +1,35 @@
 import { View, TextInput, StyleSheet, Text } from "react-native"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Divider } from "react-native-paper"
 import TransactionType from "../../atoms/TransactionType"
+import { useTransactions } from "../../../utils/addTransactions"
+import SaveButton from "../../atoms/SaveButton"
+import { RefreshContext } from "../../../utils/RefreshContext"
 
-export default function AddTransactionForm({ initialValues }) {
-    console.log(initialValues);
+export default function AddTransactionForm({ initialValues = {}, onPostSave }) {
     const [store, setStore] = useState(initialValues.purchasePlace || '');
     const [price, setPrice] = useState(initialValues.totalAmount || '');
     const [transaction, setTransaction] = useState('')
     const [budget, setBudget] = useState(initialValues.purchaseType || '');
+
+    const { triggerReRender } = useContext(RefreshContext);
+
+    const { addTransaction } = useTransactions();
+
+    const handleSave = () => {
+        const newTransaction = {
+            location: store,
+            date: date,
+            amount: price,
+            category: budget,
+        };
+        console.log('WHAT! NEW TRANSACTION: ', newTransaction);
+        addTransaction(newTransaction);
+        triggerReRender();
+        if (onPostSave) {
+            onPostSave();
+        }
+    };
 
     const formatDate = (date) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -30,7 +51,7 @@ export default function AddTransactionForm({ initialValues }) {
                                 style={styles.input}
                                 value={store}
                                 onChangeText={text => setStore(text)}
-                                placeholder="MUJI"
+                                placeholder="Store Name"
                             />
                         </View>
                         <View style={styles.rowContainer}>
@@ -52,8 +73,9 @@ export default function AddTransactionForm({ initialValues }) {
                                 <TextInput
                                     style={styles.inputShort}
                                     value={price}
-                                    onChangeText={text => setPrice(price)}
+                                    onChangeText={price => setPrice(price)}
                                     placeholder="$5.00"
+                                    keyboardType="numeric"
                                 />
                             </View>
                         </View>
@@ -77,13 +99,8 @@ export default function AddTransactionForm({ initialValues }) {
                         </View>
                     </View>
                 </View>
-
-                <Divider />
-
                 <View>
-                    <Text>
-                        OCR info here
-                    </Text>
+                    <SaveButton onSave={handleSave} />
                 </View>
             </View>
         </>
@@ -119,7 +136,6 @@ const styles = StyleSheet.create({
         height: 35,
         borderWidth: 1,
         borderRadius: 5,
-        border: 1,
         borderColor: '#707070',
         padding: 10,
         fontSize: 12,
@@ -129,7 +145,6 @@ const styles = StyleSheet.create({
         height: 35,
         borderWidth: 1,
         borderRadius: 5,
-        border: 1,
         borderColor: '#707070',
         padding: 10,
         fontSize: 12,

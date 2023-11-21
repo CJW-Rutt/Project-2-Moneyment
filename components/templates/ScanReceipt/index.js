@@ -3,12 +3,13 @@ import { Image } from "expo-image"
 import { useState, useEffect } from "react"
 
 import Message from "../../atoms/Message"
-import Icon from 'react-native-vector-icons/FontAwesome5'
+
 import GalleryButton from "../../atoms/GalleryButton"
 import { processOCR } from "../../../api/apiOCR"
 import { gptTransactionReview } from "../../../api/gptTransactionReview"
 import AddTransactionForm from "../AddTransactionForm"
 import { retreiveOcrKey } from "../../../api/retreiveOcrKey"
+import TransactionFormModal from "../../modal/Add/TransactionFormModal"
 
 export default function ScanReceipt() {
     const message = {
@@ -116,7 +117,6 @@ export default function ScanReceipt() {
                 }
                 </View>
                 {isLoading ? (
-                    // Display loading indicator when processing
                     <ActivityIndicator size="small" color="#0000ff" />
                 ) : (
                     <View style={styles.photocontainer}>
@@ -176,19 +176,11 @@ export default function ScanReceipt() {
                             }
                         </Pressable>
 
-                        <Modal animationType="slide" transparent={false} visible={showForm}>
-                            <View style={styles.modalContainer}>
-                                <View style={styles.modalHeader}>
-                                    <Pressable style={styles.closeButton} onPress={() => setShowForm(false)}>
-                                        <Icon name='arrow-left' size={25} color='#000' />
-                                    </Pressable>
-                                    <Text style={styles.headerTitle}>
-                                        Confirmation
-                                    </Text>
-                                </View>
-                                <AddTransactionForm initialValues={reviewResults} />
-                            </View>
-                        </Modal>
+                        <TransactionFormModal 
+                            visible={showForm}
+                            onClose={() => setShowForm(false)}
+                            initialValues={reviewResults}
+                        />
                     </View>
                 )}
             </View>

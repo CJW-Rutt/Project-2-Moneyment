@@ -11,6 +11,7 @@ import { useFonts } from 'expo-font';
 import { SIZES } from './constants';
 import NavBar from './components/molecules/NavBar';
 import { DarkModeContext, DarkModeProvider } from './context/darkMode';
+import { RefreshProvider } from './utils/RefreshContext';
 
 export default function App() {
   // const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
@@ -55,17 +56,20 @@ export default function App() {
   }
 
   return (
-    <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
-      <PaperProvider theme={paperTheme}>
-        {/* <DarkModeProvider> */}
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <SafeAreaView >
-          </SafeAreaView>
-          <NavBar />
-        </GestureHandlerRootView>
-        {/* </DarkModeProvider> */}
-      </PaperProvider>
-    </DarkModeContext.Provider>
+    <RefreshProvider>
+      <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+        <PaperProvider theme={paperTheme}>
+          {/* <DarkModeProvider> */}
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <SafeAreaView >
+            </SafeAreaView>
+            
+              <NavBar />
+          </GestureHandlerRootView>
+          {/* </DarkModeProvider> */}
+        </PaperProvider>
+      </DarkModeContext.Provider>
+      </RefreshProvider>
   );
 }
 
