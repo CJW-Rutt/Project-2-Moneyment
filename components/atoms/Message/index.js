@@ -11,17 +11,18 @@ export default function Message({ header, bodyCopy }) {
 
 const styles = StyleSheet.create({
     header: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: '700'
     },
     bodyCopy: {
-        fontSize: 12,
+        fontSize: 14,
         color: '#707070'
     },
     text: {
-        paddingLeft: 20
     },
     container: {
+        padding: 5,
         gap: 10
-    }
+    },
+
 })
