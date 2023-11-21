@@ -51,7 +51,7 @@ export default function Home() {
         </View>
 
     );
-} //<NavButton icon='wallet' active />
+}
 
 const styles = StyleSheet.create({
     container: {
