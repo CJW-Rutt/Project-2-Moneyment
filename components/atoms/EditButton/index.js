@@ -1,10 +1,10 @@
 import { View, Pressable, Text } from "react-native";
 import { StyleSheet } from "react-native";
 
-export default function EditButton() {
+export default function EditButton({ onPress, style }) {
     return (
         <>
-            <Pressable style={[styles.button, styles.editbutton]}>
+            <Pressable onPress={onPress} style={[styles.button, styles.editbutton]}>
                 <Text style={styles.buttontext}>Edit</Text>
             </Pressable>
         </>

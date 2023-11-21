@@ -158,6 +158,9 @@ export default function Budget() {
                                     budget={budgetItem}
                                     onEdit={() => openEdit(index)}
                                     calculateProgress={calculateProgress}
+                                    closeNewModal={closeNewModal}
+                                    modalVisible={modalVisible} 
+                                    onAddBudget={addBudget}
                                 />
                             </View>
                         ))}

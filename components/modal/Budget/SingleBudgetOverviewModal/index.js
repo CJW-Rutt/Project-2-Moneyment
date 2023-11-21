@@ -4,8 +4,27 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import EditButton from '../../../atoms/EditButton';
 import BudgetSingleTemplate from '../../../templates/Budget/BudgetSingleTemplate';
 import EditBudgetModal from '../EditBudgetModal';
+import { useState } from 'react';
 
-export default function SingleBudgetOverviewModal ({ index, activeModalIndex, onClose, budget, onEdit, calculateProgress  }) {
+export default function SingleBudgetOverviewModal ({ 
+    index, 
+    activeModalIndex, 
+    onClose, 
+    budget, 
+    onEdit, 
+    calculateProgress,
+    addBudget,
+    closeNewModal, 
+    modalVisible,
+    onAddBudget
+}) { 
+
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+
+    const toggleEditModal = () => {
+        console.log('Current isEditModalVisible:', isEditModalVisible);
+        setIsEditModalVisible(!isEditModalVisible);
+    };
 
     return (
         <Modal
@@ -20,8 +39,22 @@ export default function SingleBudgetOverviewModal ({ index, activeModalIndex, on
                         <Icon name='arrow-left' size={25} color='#000' />
                     </Pressable>
                     <Text style={styles.headerTitle}>{budget.budgetTitle}</Text>
-                    <EditButton style={styles.editButton} onPress={() => onEdit()} />
-                    <EditBudgetModal/>
+                    <EditButton style={styles.editButton} onPress={toggleEditModal} />
+                    <EditBudgetModal 
+                        budget={{
+                            budgetTitle: budget.budgetTitle,
+                            totalBudget: budget.totalBudget,
+                            totalPrice: budget.totalPrice,
+                            progress: calculateProgress(budget.totalBudget, budget.totalPrice),
+                        }} 
+                        index={index}
+                        activeModalIndex={activeModalIndex}
+                        addBudget={addBudget}
+                        visible={isEditModalVisible}
+                        onClose={toggleEditModal}
+                        closeNewModal={closeNewModal}
+                        onAddBudget={addBudget}
+                    />
                 </View>
                 <BudgetSingleTemplate
                     budget={{

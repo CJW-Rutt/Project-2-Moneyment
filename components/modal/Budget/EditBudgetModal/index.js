@@ -1,17 +1,35 @@
 import React from 'react';
 import { Modal, View, Pressable, Text, StyleSheet } from 'react-native';
+import { useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import EditButton from '../../../atoms/EditButton';
-import AddBudgetModal from '../AddBudgetModal';
-import BudgetSingleTemplate from '../../../templates/Budget/BudgetSingleTemplate';
+import BudgetForm from '../../../molecules/BudgetForm';
 
-export default function EditBudgetModal ({ index, activeModalIndex, onClose, addBudget, budget }) {
+export default function EditBudgetModal ({ 
+    index, 
+    activeModalIndex, 
+    onClose, 
+    addBudget, 
+    budget,
+    onAddBudget,
+    visible
+}) {
+
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+
+    const openEditModal = () => {
+        setIsEditModalVisible(true);
+    };
+
+    const closeEditModal = () => {
+        setIsEditModalVisible(false);
+    };
 
     return (
         <Modal
             animationType="slide-right"
             transparent={false}
-            visible={activeModalIndex === index}
+            visible={visible}
             onRequestClose={onClose}
         >
             <View style={styles.modalContainer}>
@@ -20,13 +38,9 @@ export default function EditBudgetModal ({ index, activeModalIndex, onClose, add
                         <Icon name='arrow-left' size={25} color='#000' />
                     </Pressable>
                     <Text style={styles.headerTitle}>{budget.budgetTitle}</Text>
-                    <EditButton style={styles.editButton} onPress={() => onEdit()} />
+                    <EditButton style={styles.editButton} onPress={openEditModal} />
                 </View>
-                <AddBudgetModal
-                    visible={modalVisible}
-                    onClose={closeNewModal}
-                    onAddBudget={addBudget}
-                />
+                <BudgetForm onAddBudget={onAddBudget} closeModal={onClose} />
             </View>
         </Modal>
     );
