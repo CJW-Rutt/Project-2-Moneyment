@@ -1,11 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
-import useRefresh from '../RefreshTransactions';
-
 
 const transactionList = []
 
 export const useTransactions = () => {
-    const { triggerReRender } = useRefresh();
     const [transactions, setTransactions] = useState(transactionList);
 
     useEffect(() => {

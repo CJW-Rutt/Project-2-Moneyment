@@ -9,7 +9,7 @@ import { View, StyleSheet, Text, Dimensions } from "react-native";
 export default function BudgetSingleSegment({ budget }) {
     const [position, setPosition] = useState(1)
     const [count, setCount] = useState(3)
-    const [topic, setTopic] = useState('accounts')
+    const [topic, setTopic] = useState('overview')
     const [num, setNum] = useState(0)
     const [data, setData] = useState([1200, 6100, 15000, 20532])
 
