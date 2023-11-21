@@ -42,7 +42,7 @@ export default function App() {
 
   useEffect(() => {
     // Additional logic or side effects based on dark mode changes can be placed here
-    console.log('Dark Mode:', isDarkMode);
+    // console.log('Dark Mode:', isDarkMode);
   }, [isDarkMode]);
 
 
