@@ -14,7 +14,7 @@ export default function GoogleSignIn() {
     return (
         <>
             <Button
-                onClick={() => GoogleLogIn()}
+                onPress={() => GoogleLogIn()}
                 mode='contained'
             >
                 Google Log in
