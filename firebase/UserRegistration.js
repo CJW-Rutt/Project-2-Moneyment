@@ -7,13 +7,16 @@ import { View, TextInput } from "react-native";
 export default function UserRegistrationSignIn() {
     const [registerEmail, setRegisterEmail] = useState('')
     const [registerPassword, setRegisterPassword] = useState('')
+    const [isError, setIsError] = useState(false)
 
     const register = async () => {
         try {
             const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword)
             console.log(user)
+            setIsError(false)
         } catch (err) {
             console.log(err)
+            setIsError(true)
         }
     }
 
@@ -27,8 +30,8 @@ export default function UserRegistrationSignIn() {
                     <TextInput
                         placeholder='email...'
                         value={registerEmail}
-                        onChange={(event) => {
-                            setRegisterEmail(event.target.value)
+                        onChangeText={(text) => {
+                            setRegisterEmail(text)
                         }}
                     />
                     <View>
@@ -37,19 +40,34 @@ export default function UserRegistrationSignIn() {
                     <TextInput
                         placeholder='password...'
                         value={registerPassword}
-                        onChange={(event) => {
-                            setRegisterPassword(event.target.value)
+                        onChangeText={(text) => {
+                            setRegisterPassword(text)
                         }}
                     />
                 </View>
                 <Button
-                    title='Register'
-                    onClick={() => {
-                        register()
-                        setRegisterEmail("")
-                        setRegisterPassword("")
+                    mode='contained'
+                    onPress={() => {
+                        try {
+                            console.log('Registration complete:', registerEmail, registerPassword)
+                            register()
+                        }
+                        catch (err) {
+                            console.log(err)
+                        }
+                        finally {
+                            setRegisterEmail("")
+                            setRegisterPassword("")
+                        }
                     }}
-                />
+                >
+                    register
+                </Button>
+                {
+                    isError
+                        ? <Text>Please enter a valid email and a password of at least six characters</Text>
+                        : <></>
+                }
             </View >
         </>
     )

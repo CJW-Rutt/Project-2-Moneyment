@@ -3,17 +3,21 @@ import { auth } from "./firebase.config";
 import { useState } from "react";
 import { Text, Button } from "react-native-paper";
 import { View, TextInput } from "react-native";
+import Home from "../screens/Home";
 
-export default function UserEmailSignIn() {
+export default function UserEmailSignIn({ navigation }) {
     const [loginEmail, setLoginEmail] = useState('')
     const [loginPassword, setLoginPassword] = useState('')
+    const [isError, setIsError] = useState(false)
 
     const login = async () => {
         try {
             const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword)
             console.log(user)
+            setIsError(false)
         } catch (err) {
             console.log(err)
+            setIsError(true)
         }
     }
 
@@ -28,8 +32,8 @@ export default function UserEmailSignIn() {
                     <TextInput
                         placeholder='email...'
                         value={loginEmail}
-                        onChange={(event) => {
-                            setLoginEmail(event.target.value)
+                        onChangeText={(text) => {
+                            setLoginEmail(text)
                         }}
                     />
                     <Text>
@@ -38,18 +42,28 @@ export default function UserEmailSignIn() {
                     <TextInput
                         placeholder='password...'
                         value={loginPassword}
-                        onChange={(event) => {
-                            setLoginPassword(event.target.value)
+                        onChangeText={(text) => {
+                            setLoginPassword(text)
                         }}
                     />
                 </View>
                 <Button
-                    title='Login'
-                    onClick={() => {
+                    mode='contained'
+                    onPress={() => {
                         login()
+                        console.log(loginEmail, loginPassword)
                         setLoginEmail("")
                         setLoginPassword("")
-                    }} />
+                        // navigation.navigate('Home')
+                    }}
+                >
+                    Login
+                </Button>
+                {
+                    isError
+                        ? <Text>Login failed. Please check your email and password</Text>
+                        : <></>
+                }
             </View>
         </>
     )
