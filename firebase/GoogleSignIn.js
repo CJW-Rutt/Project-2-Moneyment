@@ -1,6 +1,6 @@
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "./firebase.config";
-import { Button } from "react-native";
+import { Button } from "react-native-paper";
 
 export default function GoogleSignIn() {
     const GoogleLogIn = async () => {
@@ -13,7 +13,12 @@ export default function GoogleSignIn() {
 
     return (
         <>
-            <Button title='Log In with Google' onClick={() => GoogleLogIn()} />
+            <Button
+                onClick={() => GoogleLogIn()}
+                mode='contained'
+            >
+                Google Log in
+            </Button>
         </>
     )
 }
