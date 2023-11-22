@@ -6,6 +6,7 @@ import LightDarkSegment from '../components/atoms/LightDarkSegment';
 import { Text } from 'react-native-paper';
 import TopHeader from '../components/molecules/TopHeader';
 import { DarkModeContext } from '../context/darkMode';
+import UserLogOut from '../firebase/UserLogOut';
 
 
 export default function Settings() {
@@ -40,9 +41,8 @@ export default function Settings() {
                         }
                     ]} />
                 </View>
-                {
-                    // isDark || darkMode ? <Text>it's dark!</Text> : <Text>it's not</Text>
-                }
+                <UserLogOut />
+                
                 <View style={styles.secondContainer}>
                     <View style={styles.textContainer}>
                         <Text style={styles.subTitle} variant="titleMedium">We are not financial advisors</Text>
