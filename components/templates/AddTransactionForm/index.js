@@ -25,7 +25,6 @@ export default function AddTransactionForm({ initialValues = {}, onPostSave }) {
         };
         console.log('WHAT! NEW TRANSACTION: ', newTransaction);
         addTransaction(newTransaction);
-        triggerReRender();
         if (onPostSave) {
             onPostSave();
         }

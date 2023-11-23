@@ -3,8 +3,8 @@ import { Modal, View, StyleSheet } from 'react-native';
 import TopHeader from '../../../molecules/TopHeader';
 import BudgetForm from '../../../molecules/BudgetForm';
 
-export default function AddBudgetModal({ visible, onClose, onAddBudget }) { 
-
+export default function AddBudgetModal({ visible, onClose, addBudget }) { 
+    console.log("AddBudgetModal addBudget:", addBudget);
     return (
         <Modal
             animationType="slide-right"
@@ -18,7 +18,7 @@ export default function AddBudgetModal({ visible, onClose, onAddBudget }) {
                     type='close'
                     func={onClose}
                 />
-                <BudgetForm onAddBudget={onAddBudget} closeModal={onClose} />
+                <BudgetForm onSave={addBudget} closeModal={onClose} />
             </View>
         </Modal>
     );

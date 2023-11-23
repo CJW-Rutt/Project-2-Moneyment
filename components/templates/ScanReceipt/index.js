@@ -7,7 +7,6 @@ import Message from "../../atoms/Message"
 import GalleryButton from "../../atoms/GalleryButton"
 import { processOCR } from "../../../api/apiOCR"
 import { gptTransactionReview } from "../../../api/gptTransactionReview"
-import AddTransactionForm from "../AddTransactionForm"
 import { retreiveOcrKey } from "../../../api/retreiveOcrKey"
 import TransactionFormModal from "../../modal/Add/TransactionFormModal"
 

@@ -12,7 +12,6 @@ import { useTheme } from "react-native-paper";
 import AddBudgetModal from '../components/modal/Budget/AddBudgetModal';
 import SingleBudgetOverviewModal from '../components/modal/Budget/SingleBudgetOverviewModal';
 
-
 export default function Budget() {
 
     const { isDarkMode } = useContext(DarkModeContext);
@@ -143,7 +142,7 @@ export default function Budget() {
                         <AddBudgetModal
                             visible={modalVisible}
                             onClose={closeNewModal}
-                            onAddBudget={addBudget}
+                            addBudget={addBudget}
                         />
                         {budgets.map((budgetItem, index) => (
                             <View key={index}>
