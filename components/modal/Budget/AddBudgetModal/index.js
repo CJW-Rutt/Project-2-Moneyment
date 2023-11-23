@@ -4,7 +4,7 @@ import TopHeader from '../../../molecules/TopHeader';
 import BudgetForm from '../../../molecules/BudgetForm';
 
 export default function AddBudgetModal({ visible, onClose, addBudget }) { 
-    console.log("AddBudgetModal addBudget:", addBudget);
+    // console.log("AddBudgetModal addBudget:", addBudget);
     return (
         <Modal
             animationType="slide-right"

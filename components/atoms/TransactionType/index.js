@@ -3,15 +3,24 @@ import SelectDropdown from 'react-native-select-dropdown';
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from '@iconify/react';
 
-const TransactionType = () => {
+const TransactionType = ({ onTypeSelect }) => {
   const options = ['Debit Card', 'Credit Card', 'Cash'];
   const [selectedValue, setSelectedValue] = useState("Debit Card");
+
+  const handleSelect = (selectedOption) => {
+
+    setSelectedValue(selectedOption);
+
+    if (onTypeSelect) {
+        onTypeSelect(selectedOption);
+    }
+};
 
   return (
     <View style={styles.container}>
       <SelectDropdown
         data={options}
-        onSelect={(selectedOption) => setSelectedValue(selectedOption)}
+        onSelect={handleSelect}
         buttonTextAfterSelection={(selectedOption) => {
           // Text to show after selection
           return selectedOption;
@@ -29,7 +38,6 @@ const TransactionType = () => {
 
       />
     </View>
-
   );
 };
 

@@ -11,7 +11,32 @@ import { useFonts } from 'expo-font';
 import { SIZES } from './constants';
 import NavBar from './components/molecules/NavBar';
 import { DarkModeContext, DarkModeProvider } from './context/darkMode';
-import { RefreshProvider } from './utils/RefreshContext';
+
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
+// TODO: Add SDKs for Firebase products that you want to use
+
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+
+// Your web app's Firebase configuration
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyBMKOSBSINt6nBUiaBWHRNVsdrGyPvt-gY",
+  authDomain: "websupplementmoneyment.firebaseapp.com",
+  projectId: "websupplementmoneyment",
+  storageBucket: "websupplementmoneyment.appspot.com",
+  messagingSenderId: "69359821128",
+  appId: "1:69359821128:web:96cf1432558c87b4ff137d"
+
+};
+
+// Initialize Firebase
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 export default function App() {
   // const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
@@ -56,7 +81,6 @@ export default function App() {
   }
 
   return (
-    <RefreshProvider>
       <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
         <PaperProvider theme={paperTheme}>
           {/* <DarkModeProvider> */}
@@ -69,7 +93,6 @@ export default function App() {
           {/* </DarkModeProvider> */}
         </PaperProvider>
       </DarkModeContext.Provider>
-      </RefreshProvider>
   );
 }
 

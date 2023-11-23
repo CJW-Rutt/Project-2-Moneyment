@@ -1,9 +1,18 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Modal, View, StyleSheet, Pressable, Text } from 'react-native';
 import AddTransactionForm from '../../../templates/AddTransactionForm';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
-export default function TransactionFormModal({ visible, onClose, onPostSave, initialValues }) { 
+export default function TransactionFormModal({ visible, onClose, initialValues }) { 
+
+    useEffect(() => {
+        console.log("Modal component mounted");
+    
+        return () => {
+            console.log("Modal component unmounted");
+        };
+    }, []);
+
     return (
         <Modal 
             animationType="slide"
@@ -17,7 +26,7 @@ export default function TransactionFormModal({ visible, onClose, onPostSave, ini
                     </Pressable>
                     <Text style={styles.headerTitle}>Confirmation</Text>
                 </View>
-                <AddTransactionForm initialValues={initialValues} onPostSave={onPostSave} />
+                <AddTransactionForm initialValues={initialValues} onClose={onClose} />
             </View>
         </Modal>
     );

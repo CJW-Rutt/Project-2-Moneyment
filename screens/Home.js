@@ -11,20 +11,12 @@ import {
 } from 'react-native-paper';
 import TopHeader from '../components/molecules/TopHeader';
 import { useTransactions } from '../utils/addTransactions';
-import { useEffect, useContext } from 'react';
-import { RefreshContext } from '../utils/RefreshContext';
+import { useEffect } from 'react';
+// Import the functions you need from the SDKs you need
 
 export default function Home() {
 
-    const { refreshKey } = useContext(RefreshContext);
-    const { transactions } = useTransactions();
-
     const windowWidth = Dimensions.get('window').width;
-
-    useEffect(() => {
-        console.log('HOME TRANSACTIONS: ', transactions);
-        console.log('HOME KEY: ' + refreshKey);
-    }, [transactions, refreshKey]);
     
     return (
 
@@ -47,7 +39,7 @@ export default function Home() {
                     width: { windowWidth }
                 }}></View>
             </View>
-            <TransactionsCardHome key={refreshKey} transactions={transactions} style={styles.transaction} />
+            <TransactionsCardHome style={styles.transaction} />
         </View>
 
     );

@@ -10,7 +10,7 @@ import { gptTransactionReview } from "../../../api/gptTransactionReview"
 import { retreiveOcrKey } from "../../../api/retreiveOcrKey"
 import TransactionFormModal from "../../modal/Add/TransactionFormModal"
 
-export default function ScanReceipt() {
+export default function ScanReceipt({ onCloseScan }) {
     const message = {
         takePhoto: {
             header: 'Take a photo',
@@ -21,6 +21,17 @@ export default function ScanReceipt() {
             body: 'Moneyment will pull the transaction information from the receipt.'
         }
     }
+
+    useEffect(() => {
+        return () => {
+            // This is the cleanup function, it runs when the component unmounts.
+            console.log("ScanReceipt is unmounting");
+            // Reset states:
+            setShowCamera(false);
+            setPhotoTaken(false);
+            setShowForm(false);
+        };
+    }, []);
 
     const gptQuestion = 'Review and analyze the receipt data and align the return with your role.';
     const gptRole = 'You are provided with receipt data. Analyze it and extract and return Total Price:, Type:, and Place:. Type is the type of item strictly done with two words or less. Place is the type of store strictly done with two words or less. So if Vape Batteries are bought, Vape Store is the place. The response for each category CANNOT be more then 2 words. Just choose.';
@@ -177,7 +188,7 @@ export default function ScanReceipt() {
 
                         <TransactionFormModal 
                             visible={showForm}
-                            onClose={() => setShowForm(false)}
+                            onClose={onCloseScan}
                             initialValues={reviewResults}
                         />
                     </View>
@@ -189,7 +200,7 @@ export default function ScanReceipt() {
 
 const styles = StyleSheet.create({
     photocontainer: {
-alignItems: "center"
+        alignItems: "center"
     },
     borderSheet: {
         borderWidth: 5,
