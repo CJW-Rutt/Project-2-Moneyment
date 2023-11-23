@@ -1,33 +1,37 @@
 import { View, TextInput, StyleSheet, Text } from "react-native"
-import { useState, useContext } from "react"
-import { Divider } from "react-native-paper"
+import { useState } from "react"
 import TransactionType from "../../atoms/TransactionType"
-import { useTransactions } from "../../../utils/addTransactions"
 import SaveButton from "../../atoms/SaveButton"
-import { RefreshContext } from "../../../utils/RefreshContext"
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
-export default function AddTransactionForm({ initialValues = {}, onPostSave }) {
+export default function AddTransactionForm({ initialValues = {}, onClose }) {
     const [store, setStore] = useState(initialValues.purchasePlace || '');
     const [price, setPrice] = useState(initialValues.totalAmount || '');
-    const [transaction, setTransaction] = useState('')
+    const [transactionType, setTransactionType] = useState('');
     const [budget, setBudget] = useState(initialValues.purchaseType || '');
 
-    const { triggerReRender } = useContext(RefreshContext);
+    const handleTransactionTypeSelect = (selectedType) => {
+        setTransactionType(selectedType);
+    };
 
-    const { addTransaction } = useTransactions();
+    const handleSave = async () => {
+        const db = getFirestore();
 
-    const handleSave = () => {
         const newTransaction = {
-            location: store,
-            date: date,
-            amount: price,
-            category: budget,
+            store: store,
+            date: date, // We need to update this 
+            price: parseFloat(price),
+            budget: budget,
+            type: transactionType,
         };
-        console.log('WHAT! NEW TRANSACTION: ', newTransaction);
-        addTransaction(newTransaction);
-        triggerReRender();
-        if (onPostSave) {
-            onPostSave();
+    
+        try {
+            const docRef = await addDoc(collection(db, "transactions"), newTransaction);
+            onClose();
+            
+            console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
         }
     };
 
@@ -83,7 +87,7 @@ export default function AddTransactionForm({ initialValues = {}, onPostSave }) {
                             <Text>
                                 Transaction Type
                             </Text>
-                            <TransactionType />
+                            <TransactionType onTypeSelect={handleTransactionTypeSelect} />
                         </View>
 
                         <View style={styles.smallContainer}>

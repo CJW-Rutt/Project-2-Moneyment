@@ -12,8 +12,6 @@ export default function SingleBudgetOverviewModal ({
     onClose, 
     budget,
     calculateProgress,
-    addBudget,
-    closeNewModal,
     onUpdateBudget,
 }) { 
 
@@ -50,14 +48,9 @@ export default function SingleBudgetOverviewModal ({
                             progress: calculateProgress(budget.totalBudget, budget.totalPrice),
                         }} 
                         index={index}
-                        activeModalIndex={activeModalIndex}
-                        addBudget={addBudget}
                         visible={isEditModalVisible}
                         onClose={toggleEditModal}
-                        closeNewModal={closeNewModal}
-                        onAddBudget={addBudget}
                         onUpdateBudget={onUpdateBudget}
-                        onSaveSuccess={handleUpdateSuccess}
                         handleUpdateSuccess={handleUpdateSuccess}
                     />
                 </View>
