@@ -21,11 +21,12 @@ export default function AddTransactionSingle() {
     }, [showTransactionFormModal]);
 
     const toggleTransactionFormModal = () => {
-        console.log("Toggling transaction form modal");
+        console.log("AddTransactionSingle: toggleTransactionFormModal");
         setShowTransactionFormModal(!showTransactionFormModal);
     };
 
     const handleScan = () => {
+        console.log('AddTransactionSingle: handleScan');
         showScan ? setShowScan(false) : setShowScan(true)
     }
 

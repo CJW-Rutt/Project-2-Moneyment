@@ -1,18 +1,80 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Modal, Pressable } from 'react-native';
-import { useState, useContext } from 'react';
-import BudgetCard from '../components/molecules/BudgetCard';
-import ManageBudgetCard from '../components/molecules/ManageBudgetCard';
+import { StyleSheet, View, Pressable } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import StackedChart from '../components/atoms/StackedBarChart'
-import TopHeader from '../components/molecules/TopHeader';
+import { useState, useContext, useEffect } from 'react';
+import { collection, query, where, onSnapshot, getFirestore } from "firebase/firestore";
 import { Text } from 'react-native-paper';
 import { DarkModeContext } from '../context/darkMode';
 import { useTheme } from "react-native-paper";
+
+import BudgetCard from '../components/molecules/BudgetCard';
+import ManageBudgetCard from '../components/molecules/ManageBudgetCard';
+import StackedChart from '../components/atoms/StackedBarChart'
+import TopHeader from '../components/molecules/TopHeader';
 import AddBudgetModal from '../components/modal/Budget/AddBudgetModal';
 import SingleBudgetOverviewModal from '../components/modal/Budget/SingleBudgetOverviewModal';
 
+
 export default function Budget() {
+    const [budgets, setBudgets] = useState([]);
+    const [displayedBudgets, setDisplayedBudgets] = useState([]);
+    const [transactions, setTransactions] = useState([]);
+
+    const aggregateData = () => {
+        let noBudgetTotal = 0;
+    
+        const rawBudgets = budgets.map(budget => {
+            const totalSpent = transactions.reduce((acc, transaction) => {
+                if (transaction.budget === budget.name) {
+                    return acc + transaction.price;
+                }
+                return acc;
+            }, 0);
+    
+            noBudgetTotal += transactions.reduce((acc, transaction) => {
+                return transaction.budget === budget.name ? acc : acc + transaction.price;
+            }, 0);
+    
+            return {
+                ...budget,
+                spent: totalSpent,
+                left: budget.amount - totalSpent
+            };
+        });
+    
+        rawBudgets.push({
+            name: "No Budget",
+            amount: noBudgetTotal,
+            spent: noBudgetTotal,
+            left: 0
+        });
+    
+        setDisplayedBudgets(rawBudgets);
+    };
+
+    useEffect(() => {
+        const db = getFirestore();
+        const unsubscribe = onSnapshot(collection(db, "budgets"), (snapshot) => {
+            const budgetsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setBudgets(budgetsData);
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    useEffect(() => {
+        const db = getFirestore();
+        const unsubscribe = onSnapshot(collection(db, "transactions"), (snapshot) => {
+            const transactionsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setTransactions(transactionsData);
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    useEffect(() => {
+        aggregateData();
+    }, [budgets, transactions]);
 
     const { isDarkMode } = useContext(DarkModeContext);
     const theme = useTheme();
@@ -42,37 +104,9 @@ export default function Budget() {
         fontWeight: 'bold'
     }
 
-    const [budgets, setBudgets] = useState([
-        {
-            budgetTitle: "Coffee",
-            budgetCategory: "Coffee",
-            totalPrice: 50.45,
-            totalBudget: 500.00
-        },
-        {
-            budgetTitle: "Food",
-            budgetCategory: "Food",
-            totalPrice: 578.00,
-            totalBudget: 1500.00
-        },
-        {
-            budgetTitle: "Cheese",
-            budgetCategory: "Cheese",
-            totalPrice: 1570.00,
-            totalBudget: 5000.00
-        },
-        {
-            budgetTitle: "Wine",
-            budgetCategory: "Wine",
-            totalPrice: 4570.00,
-            totalBudget: 5000.00
-        },
-    ]);
-
     const addBudget = (newBudget) => {
         setBudgets([...budgets, newBudget]);
     };
-
 
     const totalBudgetSum = budgets.reduce((acc, budget) => acc + budget.totalBudget, 0);
     const totalPriceSum = budgets.reduce((acc, budget) => acc + budget.totalPrice, 0);
@@ -81,6 +115,7 @@ export default function Budget() {
     const calculateProgress = (totalBudget, totalPrice) => {
         const budget = parseFloat(totalBudget);
         const spent = parseFloat(totalPrice);
+        if (!budget || !spent) return 0;
         return spent / budget;
     };
 
@@ -104,15 +139,15 @@ export default function Budget() {
         setActiveModalIndex(null);
     };
 
-    const updateBudget = (updatedBudget) => {
-        const updatedBudgets = budgets.map((item) => {
-            if (item.budgetTitle === updatedBudget.budgetTitle) {
-                return updatedBudget;
-            }
-            return item;
-        });
-        setBudgets(updatedBudgets);
-    };
+    // const updateBudget = (updatedBudget) => {
+    //     const updatedBudgets = budgets.map((item) => {
+    //         if (item.budgetTitle === updatedBudget.budgetTitle) {
+    //             return updatedBudget;
+    //         }
+    //         return item;
+    //     });
+    //     setBudgets(updatedBudgets);
+    // };
 
     return (
 
@@ -144,7 +179,7 @@ export default function Budget() {
                             onClose={closeNewModal}
                             addBudget={addBudget}
                         />
-                        {budgets.map((budgetItem, index) => (
+                        {displayedBudgets.map((budgetItem, index) => (
                             <View key={index}>
                                 <BudgetCard
                                     budget={{
@@ -165,7 +200,6 @@ export default function Budget() {
                                     closeNewModal={closeNewModal}
                                     modalVisible={modalVisible} 
                                     onAddBudget={addBudget}
-                                    onUpdateBudget={updateBudget}
                                 />
                             </View>
                         ))}
