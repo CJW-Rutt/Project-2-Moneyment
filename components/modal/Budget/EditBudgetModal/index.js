@@ -45,7 +45,6 @@ export default function EditBudgetModal ({
                 </View>
                 <BudgetForm 
                     budgetData={budget} 
-                    onSave={onUpdateBudget} 
                     closeModal={closeModal}
                     onSaveSuccess={handleUpdateSuccess}
                     onClose={handleCloseEditModal}

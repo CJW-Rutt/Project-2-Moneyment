@@ -3,6 +3,8 @@ import { StyleSheet, View, Pressable } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useState, useContext, useEffect } from 'react';
 import { collection, query, where, onSnapshot, getFirestore } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+
 import { Text } from 'react-native-paper';
 import { DarkModeContext } from '../context/darkMode';
 import { useTheme } from "react-native-paper";
@@ -13,13 +15,10 @@ import StackedChart from '../components/atoms/StackedBarChart'
 import TopHeader from '../components/molecules/TopHeader';
 import AddBudgetModal from '../components/modal/Budget/AddBudgetModal';
 import SingleBudgetOverviewModal from '../components/modal/Budget/SingleBudgetOverviewModal';
-import BudgetCard from '../components/molecules/BudgetCard';
-import ManageBudgetCard from '../components/molecules/ManageBudgetCard';
-import StackedChart from '../components/atoms/StackedBarChart'
-import TopHeader from '../components/molecules/TopHeader';
 
 
 export default function Budget() {
+
     const [budgets, setBudgets] = useState([]);
     const [displayedBudgets, setDisplayedBudgets] = useState([]);
     const [transactions, setTransactions] = useState([]);
@@ -27,33 +26,34 @@ export default function Budget() {
     const aggregateData = () => {
         let noBudgetTotal = 0;
     
-        const rawBudgets = budgets.map(budget => {
+        const updatedBudgets = budgets.map(budget => {
             const totalSpent = transactions.reduce((acc, transaction) => {
                 if (transaction.budget === budget.name) {
-                    return acc + transaction.price;
+                    return acc + (transaction.price || 0);
                 }
                 return acc;
             }, 0);
     
             noBudgetTotal += transactions.reduce((acc, transaction) => {
-                return transaction.budget === budget.name ? acc : acc + transaction.price;
+                return transaction.budget === budget.name ? acc : acc + (transaction.price || 0);
             }, 0);
     
             return {
-                ...budget,
-                spent: totalSpent,
+                budgetTitle: budget.name,
+                totalBudget: budget.amount,
+                totalPrice: totalSpent,
                 left: budget.amount - totalSpent
             };
         });
     
-        rawBudgets.push({
-            name: "No Budget",
-            amount: noBudgetTotal,
-            spent: noBudgetTotal,
+        updatedBudgets.push({
+            budgetTitle: "No Budget",
+            totalBudget: noBudgetTotal,
+            totalPrice: noBudgetTotal,
             left: 0
         });
     
-        setDisplayedBudgets(rawBudgets);
+        setDisplayedBudgets(updatedBudgets);
     };
 
     useEffect(() => {
@@ -61,9 +61,11 @@ export default function Budget() {
         const unsubscribe = onSnapshot(collection(db, "budgets"), (snapshot) => {
             const budgetsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setBudgets(budgetsData);
+            console.log('BUDGETS DATA: ', budgetsData);
         });
 
         return () => unsubscribe();
+
     }, []);
 
     useEffect(() => {
@@ -71,6 +73,7 @@ export default function Budget() {
         const unsubscribe = onSnapshot(collection(db, "transactions"), (snapshot) => {
             const transactionsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setTransactions(transactionsData);
+            console.log('TRANSACTIONS DATA: ', transactionsData);
         });
 
         return () => unsubscribe();
@@ -113,9 +116,20 @@ export default function Budget() {
         setBudgets([...budgets, newBudget]);
     };
 
-    const totalBudgetSum = budgets.reduce((acc, budget) => acc + budget.totalBudget, 0);
-    const totalPriceSum = budgets.reduce((acc, budget) => acc + budget.totalPrice, 0);
-    const remainingBudget = totalBudgetSum - totalPriceSum;
+    const totalBudgetSum = displayedBudgets.reduce((acc, budget) => {
+        if (budget.budgetTitle !== "No Budget") {
+            return acc + (budget.totalBudget || 0);
+        }
+        return acc;
+    }, 0);
+    
+    const totalSpent = transactions.reduce((acc, transaction) => {
+        return acc + (transaction.price || 0);
+    }, 0);
+
+    const totalPriceSum = totalSpent;
+    
+    const remainingBudget = totalBudgetSum - totalSpent;
 
     const calculateProgress = (totalBudget, totalPrice) => {
         const budget = parseFloat(totalBudget);
@@ -182,12 +196,13 @@ export default function Budget() {
                     <Text style={styles.desc}>Visualize your budgets and analyze your remaining spending within specific timeframes</Text>
                 </View>
                 <ScrollView>
-                    <ManageBudgetCard
-                        totalBudget={totalBudgetSum}
-                        remainingBudget={remainingBudget}
-                    />
+                <ManageBudgetCard
+                    totalBudget={totalBudgetSum}
+                    remainingBudget={remainingBudget}
+                    totalSpent={totalSpent}
+                />
                     <View styles={styles.chart}>
-                        <StackedChart totalBudget={totalBudgetSum} totalSpent={totalPriceSum} />
+                        <StackedChart  totalBudget={totalBudgetSum} totalSpent={totalPriceSum} />
                     </View>
                     <View style={styles.budgetcontainer}>
                         {signedIn ? <Pressable onPress={() => openNewModal()}>
