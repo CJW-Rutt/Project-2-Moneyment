@@ -13,7 +13,7 @@ export default function EditBudgetModal ({
     handleUpdateSuccess
 }) {
 
-    const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+    //const [isEditModalVisible, setIsEditModalVisible] = useState(false);
     
     const handleCloseEditModal = () => {
         setIsEditModalVisible(false);
@@ -25,8 +25,8 @@ export default function EditBudgetModal ({
     };
 
     const closeModal = () => {
-        onClose(); // Close this modal
-        handleUpdateSuccess(); // Notify parent to close its modal
+        onClose();
+        handleUpdateSuccess();
     };
 
     return (

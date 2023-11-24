@@ -15,7 +15,6 @@ import ManageBudgetCard from '../components/molecules/ManageBudgetCard';
 import StackedChart from '../components/atoms/StackedBarChart'
 import TopHeader from '../components/molecules/TopHeader';
 
-
 export default function Budget() {
 
     const { isDarkMode } = useContext(DarkModeContext);
@@ -164,7 +163,7 @@ export default function Budget() {
                         <AddBudgetModal
                             visible={modalVisible}
                             onClose={closeNewModal}
-                            onAddBudget={addBudget}
+                            addBudget={addBudget}
                         />
                         {budgets.map((budgetItem, index) => (
                             <View key={index}>

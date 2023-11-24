@@ -1,20 +1,39 @@
-import { useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { useEffect, useState } from 'react';
+import { View, StyleSheet, ScrollView, Dimensions, Text } from "react-native";
 import CategoryContainer from "../../atoms/CategoryContainer";
 import TransactionSpending from "../../atoms/TransactionSpending";
-import { Text } from 'react-native-paper';
+import { collection, query, onSnapshot, getFirestore } from "firebase/firestore";
 
-export default function TransactionsCardHome({ transactions }) {
-    const windowWidth = Dimensions.get('window').width;
+
+export default function TransactionsCardHome() {
+
+    const windowWidth = Dimensions.get('window').width; // replace with SIZES.width from constants
+    const [transactions, setTransactions] = useState({});
 
     useEffect(() => {
-        console.log("Transactions updated in TransactionsCardHome:", transactions);
-    }, [transactions]);
+        const db = getFirestore();
+        const q = query(collection(db, "transactions"));
+    
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const newTransactions = {};
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const date = data.date;
+                if (!newTransactions[date]) {
+                    newTransactions[date] = [];
+                }
+                newTransactions[date].push({ id: doc.id, ...data });
+            });
+            setTransactions(newTransactions);
+        });
+    
+        return () => unsubscribe();
+    }, []);
     
     if (!transactions || Object.keys(transactions).length === 0) {
         return <Text>No transactions available</Text>;
     }
-
+    
     return (
         <View style={styles.container}>
             <View style={[styles.sheet, { width: windowWidth }]}>
@@ -26,9 +45,9 @@ export default function TransactionsCardHome({ transactions }) {
                                 <View key={transactionIndex} style={styles.transaction}>
                                     <CategoryContainer style={styles.icon} category={item.category} size="s" />
                                     <TransactionSpending
-                                        category={item.category}
-                                        location={item.location}
-                                        amount={item.amount}
+                                        category={item.type}
+                                        location={item.store}
+                                        amount={item.price}
                                     />
                                 </View>
                             ))}

@@ -77,7 +77,6 @@ export default function App() {
   }
 
   return (
-    <RefreshProvider>
       <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
         <PaperProvider theme={paperTheme}>
           <GestureHandlerRootView style={{ flex: 1 }}>
@@ -107,7 +106,6 @@ export default function App() {
           </GestureHandlerRootView>
         </PaperProvider>
       </DarkModeContext.Provider>
-    </RefreshProvider >
   );
 }
 

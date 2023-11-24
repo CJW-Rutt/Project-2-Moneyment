@@ -1,5 +1,5 @@
 import { StyleSheet, View, Button, Modal, Pressable } from 'react-native';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Text } from 'react-native-paper';
 import { Image } from "expo-image"
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -13,7 +13,15 @@ export default function AddTransactionSingle() {
     const { isDarkMode } = useContext(DarkModeContext);
     const [showTransactionFormModal, setShowTransactionFormModal] = useState(false);
 
+    useEffect(() => {
+        console.log(`Transaction Form Modal is now ${showTransactionFormModal ? 'open' : 'closed'}.`);
+        if (showTransactionFormModal) {
+            console.log("Modal opened. Trace this back to find where it's set.");
+        }
+    }, [showTransactionFormModal]);
+
     const toggleTransactionFormModal = () => {
+        console.log("Toggling transaction form modal");
         setShowTransactionFormModal(!showTransactionFormModal);
     };
 
@@ -23,10 +31,6 @@ export default function AddTransactionSingle() {
 
     const handleAddBudget = (newBudget) => {
         console.log("New budget added:", newBudget);
-    };
-
-    const postSaveHandler = () => {
-        toggleTransactionFormModal();
     };
 
     return (
@@ -47,11 +51,11 @@ export default function AddTransactionSingle() {
                                 </Pressable>
                                 <Text style={styles.headerTitle}>Scan Receipt</Text>
                             </View>
-                            <ScanReceipt />
+                            <ScanReceipt onCloseScan={handleScan} />
                         </Modal>
                     </> :
                     <>
-                        {console.log('add transaction', isDarkMode)}
+                        {/* {console.log('add transaction', isDarkMode)} */}
                         <Text style={styles.title}>What works better for you!</Text>
                         <Text style={styles.desc}>Choose the method tailored to your unique needs</Text>
                         <View style={styles.buttonContainer}>
@@ -66,7 +70,6 @@ export default function AddTransactionSingle() {
                                 visible={showTransactionFormModal} 
                                 onClose={toggleTransactionFormModal} 
                                 onAddBudget={handleAddBudget}
-                                onPostSave={postSaveHandler}
                             />
                         )}
                     </>

@@ -14,11 +14,12 @@ export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) 
     const theme = useTheme()
     const { isDarkMode } = useContext(DarkModeContext);
 
-    const [budgetTitle, setBudgetTitle] = useState(budgetData.budgetTitle);
-    const [budgetCategory, setBudgetCategory] = useState(budgetData.budgetCategory);
-    const [totalBudget, setTotalBudget] = useState(budgetData.totalBudget.toString())
+    const [budgetTitle, setBudgetTitle] = useState(budgetData?.budgetTitle || '');
+    const [budgetCategory, setBudgetCategory] = useState(budgetData?.budgetCategory || '');
+    const [totalBudget, setTotalBudget] = useState(budgetData?.totalBudget?.toString() || '');
 
     const handleSave = () => {
+        console.log("BudgetForm onSave:", onSave);
         const updatedBudget = {
             ...budgetData,
             budgetTitle,
