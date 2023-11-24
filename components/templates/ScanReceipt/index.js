@@ -22,14 +22,18 @@ export default function ScanReceipt({ onCloseScan }) {
         }
     }
 
-    useEffect(() => {
+        useEffect(() => {
+        // This is the effect function, it runs after the initial render.
+
         return () => {
             // This is the cleanup function, it runs when the component unmounts.
             console.log("ScanReceipt is unmounting");
-            // Reset states:
+            // Reset states or perform other cleanup tasks here.
+            // For example:
             setShowCamera(false);
             setPhotoTaken(false);
             setShowForm(false);
+            // ... any other state resets or cleanup you need
         };
     }, []);
 

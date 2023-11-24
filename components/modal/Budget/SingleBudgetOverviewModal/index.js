@@ -12,7 +12,6 @@ export default function SingleBudgetOverviewModal ({
     onClose, 
     budget,
     calculateProgress,
-    onUpdateBudget,
 }) { 
 
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -50,7 +49,6 @@ export default function SingleBudgetOverviewModal ({
                         index={index}
                         visible={isEditModalVisible}
                         onClose={toggleEditModal}
-                        onUpdateBudget={onUpdateBudget}
                         handleUpdateSuccess={handleUpdateSuccess}
                     />
                 </View>

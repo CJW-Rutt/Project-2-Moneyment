@@ -8,7 +8,6 @@ import BudgetForm from '../../../molecules/BudgetForm';
 export default function EditBudgetModal ({ 
     onClose,
     budget,
-    onUpdateBudget,
     visible,
     handleUpdateSuccess
 }) {
@@ -48,7 +47,6 @@ export default function EditBudgetModal ({
                     budgetData={budget} 
                     onSave={onUpdateBudget} 
                     closeModal={closeModal}
-                    onUpdateBudget={onUpdateBudget}
                     onSaveSuccess={handleUpdateSuccess}
                     onClose={handleCloseEditModal}
                 />

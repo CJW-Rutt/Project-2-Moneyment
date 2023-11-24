@@ -1,7 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, ScrollView, View, Button, Dimensions } from 'react-native';
-import { Appearance, useColorScheme } from 'react-native';
-import WalletTemplate from '../components/templates/WalletTemplate';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import BezLineChart from '../components/atoms/BezLineChart';
 import TransactionsCardHome from '../components/molecules/TransactionsCardHome';
 import { Text } from 'react-native-paper';
@@ -10,9 +8,6 @@ import {
     PaperProvider,
 } from 'react-native-paper';
 import TopHeader from '../components/molecules/TopHeader';
-import { useTransactions } from '../utils/addTransactions';
-import { useEffect } from 'react';
-// Import the functions you need from the SDKs you need
 
 export default function Home() {
 
