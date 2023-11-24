@@ -1,12 +1,15 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { BottomNavigation, Text, Image, Badge } from 'react-native-paper';
 import { View, StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { CommonActions } from '@react-navigation/native';
 
 import Home from '../../../screens/Home';
 import Add from '../../../screens/Add';
 import Budget from '../../../screens/Budget';
-import Header from '../Header';
 import Settings from '../../../screens/Settings';
+import Login from '../../../screens/Login';
+
 import { DarkModeContext } from '../../../context/darkMode';
 import { useTheme } from 'react-native-paper';
 
@@ -16,7 +19,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 
 // Icon Directory <NOTE: Just remove the FontAwesome5 and start typeing to import various libraries>
 
-export default function NavBar() {
+export default function NavBar({ signedIn }) {
     const theme = useTheme()
     const { isDarkMode } = useContext(DarkModeContext)
 
@@ -24,7 +27,7 @@ export default function NavBar() {
 
     const colors = {
         light: {
-            activeColor: '#000',
+            activeColor: '#fff',
             inactiveColor: '#707070'
         },
         dark: {
@@ -33,42 +36,52 @@ export default function NavBar() {
         }
     }
 
+    const darkOverrideColor = colors.dark.inactiveColor
+
+    const lightOverride = { colors: { secondaryContainer: '#000000' } }
+    const darkOverride = { colors: { secondaryContainer: darkOverrideColor } }
+
     const [routes] = useState([
         {
             key: 'home',
             title: 'Transactions',
             focusedIcon: 'wallet',
             unfocusedIcon: 'wallet',
-            color: '#707070'
+            color: '#707070',
+            notif: true
         },
         {
             key: 'add',
             title: 'Add',
             focusedIcon: 'plus',
             unfocusedIcon: 'plus-circle',
-            color: '#707070'
+            color: '#707070',
+            notif: false
+
         },
         {
             key: 'budget',
             title: 'Budget',
             focusedIcon: 'piggy-bank',
             unfocusedIcon: 'piggy-bank',
-            color: '#707070'
+            color: '#707070',
+            notif: true,
         },
         {
             key: 'settings',
             title: 'Settings',
             focusedIcon: 'cog',
             unfocusedIcon: 'cog',
-            color: '#707070'
-        },
+            color: '#707070',
+            notif: false
+        }
     ]);
 
     const renderScene = BottomNavigation.SceneMap({
         home: Home,
         add: Add,
         budget: Budget,
-        settings: Settings
+        settings: Settings,
     });
 
     const renderIcon = ({ route, focused }) => {
@@ -82,21 +95,16 @@ export default function NavBar() {
                             size={20}
                             color={focused ? colors.dark.activeColor : colors.dark.inactiveColor}
                         />
-                        : 
-                        <View>
-                            <Icon
-                                name={focused ? route.focusedIcon : route.unfocusedIcon}
-                                routeName={route.key}
-                                size={20}
-                                color={focused ? colors.light.activeColor : colors.light.inactiveColor}
-                            />
-                            {/* <Badge size={10}></Badge> */}
-                        </View>
-
-                        
+                        :
+                        <Icon
+                            name={focused ? route.focusedIcon : route.unfocusedIcon}
+                            routeName={route.key}
+                            size={20}
+                            color={focused ? colors.light.activeColor : colors.light.inactiveColor}
+                        />
                 }
                 {/* {
-                    <Badge size={10} style={{ position: 'absolute', top: -5, right: -10 }}></Badge>
+                    route.notif === true ? <Badge size={10} style={{ position: 'absolute', top: -5, right: -10 }}></Badge> : <></>
                 } */}
             </>
         );
@@ -112,6 +120,7 @@ export default function NavBar() {
                 ? { borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: theme.colors.secondaryDark }
                 : { backgroundColor: '#F4F4F4', borderTopLeftRadius: 20, borderTopRightRadius: 20, }}
             keyboardHidesNavigationBar={true}
+            theme={isDarkMode ? darkOverride : lightOverride}
         />
     );
 }
