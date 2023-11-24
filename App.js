@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, Dimensions, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider as PaperProvider, useTheme } from 'react-native-paper';
@@ -10,39 +10,23 @@ import { MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
 import { useFonts } from 'expo-font';
 import { SIZES } from './constants';
 import NavBar from './components/molecules/NavBar';
-import { DarkModeContext, DarkModeProvider } from './context/darkMode';
+import { DarkModeContext } from './context/darkMode';
+import { RefreshProvider } from './utils/RefreshContext';
+import { auth } from './firebase/firebase.config';
+import { Text } from 'react-native-paper';
+import { onAuthStateChanged } from 'firebase/auth';
+import Login from './screens/Login';
 
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+const screenWidth = Dimensions.get('screen').width
 
-// TODO: Add SDKs for Firebase products that you want to use
-
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-
-// Your web app's Firebase configuration
-
-const firebaseConfig = {
-
-  apiKey: "AIzaSyBMKOSBSINt6nBUiaBWHRNVsdrGyPvt-gY",
-  authDomain: "websupplementmoneyment.firebaseapp.com",
-  projectId: "websupplementmoneyment",
-  storageBucket: "websupplementmoneyment.appspot.com",
-  messagingSenderId: "69359821128",
-  appId: "1:69359821128:web:96cf1432558c87b4ff137d"
-
-};
-
-// Initialize Firebase
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 export default function App() {
   // const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
   const colorScheme = useColorScheme();
   const { theme } = useMaterial3Theme();
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [signedIn, setSignedIn] = useState(false)
+  const [showSignIn, setShowSignIn] = useState(false)
 
   const paperTheme =
     isDarkMode
@@ -65,32 +49,61 @@ export default function App() {
     setIsDarkMode((prevMode) => !prevMode);
   };
 
-  useEffect(() => {
-    // Additional logic or side effects based on dark mode changes can be placed here
-    console.log('Dark Mode:', isDarkMode);
-  }, [isDarkMode]);
+  const checkUser = async () => {
+    await onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log('signed in', uid)
+        setSignedIn(true)
+      } else {
+        setSignedIn(false)
+        console.log('not signed in')
+      }
+    })
+  }
 
+  useEffect(() => {
+    checkUser()
+    // console.log('signedIn on App.js is', signedIn)
+  }, [])
 
   //FONTS
   const [fontsLoaded] = useFonts({
     'Montserrat': require('./assets/fonts/Montserrat-VariableFont_wght.ttf'),
   });
-  // Check if fonts are loaded before rendering the app
+
   if (!fontsLoaded) {
-    return null; // Or render a loading indicator
+    return null;
   }
 
   return (
       <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
         <PaperProvider theme={paperTheme}>
-          {/* <DarkModeProvider> */}
           <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView >
             </SafeAreaView>
-            
-              <NavBar />
+            <NavigationContainer>
+              {
+                signedIn
+                  ? <NavBar />
+                  : <>
+                    {
+                      showSignIn
+                        ? <Login />
+                        : <>
+                          <Pressable
+                            style={[styles.unlockContainer, { width: screenWidth }]}
+                            onPress={() => setShowSignIn(true)}
+                          >
+                            <Text style={{textAlign: 'center'}}>Log in to unlock full access</Text>
+                          </Pressable>
+                          <NavBar signedIn={{signedIn}} />
+                        </>
+                    }
+                  </>
+              }
+            </NavigationContainer>
           </GestureHandlerRootView>
-          {/* </DarkModeProvider> */}
         </PaperProvider>
       </DarkModeContext.Provider>
   );
@@ -102,5 +115,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: SIZES.height
+  },
+  unlockContainer: {
+    position: 'absolute',
+    top: 20,
+    backgroundColor: '#429488',
+    height: 25,
+    zIndex: 2,
+    textAlign: 'center',
+    justifyContent: 'center'
   }
 });
