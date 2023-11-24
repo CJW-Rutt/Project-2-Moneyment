@@ -42,7 +42,7 @@ export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBu
 
     return (
         <View style={styles.manageContainer}>
-            {console.log('Theme: ', theme.colors)}
+            {/* {console.log('Theme: ', theme.colors)} */}
             <View style={styles.manageLeftCol}>
                 <View style={styles.budgetRow}>
                     <Text style={styles.remainingTitle}>Remaining Budget</Text>

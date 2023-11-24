@@ -4,6 +4,7 @@ import CategoryContainer from "../../atoms/CategoryContainer";
 import TransactionSpending from "../../atoms/TransactionSpending";
 import { collection, query, onSnapshot, getFirestore } from "firebase/firestore";
 
+
 export default function TransactionsCardHome() {
 
     const windowWidth = Dimensions.get('window').width; // replace with SIZES.width from constants
