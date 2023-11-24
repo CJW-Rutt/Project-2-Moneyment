@@ -1,16 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Modal, Pressable } from 'react-native';
-import { useState, useContext } from 'react';
-import BudgetCard from '../components/molecules/BudgetCard';
-import ManageBudgetCard from '../components/molecules/ManageBudgetCard';
+import { useState, useContext, useEffect } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import StackedChart from '../components/atoms/StackedBarChart'
-import TopHeader from '../components/molecules/TopHeader';
 import { Text } from 'react-native-paper';
 import { DarkModeContext } from '../context/darkMode';
 import { useTheme } from "react-native-paper";
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase/firebase.config';
+
 import AddBudgetModal from '../components/modal/Budget/AddBudgetModal';
 import SingleBudgetOverviewModal from '../components/modal/Budget/SingleBudgetOverviewModal';
+import BudgetCard from '../components/molecules/BudgetCard';
+import ManageBudgetCard from '../components/molecules/ManageBudgetCard';
+import StackedChart from '../components/atoms/StackedBarChart'
+import TopHeader from '../components/molecules/TopHeader';
 
 
 export default function Budget() {
@@ -19,6 +22,7 @@ export default function Budget() {
     const theme = useTheme();
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [signedIn, setSignedIn] = useState(false)
 
     const openNewModal = () => {
         setModalVisible(true);
@@ -74,7 +78,6 @@ export default function Budget() {
         setBudgets([...budgets, newBudget]);
     };
 
-
     const totalBudgetSum = budgets.reduce((acc, budget) => acc + budget.totalBudget, 0);
     const totalPriceSum = budgets.reduce((acc, budget) => acc + budget.totalPrice, 0);
     const remainingBudget = totalBudgetSum - totalPriceSum;
@@ -115,6 +118,24 @@ export default function Budget() {
         setBudgets(updatedBudgets);
     };
 
+    const checkUser = async () => {
+        await onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uid = user.uid;
+                console.log('signed in', uid)
+                setSignedIn(true)
+            } else {
+                setSignedIn(false)
+                console.log('not signed in')
+            }
+        })
+    }
+
+    useEffect(() => {
+        checkUser()
+        // console.log('signedIn on Budget.js is', signedIn)
+    }, [])
+
     return (
 
         <View style={styles.container}>
@@ -133,13 +154,13 @@ export default function Budget() {
                         <StackedChart totalBudget={totalBudgetSum} totalSpent={totalPriceSum} />
                     </View>
                     <View style={styles.budgetcontainer}>
-                        <Pressable onPress={() => openNewModal()}>
+                        {signedIn ? <Pressable onPress={() => openNewModal()}>
                             <View style={styles.manageRightCol}>
                                 <Text
                                     style={isDarkMode ? darkButton : lightButton}
                                 >+ New Budget</Text>
                             </View>
-                        </Pressable>
+                        </Pressable> : <></>}
                         <AddBudgetModal
                             visible={modalVisible}
                             onClose={closeNewModal}
@@ -156,7 +177,7 @@ export default function Budget() {
                                     }}
                                     onPress={() => openModal(index)}
                                 />
-                                <SingleBudgetOverviewModal 
+                                <SingleBudgetOverviewModal
                                     index={index}
                                     activeModalIndex={activeModalIndex}
                                     onClose={closeModal}
@@ -164,7 +185,7 @@ export default function Budget() {
                                     onEdit={() => openEdit(index)}
                                     calculateProgress={calculateProgress}
                                     closeNewModal={closeNewModal}
-                                    modalVisible={modalVisible} 
+                                    modalVisible={modalVisible}
                                     onAddBudget={addBudget}
                                     onUpdateBudget={updateBudget}
                                 />
