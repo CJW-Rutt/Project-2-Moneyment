@@ -1,13 +1,9 @@
 import { View, StyleSheet } from "react-native"
-import CategoryContainer from "../CategoryContainer"
-import IconContainer from "../IconContainer"
 import { Text } from "react-native-paper"
 
 export default function TransactionSpending({ category, location, amount }) {
 
-    //let categoryIcon = category.toLowerCase() !! not in use? !!
-
-    const decimalAmount = amount.toFixed(2);
+    const decimalAmount = (typeof amount === 'number') ? amount.toFixed(2) : '0.00';
  
     return (
         <View style={styles.container}>

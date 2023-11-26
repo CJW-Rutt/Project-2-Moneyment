@@ -1,111 +1,47 @@
+import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
-
 import TransactionSpending from "../../atoms/TransactionSpending";
 
-export default function TransactionsCard({
-    arr = [{
-        today: [{
-            category: 'Credit Card',
-            location: 'Starbucks',
-            amount: '3.10',
-
-        },
-        {
-            category: 'Credit Card',
-            location: 'Subway',
-            amount: '7.60',
-
-        },
-        ],
-        Saturday: [{
-            category: 'Credit Card',
-            location: 'Starbucks',
-            amount: '3.10',
-
-        },
-        ],
-        Friday: [{
-            category: 'Credit Card',
-            location: 'Best Buy',
-            amount: '83.10',
-
-        },
-        {
-            category: 'Credit Card',
-            location: 'Pizza Hut',
-            amount: '3.10',
-
-        }
-        ],
-    }
-    ]
-}) {
-
-    const datesObj = arr[0]
+export default function TransactionsCard({ transactions }) {
     const windowWidth = Dimensions.get('window').width;
+
+    if (!transactions || Object.keys(transactions).length === 0) {
+        return <Text>No transactions available</Text>;
+    }
 
     return (
         <View style={styles.container}>
             <View style={[styles.sheet, { width: windowWidth }]}>
-
                 <ScrollView>
-                    <View>
-                        <Text style={styles.date}>October 26</Text>
-                        {
-                            datesObj.today.map((item, index) => {
-                                return (
-                                    <View key={index}>
-                                        <TransactionSpending
-                                            location={item.location} amount={item.amount}
-                                            category={item.category}
-                                            payment={item.payment} />
-                                    </View>
-                                )
-                            })
-                        }
-                    </View>
-                    <View style={{
-                        borderBottomColor: 'black',
-                        borderBottomWidth: StyleSheet.hairlineWidth,
-                        marginTop: 19,
-                        marginBottom: 19
-                    }}></View>
-                    <View>
-                        <Text style={styles.date}>October 13</Text>
-                        {
-                            datesObj.Saturday.map((item, index) => {
-                                return (
-                                    <View key={index}>
-                                        <TransactionSpending
-                                            category={item.category}
-                                            location={item.location} amount={item.amount}
-                                            payment={item.payment} />
-                                    </View>
-                                )
-                            })
-                        }
-                    </View>
-                    <View style={{
-                        borderBottomColor: 'black',
-                        borderBottomWidth: StyleSheet.hairlineWidth,
-                        marginTop: 19,
-                        marginBottom: 19
-                    }}></View>
-                    <View>
-                        <Text style={styles.date}>October 10</Text>
-                        {
-                            datesObj.Friday.map((item, index) => {
-                                return (
-                                    <View key={index}>
-                                        <TransactionSpending
-                                            category={item.category}
-                                            location={item.location} amount={item.amount}
-                                            payment={item.payment} />
-                                    </View>
-                                )
-                            })
-                        }
-                    </View>
+                    {
+                        Object.entries(transactions).map(([date, transactionArray], index) => (
+                            <View key={index}>
+                                <Text style={styles.date}>{date}</Text>
+                                {
+                                    transactionArray.map((item, transactionIndex) => (
+                                        <View key={transactionIndex}>
+                                            <TransactionSpending
+                                                category={item.budget}
+                                                location={item.store} 
+                                                amount={item.price}
+                                                payment={item.price} 
+                                            />
+                                        </View>
+                                    ))
+                                }
+                                {
+                                    index < Object.entries(transactions).length - 1 && (
+                                        <View style={{
+                                            borderBottomColor: 'black',
+                                            borderBottomWidth: StyleSheet.hairlineWidth,
+                                            marginTop: 19,
+                                            marginBottom: 19
+                                        }}></View>
+                                    )
+                                }
+                            </View>
+                        ))
+                    }
                 </ScrollView>
             </View>
         </View>

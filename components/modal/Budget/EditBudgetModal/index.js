@@ -41,7 +41,6 @@ export default function EditBudgetModal ({
                         <Icon name='arrow-left' size={25} color='#000' />
                     </Pressable>
                     <Text style={styles.headerTitle}>{budget.budgetTitle}</Text>
-                    <EditButton style={styles.editButton} onPress={openEditModal} />
                 </View>
                 <BudgetForm 
                     budgetData={budget} 

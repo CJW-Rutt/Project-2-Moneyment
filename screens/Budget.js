@@ -39,6 +39,7 @@ export default function Budget() {
             }, 0);
     
             return {
+                ...budget,
                 budgetTitle: budget.name,
                 totalBudget: budget.amount,
                 totalPrice: totalSpent,
@@ -54,6 +55,7 @@ export default function Budget() {
         });
     
         setDisplayedBudgets(updatedBudgets);
+
     };
 
     useEffect(() => {
@@ -157,16 +159,6 @@ export default function Budget() {
     const closeModal = () => {
         setActiveModalIndex(null);
     };
-
-    // const updateBudget = (updatedBudget) => {
-    //     const updatedBudgets = budgets.map((item) => {
-    //         if (item.budgetTitle === updatedBudget.budgetTitle) {
-    //             return updatedBudget;
-    //         }
-    //         return item;
-    //     });
-    //     setBudgets(updatedBudgets);
-    // };
 
     const checkUser = async () => {
         await onAuthStateChanged(auth, (user) => {

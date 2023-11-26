@@ -58,5 +58,8 @@
     "metro": "^0.80.1",
     "metro-core": "^0.80.1"
   },
-  "private": true
+  "private": true,
+  "repository": "https://github.com/CJW-Rutt/Project-2-Moneyment.git",
+  "author": "Corey J. <cjw.rutt@gmail.com>",
+  "license": "MIT"
 }

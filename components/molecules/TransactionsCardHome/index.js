@@ -38,30 +38,36 @@ export default function TransactionsCardHome() {
         <View style={styles.container}>
             <View style={[styles.sheet, { width: windowWidth }]}>
                 <ScrollView>
-                    {Object.entries(transactions).map(([date, transactionArray], index) => (
-                        <View key={index} style={styles.dayContainer}>
-                            <Text style={styles.date}>{date}</Text>
-                            {transactionArray.map((item, transactionIndex) => (
-                                <View key={transactionIndex} style={styles.transaction}>
-                                    <CategoryContainer style={styles.icon} category={item.category} size="s" />
-                                    <TransactionSpending
-                                        category={item.type}
-                                        location={item.store}
-                                        amount={item.price}
-                                    />
-                                </View>
-                            ))}
-                            {index < Object.entries(transactions).length - 1 && (
-                                <View style={{
-                                    borderBottomColor: 'darkGrey',
-                                    borderBottomWidth: StyleSheet.hairlineWidth,
-                                    marginTop: 10,
-                                    marginBottom: 15,
-                                    width: windowWidth
-                                }}></View>
-                            )}
-                        </View>
-                    ))}
+                    {
+                        Object.entries(transactions).map(([date, transactionArray], index) => (
+                            <View key={index} style={styles.dayContainer}>
+                                <Text style={styles.date}>{date}</Text>
+                                {
+                                    transactionArray.map((item, transactionIndex) => (
+                                        <View key={transactionIndex} style={styles.transaction}>
+                                            <CategoryContainer style={styles.icon} category={item.category} size="s" />
+                                            <TransactionSpending
+                                                category={item.type}
+                                                location={item.store}
+                                                amount={item.price}
+                                            />
+                                        </View>
+                                    ))
+                                }
+                                {
+                                    index < Object.entries(transactions).length - 1 && (
+                                        <View style={{
+                                            borderBottomColor: 'darkGrey',
+                                            borderBottomWidth: StyleSheet.hairlineWidth,
+                                            marginTop: 10,
+                                            marginBottom: 15,
+                                            width: windowWidth
+                                        }}></View>
+                                    )
+                                }
+                            </View>
+                        ))
+                    }
                 </ScrollView>
             </View>
         </View>
