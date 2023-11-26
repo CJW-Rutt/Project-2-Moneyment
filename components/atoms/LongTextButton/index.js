@@ -1,16 +1,20 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import { DarkModeContext } from '../../../context/darkMode';
+import { useContext } from 'react'
 
 // Don't overwrite my files without discussing it with me first. (Corey)
 
 export default function LongTextButton({ type, onPress }) {
 
+    const { isDarkMode } = useContext(DarkModeContext);
+
     const buttonTextArr = [
-        { type: 'transactions', title: 'Transactions', description: 'Easily incorporate new transactions into the app through receipt scanning, importing SVG files, or manual input'},
-        { type: 'accounts', title: 'Bank Accounts', description: 'Effortlessly link your bank accounts to gain immediate access to up-to-the-minute transaction updates'},
-        { type: 'scan', title: 'Scan Receipts', description: 'Effortlessly capture receipt details by taking a photo for automatic logging'},
-        { type: 'manual', title: 'Manual Input', description: 'Take control by manually logging bank transactions and additional expenses'},
-        { type: 'statements', title: 'Import Statements', description: 'Import data to transfer information from your bank statements'},
+        { type: 'transactions', title: 'Transactions', description: 'Easily incorporate new transactions into the app through receipt scanning, importing SVG files, or manual input' },
+        { type: 'accounts', title: 'Bank Accounts', description: 'Effortlessly link your bank accounts to gain immediate access to up-to-the-minute transaction updates' },
+        { type: 'scan', title: 'Scan Receipts', description: 'Effortlessly capture receipt details by taking a photo for automatic logging' },
+        { type: 'manual', title: 'Manual Input', description: 'Take control by manually logging bank transactions and additional expenses' },
+        { type: 'statements', title: 'Import Statements', description: 'Import data to transfer information from your bank statements' },
     ];
 
     const stylesForType = {
@@ -29,7 +33,7 @@ export default function LongTextButton({ type, onPress }) {
             minWidth: 349,
             maxWidth: 349,
         },
-            manual: {
+        manual: {
             maxHeight: 110,
             minWidth: 349,
             maxWidth: 349,
@@ -40,12 +44,12 @@ export default function LongTextButton({ type, onPress }) {
             maxWidth: 349,
         },
     };
-    
+
     const selectedStyle = stylesForType[type] || {};
 
-    const index = buttonTextArr.findIndex( item => item.type === type);
+    const index = buttonTextArr.findIndex(item => item.type === type);
 
-    if ( index === -1 ){
+    if (index === -1) {
         return <Text>Type Not Found</Text>;
     }
 
@@ -54,17 +58,21 @@ export default function LongTextButton({ type, onPress }) {
 
     return (
         <Pressable onPress={onPress}>
-            <View style={{ ...styles.container, ...selectedStyle }}>
+            <View style={isDarkMode ? { ...styles.containerDark, ...selectedStyle } : { ...styles.container, ...selectedStyle }}>
                 <View style={styles.titleRow}>
                     <View style={styles.title}>
-                        <Text style={styles.titleText}>{title}</Text>
+                        <Text style={isDarkMode ? styles.titleTextDark : styles.titleText}>{title}</Text>
                     </View>
                     <View style={styles.icon}>
-                        <Icon name='angle-right' size={15} color='#fff' />
+                        {
+                            isDarkMode ?
+                                <Icon name='angle-right' size={15} color='#212121' /> :
+                                <Icon name='angle-right' size={15} color='#fff' />
+                        }
                     </View>
                 </View>
                 <View style={styles.descText}>
-                    <Text style={styles.descriptionText}>{description}</Text>
+                    <Text style={isDarkMode ? styles.descriptionTextDark : styles.descriptionText}>{description}</Text>
                 </View>
             </View>
         </Pressable>
@@ -74,7 +82,15 @@ export default function LongTextButton({ type, onPress }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#6AB4AC',
+        backgroundColor: '#429488',
+        borderBottomLeftRadius: 15,
+        borderTopRightRadius: 15,
+        padding: 20,
+        marginTop: 20,
+    },
+    containerDark: {
+        flex: 1,
+        backgroundColor: '#95D6CD',
         borderBottomLeftRadius: 15,
         borderTopRightRadius: 15,
         padding: 20,
@@ -96,6 +112,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
     },
+    titleTextDark: {
+        color: '#212121',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
     icon: {
         flex: 1,
         alignItems: 'flex-end',
@@ -104,6 +125,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 12,
         width: '90%',
+    },
+    descTextDark: {
+        marginTop: 10,
+        fontSize: 12,
+        width: '90%',
+        color: '#212121'
     },
     descriptionText: {
         color: '#fff',

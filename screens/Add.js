@@ -5,7 +5,7 @@ import TopHeader from '../components/molecules/TopHeader';
 
 
 export default function Add() {
-    
+
     return (
 
         <View style={styles.container}>
@@ -19,8 +19,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         // backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignContent: 'center',
+        justifyContent: 'flex-start',
     },
     title: {
         fontSize: 21,
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
     },
-    modalHeader:{
+    modalHeader: {
         flex: 1,
         flexDirection: 'row',
         maxHeight: 100,

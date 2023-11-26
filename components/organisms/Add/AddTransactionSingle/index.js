@@ -39,16 +39,22 @@ export default function AddTransactionSingle() {
             {
                 showScan ?
                     <>
-                        <View style={styles.modalHeader}>
+                        <View style={isDarkMode ? styles.modalHeaderDark : styles.modalHeader}>
                             <Pressable style={styles.closeButton} onPress={handleScan}>
-                                <Icon name='arrow-left' size={25} color='#000' />
+                                {
+                                    isDarkMode ? <Icon name='arrow-left' size={20} color='#CFCFCF' />
+                                        : <Icon name='arrow-left' size={20} color='#000' />
+                                }
                             </Pressable>
                             <Text style={styles.headerTitle}>Scan Receipt</Text>
                         </View>
                         <Modal animationType="slide" transparent={false} visible={showScan}>
-                            <View style={styles.modalHeader}>
+                            <View style={isDarkMode ? styles.modalHeaderDark : styles.modalHeader}>
                                 <Pressable style={styles.closeButton} onPress={handleScan}>
-                                    <Icon name='arrow-left' size={25} color='#000' />
+                                    {
+                                        isDarkMode ? <Icon name='arrow-left' size={20} color='#CFCFCF' />
+                                            : <Icon name='arrow-left' size={20} color='#000' />
+                                    }
                                 </Pressable>
                                 <Text style={styles.headerTitle}>Scan Receipt</Text>
                             </View>
@@ -57,19 +63,21 @@ export default function AddTransactionSingle() {
                     </> :
                     <>
                         {/* {console.log('add transaction', isDarkMode)} */}
-                        <Text style={styles.title}>What works better for you!</Text>
-                        <Text style={styles.desc}>Choose the method tailored to your unique needs</Text>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.title}>What works better for you!</Text>
+                            <Text style={isDarkMode ? styles.descDark : styles.desc}>Choose the method tailored to your unique needs</Text>
+                        </View>
                         <View style={styles.buttonContainer}>
                             <LongTextButton type="scan" onPress={() => setShowScan(true)} />
                             <LongTextButton type="manual" onPress={toggleTransactionFormModal} />
                         </View>
-                        {isDarkMode === true ? <Image source={require("../../../../assets/graphics/people/selfieDark.png")} alt='' style={{ width: 338, height: 240, marginTop: 10, }} contentFit="contain" />
-                            : <Image source={require("../../../../assets/graphics/people/selfie.png")} alt='' style={{ width: 338, height: 240, marginTop: 10, }} contentFit="contain" />}
+                        {isDarkMode === true ? <Image source={require("../../../../assets/graphics/people/phone_using.svg")} alt='' style={{ width: 338, height: 250, marginTop: 30, }} contentFit="contain" />
+                            : <Image source={require("../../../../assets/graphics/people/phone_using.svg")} alt='' style={{ width: 338, height: 250, marginTop: 30, }} contentFit="contain" />}
 
                         {showTransactionFormModal && (
-                            <TransactionFormModal 
-                                visible={showTransactionFormModal} 
-                                onClose={toggleTransactionFormModal} 
+                            <TransactionFormModal
+                                visible={showTransactionFormModal}
+                                onClose={toggleTransactionFormModal}
                                 onAddBudget={handleAddBudget}
                             />
                         )}
@@ -83,21 +91,25 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
-        // backgroundColor: '#fff',
+        justifyContent: 'flex-start',
+        padding: 20,
+    },
+    textContainer: {
+        width: '100%',
+        display: "flex",
+        flexDirection: "column",
+        gap: 3,
     },
     title: {
-        fontSize: 18,
+        fontSize: 21,
         maxWidth: 355,
         fontWeight: 'bold',
         width: '100%',
-        marginTop: 10,
+        // marginTop: 10,
     },
     desc: {
-        fontSize: 12,
-        marginTop: 10,
-        maxWidth: 355,
-        width: '100%',
+        fontSize: 14,
+        color: "#707070"
     },
     modalContainer: {
         flex: 1,
@@ -106,22 +118,39 @@ const styles = StyleSheet.create({
     modalHeader: {
         flex: 1,
         flexDirection: 'row',
-        maxHeight: 100,
+        maxHeight: 70,
         width: '100%',
         borderBottomWidth: 1,
         borderColor: 'lightgray',
         justifyContent: 'center',
         alignItems: 'flex-end',
         paddingBottom: 15,
+        gap: 10,
+    },
+    modalHeaderDark: {
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 70,
+        width: '100%',
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        paddingBottom: 15,
+        gap: 10,
+        backgroundColor: "#212121"
     },
     headerTitle: {
+        flex: 1,
         fontSize: 18,
         textAlign: 'left',
         fontWeight: 'bold',
-        width: '100%',
-        paddingLeft: 80
+        marginTop: 20,
+        textAlign: 'center',
+        paddingRight: 45
     },
     closeButton: {
-        paddingLeft: 80
+        marginTop: 20,
+        paddingLeft: 20
     }
 });

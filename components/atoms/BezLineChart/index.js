@@ -49,8 +49,8 @@ export default function BezLineChart() {
 
     return (
         <>
-            <Text style={styles.viewText}>Total Expenses</Text>
-            <Text style={styles.balance}>$749</Text>
+            <Text style={isDarkMode ? styles.viewTextDark : styles.viewText}>Total Expenses</Text>
+            <Text style={isDarkMode ? styles.balanceDark : styles.balance}>$749</Text>
             <LineChart
                 data={data}
                 width={screenWidth + 20}
@@ -76,5 +76,15 @@ const styles = StyleSheet.create({
     viewText: {
         fontSize: 14,
         color: '#707070',
+    },
+    balanceDark: {
+        fontSize: 36,
+        fontWeight: '800',
+        marginBottom: 10,
+        color: "#CFCFCF"
+    },
+    viewTextDark: {
+        fontSize: 14,
+        color: "#CFCFCF"
     }
 })
