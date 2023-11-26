@@ -40,41 +40,47 @@ export default function TransactionsCardHome() {
 
     return (
         <View style={styles.container}>
-            <View style={[styles.sheet]}>
-                {/* <ScrollView> */}
-                {Object.entries(transactions).map(([date, transactionArray], index) => (
-                    <View key={index} style={styles.dayContainer}>
-                        <Text style={isDarkMode ? styles.dateDark : styles.date}>{date}</Text>
-                        {transactionArray.map((item, transactionIndex) => (
-                            <View key={transactionIndex} style={styles.transaction}>
-                                <CategoryContainer style={styles.icon} category={item.category} size="s" />
-                                <TransactionSpending
-                                    category={item.type}
-                                    location={item.store}
-                                    amount={item.price}
-                                />
-                            </View>
-                        ))}
-                        {index < Object.entries(transactions).length - 1 && (
-                            <View style={
-                                isDarkMode ? {
-                                    borderBottomColor: '#535353',
-                                    borderBottomWidth: StyleSheet.hairlineWidth,
-                                    marginTop: 10,
-                                    marginBottom: 15,
-                                    width: 350
-                                } : {
-                                    borderBottomColor: 'darkGrey',
-                                    borderBottomWidth: StyleSheet.hairlineWidth,
-                                    marginTop: 10,
-                                    marginBottom: 15,
-                                    width: 350
+            <View style={[styles.sheet, { width: windowWidth }]}>
+                <ScrollView>
+                    {
+                        Object.entries(transactions).map(([date, transactionArray], index) => (
+                            <View key={index} style={styles.dayContainer}>
+                                <Text style={isDarkMode ? styles.dateDark : styles.date}>{date}</Text>
+                                {
+                                    transactionArray.map((item, transactionIndex) => (
+                                        <View key={transactionIndex} style={styles.transaction}>
+                                            <CategoryContainer style={styles.icon} category={item.category} size="s" />
+                                            <TransactionSpending
+                                                category={item.type}
+                                                location={item.store}
+                                                amount={item.price}
+                                            />
+                                        </View>
+                                    ))
                                 }
-                            }></View>
-                        )}
-                    </View>
-                ))}
-                {/* </ScrollView> */}
+                                {
+                                    index < Object.entries(transactions).length - 1 && (
+                                        <View style={
+                                            isDarkMode ? {
+                                                borderBottomColor: '#535353',
+                                                borderBottomWidth: StyleSheet.hairlineWidth,
+                                                marginTop: 10,
+                                                marginBottom: 15,
+                                                width: 350
+                                            } : {
+                                                borderBottomColor: 'darkGrey',
+                                                borderBottomWidth: StyleSheet.hairlineWidth,
+                                                marginTop: 10,
+                                                marginBottom: 15,
+                                                width: 350
+                                            }
+                                        }></View>
+                                    )
+                                }
+                            </View>
+                        ))
+                    }
+                </ScrollView>
             </View>
         </View>
     );
