@@ -54,7 +54,7 @@ export default function NavBar({ signedIn }) {
             key: 'add',
             title: 'Add',
             focusedIcon: 'plus',
-            unfocusedIcon: 'plus-circle',
+            unfocusedIcon: 'plus',
             color: '#707070',
             notif: false
 
@@ -110,6 +110,20 @@ export default function NavBar({ signedIn }) {
         );
     };
 
+    const CustomTabBarLabel = ({ route, focused, color }) => (
+        <Text
+            style={{
+                width: '100%',
+                textAlign: 'center',
+                fontSize: 12,
+                color: focused ? color : '#707070',
+                fontWeight: focused ? 'bold' : 'normal'
+            }}
+        >
+            {route.title}
+        </Text>
+    );
+
     return (
         <BottomNavigation
             navigationState={{ index, routes }}
@@ -117,10 +131,17 @@ export default function NavBar({ signedIn }) {
             renderScene={renderScene}
             renderIcon={renderIcon}
             barStyle={isDarkMode
-                ? { borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: theme.colors.secondaryDark }
-                : { backgroundColor: '#F4F4F4', borderTopLeftRadius: 20, borderTopRightRadius: 20, }}
+                ? {
+                    borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: theme.colors.secondaryDark, position: 'absolute',
+                    overflow: 'hidden'
+                }
+                : {
+                    backgroundColor: '#F4F4F4', borderTopLeftRadius: 20, borderTopRightRadius: 20, position: 'absolute',
+                    overflow: 'hidden'
+                }}
             keyboardHidesNavigationBar={true}
             theme={isDarkMode ? darkOverride : lightOverride}
+            renderLabel={CustomTabBarLabel}
         />
     );
 }

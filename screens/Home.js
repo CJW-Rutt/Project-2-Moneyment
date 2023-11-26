@@ -1,8 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions, ScrollView } from 'react-native';
 import BezLineChart from '../components/atoms/BezLineChart';
 import TransactionsCardHome from '../components/molecules/TransactionsCardHome';
 import { Text } from 'react-native-paper';
+import { DarkModeContext } from '../context/darkMode';
+import { useContext } from 'react'
+
 import {
     MD3LightTheme as DefaultTheme,
     PaperProvider,
@@ -12,38 +15,50 @@ import TopHeader from '../components/molecules/TopHeader';
 export default function Home() {
 
     const windowWidth = Dimensions.get('window').width;
-    
+    const screenHeight = Dimensions.get('window').height;
+
+    const { isDarkMode } = useContext(DarkModeContext);
+
     return (
-
-        <View style={[styles.container]}>
+        <View style={[styles.container, { height: screenHeight - 105 }]}>
             <TopHeader title="Transactions" />
-            <StatusBar style="auto" />
-            <View style={styles.topContainer}>
-                <View style={styles.textContainer}>
-                    <Text style={styles.title}>Track Your Transactions!</Text>
-                    <Text style={styles.desc}>Understand your finances with simple charts</Text>
+            {/* <StatusBar style="auto" /> */}
+            <ScrollView >
+                <View style={[styles.subContainer]}>
+                    <View style={styles.topContainer}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.title}>Track Your Transactions!</Text>
+                            <Text style={isDarkMode ? styles.descDark : styles.desc}>Understand your finances with simple charts</Text>
+                        </View>
+                        <View style={styles.content}>
+                            <BezLineChart />
+                        </View>
+                        <View style={{
+                            borderBottomColor: '#F4F4F4',
+                            borderBottomWidth: 1,
+                            marginTop: 5,
+                            marginBottom: 5,
+                            width: 350
+                        }}></View>
+                    </View>
+                    <TransactionsCardHome style={styles.transaction} />
                 </View>
-                <View style={styles.content}>
-                    <BezLineChart />
-                </View>
-                <View style={{
-                    borderBottomColor: '#F4F4F4',
-                    borderBottomWidth: 1,
-                    marginTop: 5,
-                    marginBottom: 5,
-                    width: { windowWidth }
-                }}></View>
-            </View>
-            <TransactionsCardHome style={styles.transaction} />
+            </ScrollView>
         </View>
-
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         alignItems: 'center',
+        justifyContent: 'flex-start',
+    },
+    subContainer: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignContent: 'center',
         justifyContent: 'flex-start',
     },
     topContainer: {
@@ -69,6 +84,10 @@ const styles = StyleSheet.create({
     desc: {
         fontSize: 14,
         color: "#707070"
+    },
+    descDark: {
+        fontSize: 14,
+        color: "#CFCFCF"
     },
     lightContainer: {
         backgroundColor: '#ffffff',

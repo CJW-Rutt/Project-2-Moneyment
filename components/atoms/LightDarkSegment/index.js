@@ -55,7 +55,7 @@ export default function LightDarkSegment({ arr }) {
                     </Text>
                   </View> :
                   <View style={styles.buttonContainer}>
-                    <Image source={require('../../../assets/icons/setting/light_reverse.png')} style={{ width: 20, height: 20 }} />
+                    <Image source={require('../../../assets/icons/setting/light_reverse.svg')} style={{ width: 20, height: 20 }} />
                     <Text >
                       {item.title}
                     </Text>

@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from '@iconify/react';
+import { DarkModeContext } from '../../../context/darkMode';
+import { useContext } from 'react'
 
 const TransactionType = ({ onTypeSelect }) => {
+
+  const { isDarkMode } = useContext(DarkModeContext);
+
   const options = ['Debit Card', 'Credit Card', 'Cash'];
   const [selectedValue, setSelectedValue] = useState("Debit Card");
 
@@ -12,9 +17,9 @@ const TransactionType = ({ onTypeSelect }) => {
     setSelectedValue(selectedOption);
 
     if (onTypeSelect) {
-        onTypeSelect(selectedOption);
+      onTypeSelect(selectedOption);
     }
-};
+  };
 
   return (
     <View style={styles.container}>
@@ -32,10 +37,9 @@ const TransactionType = ({ onTypeSelect }) => {
         rowTextStyle={styles.rowTextStyle}
         selectedRowStyle={styles.selectedRowStyle}
         selectedRowTextStyle={styles.selectedRowTextStyle}
-        buttonTextStyle={styles.buttonTextStyle}
+        buttonTextStyle={isDarkMode ? styles.buttonTextStyleDark : styles.buttonTextStyle}
         buttonStyle={styles.buttonStyle}
         rowStyle={styles.rowStyle}
-
       />
     </View>
   );
@@ -85,13 +89,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: "#707070",
-    backgroundColor: "white",
+    backgroundColor: "transparent",
   },
   buttonTextStyle: {
     fontSize: 12,
     textAlign: "left",
     marginLeft: 0,
     color: 'black'
+  },
+  buttonTextStyleDark: {
+    fontSize: 12,
+    textAlign: "left",
+    marginLeft: 0,
+    color: '#CFCFCF'
   },
   valueText: {
     fontSize: 16,
