@@ -1,20 +1,38 @@
 import { StyleSheet, View, Button, Modal, Pressable } from 'react-native';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Text } from 'react-native-paper';
 import { Image } from "expo-image"
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import ScanReceipt from '../../../templates/ScanReceipt';
 import LongTextButton from '../../../atoms/LongTextButton';
 import { DarkModeContext } from '../../../../context/darkMode';
+import TransactionFormModal from '../../../modal/Add/TransactionFormModal';
 
 export default function AddTransactionSingle() {
-    const [showScan, setShowScan] = useState(false)
+    const [showScan, setShowScan] = useState(false);
     const { isDarkMode } = useContext(DarkModeContext);
+    const [showTransactionFormModal, setShowTransactionFormModal] = useState(false);
 
+    useEffect(() => {
+        console.log(`Transaction Form Modal is now ${showTransactionFormModal ? 'open' : 'closed'}.`);
+        if (showTransactionFormModal) {
+            console.log("Modal opened. Trace this back to find where it's set.");
+        }
+    }, [showTransactionFormModal]);
+
+    const toggleTransactionFormModal = () => {
+        console.log("AddTransactionSingle: toggleTransactionFormModal");
+        setShowTransactionFormModal(!showTransactionFormModal);
+    };
 
     const handleScan = () => {
+        console.log('AddTransactionSingle: handleScan');
         showScan ? setShowScan(false) : setShowScan(true)
     }
+
+    const handleAddBudget = (newBudget) => {
+        console.log("New budget added:", newBudget);
+    };
 
     return (
         <View style={styles.container}>
@@ -34,19 +52,27 @@ export default function AddTransactionSingle() {
                                 </Pressable>
                                 <Text style={styles.headerTitle}>Scan Receipt</Text>
                             </View>
-                            <ScanReceipt />
+                            <ScanReceipt onCloseScan={handleScan} />
                         </Modal>
                     </> :
                     <>
-                        {console.log('add transaction', isDarkMode)}
+                        {/* {console.log('add transaction', isDarkMode)} */}
                         <Text style={styles.title}>What works better for you!</Text>
                         <Text style={styles.desc}>Choose the method tailored to your unique needs</Text>
                         <View style={styles.buttonContainer}>
                             <LongTextButton type="scan" onPress={() => setShowScan(true)} />
-                            <LongTextButton type="manual" />
+                            <LongTextButton type="manual" onPress={toggleTransactionFormModal} />
                         </View>
                         {isDarkMode === true ? <Image source={require("../../../../assets/graphics/people/selfieDark.png")} alt='' style={{ width: 338, height: 240, marginTop: 10, }} contentFit="contain" />
                             : <Image source={require("../../../../assets/graphics/people/selfie.png")} alt='' style={{ width: 338, height: 240, marginTop: 10, }} contentFit="contain" />}
+
+                        {showTransactionFormModal && (
+                            <TransactionFormModal 
+                                visible={showTransactionFormModal} 
+                                onClose={toggleTransactionFormModal} 
+                                onAddBudget={handleAddBudget}
+                            />
+                        )}
                     </>
             }
         </View>

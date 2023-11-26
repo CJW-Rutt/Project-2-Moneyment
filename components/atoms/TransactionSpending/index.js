@@ -3,11 +3,12 @@ import CategoryContainer from "../CategoryContainer"
 import IconContainer from "../IconContainer"
 import { Text } from "react-native-paper"
 
-export default function TransactionSpending({ category = 'Credit Card', location = 'Starbucks', amount = '13.70' }) {
+export default function TransactionSpending({ category, location, amount }) {
 
-    let categoryIcon = category.toLowerCase()
+    //let categoryIcon = category.toLowerCase() !! not in use? !!
 
-
+    const decimalAmount = amount.toFixed(2);
+ 
     return (
         <View style={styles.container}>
             <View style={styles.cardContainer}>
@@ -20,13 +21,9 @@ export default function TransactionSpending({ category = 'Credit Card', location
                     </View>
                 </View>
                 <View style={styles.amountContainer}>
-                    <Text style={styles.amount}>-${amount}</Text>
-
+                    <Text style={styles.amount}>-${decimalAmount}</Text>
                 </View>
-
-
             </View>
-
         </View>
     )
 }

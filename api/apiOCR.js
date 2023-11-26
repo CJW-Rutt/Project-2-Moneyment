@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { retreiveOcrKey } from './retreiveOcrKey';
 
-const OCR_API_KEY = process.env.EXPO_PUBLIC_OCR_KEY;
+const OCR_API_KEY = retreiveOcrKey();
 
 const ocrApiClient = axios.create({
     baseURL: 'https://apipro2.ocr.space',
@@ -14,7 +15,7 @@ export const processOCR = async (imageUri) => {
         type: 'image/jpg',
     });
     formData.append('language', 'eng');
-    formData.append('apikey', OCR_API_KEY);
+    formData.append('apikey', OCR_API_KEY._j);
     formData.append('isOverlayRequired', true);
 
     try {

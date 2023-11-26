@@ -1,9 +1,5 @@
-import ManageBudget from "../../atoms/BudgetButton";
 import { StyleSheet, View, Pressable, Modal } from 'react-native';
 import { useState } from "react";
-import Icon from 'react-native-vector-icons/FontAwesome5'
-import BudgetForm from "../BudgetForm";
-import StackedChart from "../../atoms/StackedBarChart";
 import { Text } from "react-native-paper";
 import { DarkModeContext } from '../../../context/darkMode';
 import { useContext } from "react";
@@ -42,7 +38,7 @@ export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBu
 
     return (
         <View style={styles.manageContainer}>
-            {console.log('Theme: ', theme.colors)}
+            {/* {console.log('Theme: ', theme.colors)} */}
             <View style={styles.manageLeftCol}>
                 <View style={styles.budgetRow}>
                     <Text style={styles.remainingTitle}>Remaining Budget</Text>

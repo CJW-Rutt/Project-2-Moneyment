@@ -2,7 +2,6 @@ import SegmentedControl from '@react-native-segmented-control/segmented-control'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
-import { Image } from 'expo-image'
 import Animated, {
   useSharedValue,
   withTiming,
@@ -17,7 +16,7 @@ export default function Segmented({
   const bgLeft = useSharedValue(0)
 
   const segStyle = {
-    width: 350
+    width: 338
   }
 
   const bgStyle = {
@@ -25,17 +24,9 @@ export default function Segmented({
     left: bgLeft
   }
 
-  const [selected, setSelected] = useState(false);
-
   const handlePress = (index, func) => {
     func()
-    bgLeft.value !== 0 ? (
-      bgLeft.value = withTiming(0 * bgStyle.width, { duration: 150 })
-    ) :
-      (
-        bgLeft.value = withTiming(1 * bgStyle.width, { duration: 150 })
-      )
-    setSelected(!selected)
+    bgLeft.value = withTiming(index * bgStyle.width, { duration: 150 })
   }
 
   return (
@@ -48,34 +39,13 @@ export default function Segmented({
             <TouchableOpacity style={styles.selection} key={index} onPress={() => {
               handlePress(index, item.onPress)
             }}>
-              {item.number === 0 ?
-                !selected ?
-                  <View style={styles.buttonContainer}>
-                    <Image source={require('../../../assets/icons/setting/light.png')} style={{ width: 20, height: 20 }} />
-                    <Text style={styles.active}>
-                      {item.title}
-                    </Text>
-                  </View> :
-                  <View style={styles.buttonContainer}>
-                    <Image source={require('../../../assets/icons/setting/light_reverse.png')} style={{ width: 20, height: 20 }} />
-                    <Text >
-                      {item.title}
-                    </Text>
-                  </View> :
-                item.number === 1 ?
-                  !selected ?
-                    <View style={styles.buttonContainer}>
-                      <Image source={require('../../../assets/icons/setting/dark_reverse.png')} style={{ width: 20, height: 20 }} />
-                      <Text >
-                        {item.title}
-                      </Text>
-                    </View> : <View style={styles.buttonContainer}>
-                      <Image source={require('../../../assets/icons/setting/dark.png')} style={{ width: 20, height: 20 }} />
-                      <Text >
-                        {item.title}
-                      </Text>
-                    </View> : <></>
-              }
+              {item.number.num == index ?
+                <Text style={styles.active}>
+                  {item.title}
+                </Text> :
+                <Text>
+                  {item.title}
+                </Text>}
             </TouchableOpacity>
           )
         })
@@ -93,7 +63,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   movingBg: {
     position: 'absolute',
@@ -108,16 +78,10 @@ const styles = StyleSheet.create({
   selection: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   active: {
     color: 'white',
-    fontWeight: 'bold',
-  },
-  buttonContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 5
-  },
+    fontWeight: 'bold'
+  }
 })

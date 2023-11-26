@@ -1,17 +1,39 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Image } from 'expo-image'
-import { useState, useContext } from 'react';
-import Segmented from '../components/atoms/Segmented';
+import { useState, useContext, useEffect } from 'react';
+import LightDarkSegment from '../components/atoms/LightDarkSegment';
 import { Text } from 'react-native-paper';
 import TopHeader from '../components/molecules/TopHeader';
 import { DarkModeContext } from '../context/darkMode';
-
+import UserLogOut from '../firebase/UserLogOut';
+import UserEmailSignIn from '../firebase/UserSignIn';
+import { auth } from '../firebase/firebase.config';
+import { onAuthStateChanged } from 'firebase/auth'
 
 export default function Settings() {
     // const { isDarkMode, toggleDarkMode } = useTheme();
     const [isDark, setIsDark] = useState(false)
+    const [signedIn, setSignedIn] = useState(false)
     const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+
+    const checkUser = async () => {
+        await onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uid = user.uid;
+                console.log('signed in', uid)
+                setSignedIn(true)
+            } else {
+                setSignedIn(false)
+                console.log('not signed in')
+            }
+        })
+    }
+
+    useEffect(() => {
+        checkUser()
+        // console.log('signedIn on Settings.js is', signedIn)
+    }, [])
 
     return (
         <View>
@@ -19,7 +41,7 @@ export default function Settings() {
             <View style={styles.container}>
                 <View style={styles.subContainer}>
                     <Text style={styles.title} variant="titleMedium">Display</Text>
-                    <Segmented arr={[
+                    <LightDarkSegment arr={[
                         {
                             title: 'Light',
                             onPress: () => {
@@ -40,14 +62,13 @@ export default function Settings() {
                         }
                     ]} />
                 </View>
-                {
-                    // isDark || darkMode ? <Text>it's dark!</Text> : <Text>it's not</Text>
-                }
+                {signedIn ? <UserLogOut /> : <></>}
+
                 <View style={styles.secondContainer}>
                     <View style={styles.textContainer}>
                         <Text style={styles.subTitle} variant="titleMedium">We are not financial advisors</Text>
                         <Text style={styles.body}>Moneyment provides AI-generated financial suggestions and should be used for informational purposes only. All financial decisions remain ultimately your responsibility.</Text>
-                        <Text style={styles.body}>Seek professional advice for complex financial matters.</Text>
+                        <Text style={styles.body}>Contact a financial provider to seek professional advice for complex financial matters.</Text>
                     </View>
                     <View style={styles.logoContainer}>
                         {isDark
@@ -93,7 +114,7 @@ const styles = StyleSheet.create({
         fontWeight: '800'
     },
     subTitle: {
-        fontSize: 12,
+        fontSize: 21,
         fontWeight: 'bold',
         // color: "#707070"
     },

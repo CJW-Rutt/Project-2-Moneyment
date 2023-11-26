@@ -10,22 +10,23 @@ import { Text } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 
 
-export default function BudgetForm({ onAddBudget, closeModal }) {
+export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) {
     const theme = useTheme()
     const { isDarkMode } = useContext(DarkModeContext);
 
-    const [budgetTitle, setBudgetTitle] = useState('');
-    const [budgetCategory, setBudgetCategory] = useState('');
-    const [totalBudget, setTotalBudget] = useState('');
+    const [budgetTitle, setBudgetTitle] = useState(budgetData?.budgetTitle || '');
+    const [budgetCategory, setBudgetCategory] = useState(budgetData?.budgetCategory || '');
+    const [totalBudget, setTotalBudget] = useState(budgetData?.totalBudget?.toString() || '');
 
     const handleSave = () => {
-        const newBudget = {
+        console.log("BudgetForm onSave:", onSave);
+        const updatedBudget = {
+            ...budgetData,
             budgetTitle,
             budgetCategory,
-            totalPrice: 0,
             totalBudget: parseFloat(totalBudget) || 0,
         };
-        onAddBudget(newBudget);
+        onSave(updatedBudget);
         closeModal();
     };
 
@@ -58,7 +59,7 @@ export default function BudgetForm({ onAddBudget, closeModal }) {
             {isDarkMode
                 ? <Image source={require("../../../assets/graphics/people/chillingDark.png")} alt='' style={{ width: 292, height: 186 }} contentFit="contain" />
                 : <Image source={require("../../../assets/graphics/people/chilling.png")} alt='' style={{ width: 292, height: 186 }} contentFit="contain" />}
-            <SaveButton onSave={handleSave} />
+            <SaveButton  onSave={handleSave} onPress={onClose} />
         </View>
     );
 }

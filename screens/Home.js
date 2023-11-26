@@ -1,7 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, ScrollView, View, Button, Dimensions } from 'react-native';
-import { Appearance, useColorScheme } from 'react-native';
-import WalletTemplate from '../components/templates/WalletTemplate';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import BezLineChart from '../components/atoms/BezLineChart';
 import TransactionsCardHome from '../components/molecules/TransactionsCardHome';
 import { Text } from 'react-native-paper';
@@ -14,7 +12,7 @@ import TopHeader from '../components/molecules/TopHeader';
 export default function Home() {
 
     const windowWidth = Dimensions.get('window').width;
-
+    
     return (
 
         <View style={[styles.container]}>
@@ -36,12 +34,11 @@ export default function Home() {
                     width: { windowWidth }
                 }}></View>
             </View>
-
             <TransactionsCardHome style={styles.transaction} />
         </View>
 
     );
-} //<NavButton icon='wallet' active />
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -66,11 +63,11 @@ const styles = StyleSheet.create({
     transaction: {
     },
     title: {
-        fontSize: 16,
+        fontSize: 21,
         fontWeight: 'bold',
     },
     desc: {
-        fontSize: 12,
+        fontSize: 14,
         color: "#707070"
     },
     lightContainer: {

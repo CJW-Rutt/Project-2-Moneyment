@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     title: {
-        fontSize: 18,
+        fontSize: 21,
         maxWidth: 355,
         fontWeight: 'bold',
         alignItems: 'flex-start',

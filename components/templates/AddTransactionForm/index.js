@@ -1,15 +1,46 @@
 import { View, TextInput, StyleSheet, Text } from "react-native"
 import { useState } from "react"
-import { Divider } from "react-native-paper"
 import TransactionType from "../../atoms/TransactionType"
+import SaveButton from "../../atoms/SaveButton"
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
-export default function AddTransactionForm({ initialValues }) {
-    console.log(initialValues);
+export default function AddTransactionForm({ initialValues = {}, onClose }) {
     const [store, setStore] = useState(initialValues.purchasePlace || '');
-    const [date, setDate] = useState('')
     const [price, setPrice] = useState(initialValues.totalAmount || '');
-    const [transaction, setTransaction] = useState('')
+    const [transactionType, setTransactionType] = useState('');
     const [budget, setBudget] = useState(initialValues.purchaseType || '');
+
+    const handleTransactionTypeSelect = (selectedType) => {
+        setTransactionType(selectedType);
+    };
+
+    const handleSave = async () => {
+        const db = getFirestore();
+
+        const newTransaction = {
+            store: store,
+            date: date, // We need to update this 
+            price: parseFloat(price),
+            budget: budget,
+            type: transactionType,
+        };
+    
+        try {
+            const docRef = await addDoc(collection(db, "transactions"), newTransaction);
+            onClose();
+            
+            console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    };
+
+    const formatDate = (date) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    }; 
+
+    const [date, setDate] = useState(formatDate(new Date()));
 
     return (
         <>
@@ -24,7 +55,7 @@ export default function AddTransactionForm({ initialValues }) {
                                 style={styles.input}
                                 value={store}
                                 onChangeText={text => setStore(text)}
-                                placeholder="MUJI"
+                                placeholder="Store Name"
                             />
                         </View>
                         <View style={styles.rowContainer}>
@@ -36,18 +67,19 @@ export default function AddTransactionForm({ initialValues }) {
                                     style={styles.inputShort}
                                     value={date}
                                     onChangeText={text => setDate(text)}
-                                    placeholder="July 9, 2023"
+                                    placeholder="Date"
                                 />
                             </View>
                             <View style={styles.smallRowContainer}>
                                 <Text>
-                                    Time
+                                    Price *
                                 </Text>
                                 <TextInput
                                     style={styles.inputShort}
-                                    value={time}
-                                    onChangeText={text => setTime(text)}
-                                    placeholder="1:26:06"
+                                    value={price}
+                                    onChangeText={price => setPrice(price)}
+                                    placeholder="$5.00"
+                                    keyboardType="numeric"
                                 />
                             </View>
                         </View>
@@ -55,7 +87,7 @@ export default function AddTransactionForm({ initialValues }) {
                             <Text>
                                 Transaction Type
                             </Text>
-                            <TransactionType />
+                            <TransactionType onTypeSelect={handleTransactionTypeSelect} />
                         </View>
 
                         <View style={styles.smallContainer}>
@@ -71,13 +103,8 @@ export default function AddTransactionForm({ initialValues }) {
                         </View>
                     </View>
                 </View>
-
-                <Divider />
-
                 <View>
-                    <Text>
-                        OCR info here
-                    </Text>
+                    <SaveButton onSave={handleSave} />
                 </View>
             </View>
         </>
@@ -113,7 +140,6 @@ const styles = StyleSheet.create({
         height: 35,
         borderWidth: 1,
         borderRadius: 5,
-        border: 1,
         borderColor: '#707070',
         padding: 10,
         fontSize: 12,
@@ -123,7 +149,6 @@ const styles = StyleSheet.create({
         height: 35,
         borderWidth: 1,
         borderRadius: 5,
-        border: 1,
         borderColor: '#707070',
         padding: 10,
         fontSize: 12,

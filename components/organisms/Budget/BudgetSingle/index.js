@@ -1,8 +1,6 @@
 import { View, StyleSheet, ScrollView } from "react-native";
 import TransactionsCard from "../../../molecules/TransactionsCard";
-import BarGraph from "../../../atoms/BarGraph";
 import BudgetSingleSegment from "../BudgetSingleSegment";
-import { Text } from "react-native-paper";
 
 export default function BudgetSingle({ budget }) {
     return (

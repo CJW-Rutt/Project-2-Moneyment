@@ -9,7 +9,7 @@ import { View, StyleSheet, Text, Dimensions } from "react-native";
 export default function BudgetSingleSegment({ budget }) {
     const [position, setPosition] = useState(1)
     const [count, setCount] = useState(3)
-    const [topic, setTopic] = useState('accounts')
+    const [topic, setTopic] = useState('overview')
     const [num, setNum] = useState(0)
     const [data, setData] = useState([1200, 6100, 15000, 20532])
 
@@ -73,7 +73,7 @@ export default function BudgetSingleSegment({ budget }) {
                             setNum(0)
                             { accData === '' ? setData(defaultAccountData) : setData(accData) }
                             setView('Overview')
-                        }, number: { num }
+                        }, number: 0
                     },
                     {
                         title: 'Details', onPress: () => {
@@ -82,18 +82,16 @@ export default function BudgetSingleSegment({ budget }) {
                             setNum(1)
                             { incData === '' ? setData(defaultIncomeData) : setData(incData) }
                             setView('Details')
-                        }, number: { num }
+                        }, number: 1
                     },
                 ]} />
                 {
                     topic === 'overview' ?
                         <View style={styles.budgetContainer}>
                             <BudgetCard budget={budget} />
-
                         </View> :
                         topic === 'details' ?
                             <View style={styles.barGraphContainer}>
-
                                 <BarGraph />
                             </View> : <></>
                 }
