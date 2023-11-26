@@ -3,9 +3,13 @@ import { View, StyleSheet, ScrollView, Dimensions, Text } from "react-native";
 import CategoryContainer from "../../atoms/CategoryContainer";
 import TransactionSpending from "../../atoms/TransactionSpending";
 import { collection, query, onSnapshot, getFirestore } from "firebase/firestore";
+import { DarkModeContext } from '../../../context/darkMode';
+import { useContext } from 'react'
 
 
 export default function TransactionsCardHome() {
+
+    const { isDarkMode } = useContext(DarkModeContext);
 
     const windowWidth = Dimensions.get('window').width; // replace with SIZES.width from constants
     const [transactions, setTransactions] = useState({});
@@ -13,7 +17,7 @@ export default function TransactionsCardHome() {
     useEffect(() => {
         const db = getFirestore();
         const q = query(collection(db, "transactions"));
-    
+
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const newTransactions = {};
             querySnapshot.forEach((doc) => {
@@ -26,14 +30,14 @@ export default function TransactionsCardHome() {
             });
             setTransactions(newTransactions);
         });
-    
+
         return () => unsubscribe();
     }, []);
-    
+
     if (!transactions || Object.keys(transactions).length === 0) {
         return <Text>No transactions available</Text>;
     }
-    
+
     return (
         <View style={styles.container}>
             <View style={[styles.sheet, { width: windowWidth }]}>
@@ -41,7 +45,7 @@ export default function TransactionsCardHome() {
                     {
                         Object.entries(transactions).map(([date, transactionArray], index) => (
                             <View key={index} style={styles.dayContainer}>
-                                <Text style={styles.date}>{date}</Text>
+                                <Text style={isDarkMode ? styles.dateDark : styles.date}>{date}</Text>
                                 {
                                     transactionArray.map((item, transactionIndex) => (
                                         <View key={transactionIndex} style={styles.transaction}>
@@ -56,13 +60,21 @@ export default function TransactionsCardHome() {
                                 }
                                 {
                                     index < Object.entries(transactions).length - 1 && (
-                                        <View style={{
-                                            borderBottomColor: 'darkGrey',
-                                            borderBottomWidth: StyleSheet.hairlineWidth,
-                                            marginTop: 10,
-                                            marginBottom: 15,
-                                            width: windowWidth
-                                        }}></View>
+                                        <View style={
+                                            isDarkMode ? {
+                                                borderBottomColor: '#535353',
+                                                borderBottomWidth: StyleSheet.hairlineWidth,
+                                                marginTop: 10,
+                                                marginBottom: 15,
+                                                width: 350
+                                            } : {
+                                                borderBottomColor: 'darkGrey',
+                                                borderBottomWidth: StyleSheet.hairlineWidth,
+                                                marginTop: 10,
+                                                marginBottom: 15,
+                                                width: 350
+                                            }
+                                        }></View>
                                     )
                                 }
                             </View>
@@ -76,19 +88,22 @@ export default function TransactionsCardHome() {
 
 const styles = StyleSheet.create({
     sheet: {
-        // backgroundColor: 'white',
+        // backgroundColor: 'blue',
         minHeight: 200,
-        maxHeight: 500,
+        alignContents: 'center',
+        // maxHeight: 500,
         paddingLeft: 20,
         paddingRIght: 20,
+        width: 370
     },
     container: {
         flex: 1,
-        alignItems: 'center',
+        alignContents: 'center',
         borderBottomColor: 'darkGrey',
+        width: '100%'
     },
     dayContainer: {
-        width: 350
+        width: '100%',
     },
     title: {
         fontSize: 16,
@@ -108,4 +123,10 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         marginBottom: 10
     },
+    dateDark: {
+        fontSize: 14,
+        fontWeight: '500',
+        marginBottom: 10,
+        color: "#CFCFCF"
+    }
 })

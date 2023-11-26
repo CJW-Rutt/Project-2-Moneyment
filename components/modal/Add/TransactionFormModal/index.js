@@ -2,29 +2,36 @@ import { useEffect } from 'react';
 import { Modal, View, StyleSheet, Pressable, Text } from 'react-native';
 import AddTransactionForm from '../../../templates/AddTransactionForm';
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import { DarkModeContext } from '../../../../context/darkMode';
+import { useContext } from 'react'
 
-export default function TransactionFormModal({ visible, onClose, initialValues }) { 
+export default function TransactionFormModal({ visible, onClose, initialValues }) {
+
+    const { isDarkMode } = useContext(DarkModeContext);
 
     useEffect(() => {
         console.log("Modal component mounted");
-    
+
         return () => {
             console.log("Modal component unmounted");
         };
     }, []);
 
     return (
-        <Modal 
+        <Modal
             animationType="slide"
-            transparent={false} 
+            transparent={false}
             visible={visible}
         >
             <View style={styles.modalContainer}>
-                <View style={styles.modalHeader}>
+                <View style={isDarkMode ? styles.modalHeaderDark : styles.modalHeader}>
                     <Pressable style={styles.closeButton} onPress={onClose}>
-                        <Icon name='arrow-left' size={25} color='#000' />
+                        {
+                            isDarkMode ? <Icon name='arrow-left' size={20} color='#CFCFCF' />
+                                : <Icon name='arrow-left' size={20} color='#000' />
+                        }
                     </Pressable>
-                    <Text style={styles.headerTitle}>Confirmation</Text>
+                    <Text style={isDarkMode ? styles.headerTitleDark : styles.headerTitle}>Confirmation</Text>
                 </View>
                 <AddTransactionForm initialValues={initialValues} onClose={onClose} />
             </View>
@@ -65,24 +72,50 @@ const styles = StyleSheet.create({
     modalHeader: {
         flex: 1,
         flexDirection: 'row',
-        maxHeight: 86,
+        maxHeight: 70,
         width: '100%',
         borderBottomWidth: 1,
         borderColor: 'lightgray',
         justifyContent: 'center',
         alignItems: 'flex-end',
         paddingBottom: 15,
+        gap: 10,
+    },
+    modalHeaderDark: {
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 70,
+        width: '100%',
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        paddingBottom: 15,
+        gap: 10,
+        backgroundColor: "#212121"
     },
     headerTitle: {
+        flex: 1,
         fontSize: 18,
         textAlign: 'left',
         fontWeight: 'bold',
-        width: '50%',
-        paddingLeft: 90,
+        marginTop: 20,
+        textAlign: 'center',
+        paddingRight: 45
+    },
+    headerTitleDark: {
+        flex: 1,
+        fontSize: 18,
+        textAlign: 'left',
+        fontWeight: 'bold',
+        marginTop: 20,
+        textAlign: 'center',
+        paddingRight: 45,
+        color: "#CFCFCF"
     },
     closeButton: {
+        marginTop: 20,
         paddingLeft: 20
-
     },
     editButton: {
     },

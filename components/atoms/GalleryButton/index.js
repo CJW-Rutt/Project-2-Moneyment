@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View, Pressable, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-
+import { DarkModeContext } from "../../../context/darkMode";
+import { useContext } from "react";
 
 export default function GalleryButton({ onImageSelect }) {
-    
+    const { isDarkMode } = useContext(DarkModeContext)
+
     const selectImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -18,16 +20,19 @@ export default function GalleryButton({ onImageSelect }) {
     };
 
     return (
-        <View style={styles.container}>
-            <Button title="Select Image" onPress={selectImage} />
-        </View>
+        // <View style={styles.container}>
+        //     <Button title="Select Image" onPress={selectImage} color="transparent" />
+        // </View>
+        <Pressable style={styles.container} onPress={selectImage}>
+            <Text style={isDarkMode ? styles.textDark : styles.text}>SELECT IMAGE</Text>
+        </Pressable>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        height: 43,
-        width: 356,
+        height: '100%',
+        width: '100%',
         justifyContent: 'center',
         alignContent: 'center',
         borderRadius: 10,
@@ -35,6 +40,17 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: -1 },
         shadowOpacity: 0.25,
         shadowRadius: 6,
-        backgroundColor: '#429488'
     },
+    text: {
+        color: "white",
+        textAlign: 'center',
+        fontWeight: "800",
+        fontSize: 14
+    },
+    textDark: {
+        color: "#212121",
+        textAlign: 'center',
+        fontWeight: "800",
+        fontSize: 14
+    }
 });

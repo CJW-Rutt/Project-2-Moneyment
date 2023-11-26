@@ -3,8 +3,13 @@ import { useState } from "react"
 import TransactionType from "../../atoms/TransactionType"
 import SaveButton from "../../atoms/SaveButton"
 import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { DarkModeContext } from '../../../context/darkMode';
+import { useContext } from 'react'
 
 export default function AddTransactionForm({ initialValues = {}, onClose }) {
+
+    const { isDarkMode } = useContext(DarkModeContext);
+
     const [store, setStore] = useState(initialValues.purchasePlace || '');
     const [price, setPrice] = useState(initialValues.totalAmount || '');
     const [transactionType, setTransactionType] = useState('');
@@ -24,11 +29,11 @@ export default function AddTransactionForm({ initialValues = {}, onClose }) {
             budget: budget,
             type: transactionType,
         };
-    
+
         try {
             const docRef = await addDoc(collection(db, "transactions"), newTransaction);
             onClose();
-            
+
             console.log("Document written with ID: ", docRef.id);
         } catch (e) {
             console.error("Error adding document: ", e);
@@ -38,67 +43,71 @@ export default function AddTransactionForm({ initialValues = {}, onClose }) {
     const formatDate = (date) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return date.toLocaleDateString('en-US', options);
-    }; 
+    };
 
     const [date, setDate] = useState(formatDate(new Date()));
 
     return (
         <>
-            <View style={styles.maincontainer}>
+            <View style={isDarkMode ? styles.maincontainerDark : styles.maincontainer}>
                 <View style={styles.container}>
-                    <Text style={styles.reviewText}>Review your Transaction</Text>
-                    <Text style={styles.subText}>* required fields</Text>
+                    <Text style={isDarkMode ? styles.reviewTextDark : styles.reviewText}>Review your Transaction</Text>
+                    <Text style={isDarkMode ? styles.subTextDark : styles.subText}>* required fields</Text>
                     <View>
                         <View style={styles.smallContainer}>
-                            <Text>Store *</Text>
+                            <Text style={isDarkMode ? styles.textDark : ""}>Store *</Text>
                             <TextInput
-                                style={styles.input}
+                                style={isDarkMode ? styles.inputDark : styles.input}
                                 value={store}
                                 onChangeText={text => setStore(text)}
-                                placeholder="Store Name"
+                                placeholder="Enter Store Name..."
+                                placeholderTextColor={isDarkMode ? "#CFCFCF" : "#000"}
                             />
                         </View>
                         <View style={styles.rowContainer}>
                             <View style={styles.smallRowContainer}>
-                                <Text>
+                                <Text style={isDarkMode ? styles.textDark : ""}>
                                     Date *
                                 </Text>
                                 <TextInput
-                                    style={styles.inputShort}
+                                    style={isDarkMode ? styles.inputShortDark : styles.inputShort}
                                     value={date}
                                     onChangeText={text => setDate(text)}
-                                    placeholder="Date"
+                                    placeholder="Select date"
+                                    placeholderTextColor={isDarkMode ? "#CFCFCF" : "#000"}
                                 />
                             </View>
                             <View style={styles.smallRowContainer}>
-                                <Text>
+                                <Text style={isDarkMode ? styles.textDark : ""}>
                                     Price *
                                 </Text>
                                 <TextInput
-                                    style={styles.inputShort}
+                                    style={isDarkMode ? styles.inputShortDark : styles.inputShort}
                                     value={price}
                                     onChangeText={price => setPrice(price)}
                                     placeholder="$5.00"
                                     keyboardType="numeric"
+                                    placeholderTextColor={isDarkMode ? "#CFCFCF" : "#000"}
                                 />
                             </View>
                         </View>
                         <View style={styles.smallContainer}>
-                            <Text>
+                            <Text style={isDarkMode ? styles.textDark : ""}>
                                 Transaction Type
                             </Text>
                             <TransactionType onTypeSelect={handleTransactionTypeSelect} />
                         </View>
 
                         <View style={styles.smallContainer}>
-                            <Text>
+                            <Text style={isDarkMode ? styles.textDark : ""}>
                                 Budget Name *
                             </Text>
                             <TextInput
-                                style={styles.input}
+                                style={isDarkMode ? styles.inputDark : styles.input}
                                 value={budget}
                                 onChangeText={text => setBudget(text)}
-                                placeholder="Shopping"
+                                placeholder="Budget Name"
+                                placeholderTextColor={isDarkMode ? "#CFCFCF" : "#000"}
                             />
                         </View>
                     </View>
@@ -114,11 +123,17 @@ export default function AddTransactionForm({ initialValues = {}, onClose }) {
 const styles = StyleSheet.create({
     maincontainer: {
         flex: 1,
+        gap: 10
+    },
+    maincontainerDark: {
+        flex: 1,
+        gap: 10,
+        backgroundColor: "#212121"
     },
     container: {
-        paddingLeft: 30,
-        paddingRight: 30,
-        marginBottom: 30
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 20
     },
     smallContainer: {
         gap: 3,
@@ -134,7 +149,7 @@ const styles = StyleSheet.create({
     smallRowContainer: {
         width: '48%',
         flexGrow: 1,
-        gap: 3
+        gap: 3,
     },
     input: {
         height: 35,
@@ -154,15 +169,51 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: "400"
     },
+    inputDark: {
+        height: 35,
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#707070',
+        padding: 10,
+        fontSize: 12,
+        fontWeight: "400",
+        color: "#CFCFCF"
+    },
+    inputShortDark: {
+        height: 35,
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#707070',
+        padding: 10,
+        fontSize: 12,
+        fontWeight: "400",
+        color: "#CFCFCF"
+    },
     reviewText: {
         fontSize: 16,
         fontWeight: "700",
-        paddingTop: 20,
+        // paddingTop: 20,
         paddingBottom: 5
+    },
+    reviewTextDark: {
+        fontSize: 16,
+        fontWeight: "700",
+        // paddingTop: 20,
+        paddingBottom: 5,
+        color: "#CFCFCf"
     },
     subText: {
         fontSize: 12,
         fontWeight: "400",
-        paddingBottom: 15
+        paddingBottom: 15,
+    },
+    subTextDark: {
+        fontSize: 12,
+        fontWeight: "400",
+        paddingBottom: 15,
+        color: "#CFCFCF"
+    },
+    textDark: {
+        color: "#CFCFCF"
     }
 })

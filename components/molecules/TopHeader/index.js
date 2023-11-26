@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
         marginTop: 20,
-        marginBottom: 10
+        marginBottom: 10,
+        fontWeight: 800
     },
     icon: {
         position: 'absolute',

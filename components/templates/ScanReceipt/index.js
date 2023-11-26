@@ -10,10 +10,16 @@ import { gptTransactionReview } from "../../../api/gptTransactionReview"
 import { retreiveOcrKey } from "../../../api/retreiveOcrKey"
 import TransactionFormModal from "../../modal/Add/TransactionFormModal"
 
+import { DarkModeContext } from "../../../context/darkMode";
+import { useContext } from "react";
+
 export default function ScanReceipt({ onCloseScan }) {
+
+    const { isDarkMode } = useContext(DarkModeContext)
+
     const message = {
         takePhoto: {
-            header: 'Take a photo',
+            header: 'Take a photo!',
             body: 'Include the store name, transaction date, item details, and prices in your photo.'
         },
         photoTaken: {
@@ -22,7 +28,7 @@ export default function ScanReceipt({ onCloseScan }) {
         }
     }
 
-        useEffect(() => {
+    useEffect(() => {
         // This is the effect function, it runs after the initial render.
 
         return () => {
@@ -61,13 +67,13 @@ export default function ScanReceipt({ onCloseScan }) {
         try {
             const ocrParsedResult = await processOCR(uri);
             const retrieveKey = await retreiveOcrKey();
-    
+
             if (ocrParsedResult.IsErroredOnProcessing) {
                 setError(ocrParsedResult.ErrorMessage);
             } else {
                 const parsedResults = ocrParsedResult["ParsedResults"];
                 let pageText = '';
-    
+
                 if (parsedResults && Array.isArray(parsedResults)) {
                     parsedResults.forEach((value) => {
                         const exitCode = value["FileParseExitCode"];
@@ -85,7 +91,7 @@ export default function ScanReceipt({ onCloseScan }) {
                 } else {
                     pageText = "No parsed results available";
                 }
-    
+
                 if (pageText) {
                     try {
                         const gptResponse = await gptTransactionReview(gptQuestion, pageText, gptRole);
@@ -123,18 +129,18 @@ export default function ScanReceipt({ onCloseScan }) {
 
     return (
         <>
-            <View style={styles.container}>
-            <View style={styles.headermessageContainer}>
-                {
-                    photoTaken ? <Message header={message.photoTaken.header} bodyCopy={message.photoTaken.body} /> :
-                        <Message header={message.takePhoto.header} bodyCopy={message.takePhoto.body} />
-                }
+            <View style={isDarkMode ? styles.containerDark : styles.container}>
+                <View style={styles.headermessageContainer}>
+                    {
+                        photoTaken ? <Message header={message.photoTaken.header} bodyCopy={message.photoTaken.body} /> :
+                            <Message header={message.takePhoto.header} bodyCopy={message.takePhoto.body} />
+                    }
                 </View>
                 {isLoading ? (
                     <ActivityIndicator size="small" color="#0000ff" />
                 ) : (
                     <View style={styles.photocontainer}>
-                        <View style={imageUri ? styles.borderSheetWithImage : styles.borderSheet}>
+                        <View style={imageUri ? (isDarkMode ? styles.borderSheetWithImageDark : styles.borderSheetWithImage) : (isDarkMode ? styles.borderSheetDark : styles.borderSheet)}>
                             {
                                 showCamera && photoTaken === false ?
                                     <>
@@ -146,10 +152,10 @@ export default function ScanReceipt({ onCloseScan }) {
                                         </> :
                                         <>
                                             {
-                                                imageUri ? <></> : 
-                                                    <Text style={[styles.text, styles.header]}>
-                                                        Example
-                                                    </Text>
+                                                // imageUri ? <></> :
+                                                //     <Text style={[styles.text, styles.header]}>
+                                                //         Example
+                                                //     </Text>
                                             }
                                             {
                                                 imageUri ?
@@ -157,16 +163,17 @@ export default function ScanReceipt({ onCloseScan }) {
                                                         source={{ uri: imageUri }}
                                                         style={{ width: 360, height: 520, marginBottom: 10 }}
                                                     /> :
-                                                        <Image source={require('../../../assets/graphics/receiptExample.png')} style={styles.image} />
+
+                                                    isDarkMode ? <Image source={require('../../../assets/graphics/receiptExample_dark.svg')} style={styles.image} /> : <Image source={require('../../../assets/graphics/receiptExample.svg')} style={styles.image} />
                                             }
                                             {
-                                                imageUri ? <></> : 
-                                                    <Text style={[styles.text, styles.header]}>
-                                                        Note: Sometimes the date is at the bottom of the receipt.
+                                                imageUri ? <></> :
+                                                    <Text style={isDarkMode ? [styles.textDark, styles.header] : [styles.text, styles.header]}>
+                                                        Sometimes the date is at the <Text style={{ fontWeight: 'bold' }}>bottom</Text> of the receipt
                                                     </Text>
                                             }
                                         </>
-                                        
+
                             }
                         </View>
 
@@ -182,7 +189,7 @@ export default function ScanReceipt({ onCloseScan }) {
                             }
                         </Pressable> */}
 
-                        <Pressable style={styles.button}>
+                        <Pressable style={isDarkMode ? styles.buttonDark : styles.button}>
                             {
                                 imageUri ?
                                     <Text style={styles.buttonText} onPress={() => handleOCRProcessing(imageUri)}>Next</Text> :
@@ -190,7 +197,7 @@ export default function ScanReceipt({ onCloseScan }) {
                             }
                         </Pressable>
 
-                        <TransactionFormModal 
+                        <TransactionFormModal
                             visible={showForm}
                             onClose={onCloseScan}
                             initialValues={reviewResults}
@@ -207,7 +214,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     borderSheet: {
-        borderWidth: 5,
+        borderWidth: 3,
         borderColor: '#429488',
         borderRadius: 15,
         width: 350,
@@ -215,7 +222,7 @@ const styles = StyleSheet.create({
         maxHeight: 520,
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 15,
+        // gap: 15,
         marginTop: 20,
         marginBottom: 13,
         overflow: 'hidden',
@@ -224,7 +231,7 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     borderSheetWithImage: {
-        borderWidth: 5,
+        borderWidth: 3,
         borderColor: '#429488',
         borderRadius: 15,
         width: 360,
@@ -236,24 +243,68 @@ const styles = StyleSheet.create({
         marginBottom: 13,
         overflow: 'hidden',
     },
+    borderSheetDark: {
+        borderWidth: 3,
+        borderColor: '#95D6CD',
+        borderRadius: 15,
+        width: 350,
+        minHeight: 520,
+        maxHeight: 520,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // gap: 15,
+        marginTop: 20,
+        marginBottom: 13,
+        overflow: 'hidden',
+        paddingTop: 10,
+        paddingBottom: 10,
+        padding: 5,
+    },
+    borderSheetWithImageDark: {
+        borderWidth: 3,
+        borderColor: '#95D6CD',
+        borderRadius: 15,
+        width: 360,
+        height: 520,
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 15,
+        marginTop: 20,
+        marginBottom: 13,
+        overflow: 'hidden',
+    },
     image: {
-        width: 211,
-        height: 372
+        width: 200,
+        height: 268
     },
     text: {
-        color: '#34776B'
+        color: '#429488'
+    },
+    textDark: {
+        color: '#95D6CD'
     },
     header: {
-        fontSize: 18,
-        fontWeight: 500
+        fontSize: 14,
+        fontWeight: 500,
+        textAlign: 'center',
+        paddingLeft: 60,
+        paddingTop: 40,
+        paddingRight: 60
     },
     container: {
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flex: 1
+    },
+    containerDark: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: "#212121"
     },
     button: {
         height: 43,
-        width: 356,
+        width: 350,
         justifyContent: 'center',
         alignContent: 'center',
         borderRadius: 10,
@@ -261,7 +312,21 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: -1 },
         shadowOpacity: 0.25,
         shadowRadius: 6,
-        backgroundColor: '#429488'
+        backgroundColor: '#429488',
+        marginTop: 5
+    },
+    buttonDark: {
+        height: 43,
+        width: 350,
+        justifyContent: 'center',
+        alignContent: 'center',
+        borderRadius: 10,
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: -1 },
+        shadowOpacity: 0.25,
+        shadowRadius: 6,
+        backgroundColor: '#95D6CD',
+        marginTop: 5
     },
     buttonText: {
         fontSize: 16,
@@ -294,6 +359,6 @@ const styles = StyleSheet.create({
         paddingLeft: 80
     },
     headermessageContainer: {
-    paddingTop: 15,
+        paddingTop: 20,
     }
 })
