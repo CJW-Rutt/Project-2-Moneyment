@@ -4,15 +4,17 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import EditButton from '../../../atoms/EditButton';
 import BudgetSingleTemplate from '../../../templates/Budget/BudgetSingleTemplate';
 import EditBudgetModal from '../EditBudgetModal';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { DarkModeContext } from '../../../../context/darkMode';
 
-export default function SingleBudgetOverviewModal ({ 
-    index, 
-    activeModalIndex, 
-    onClose, 
+
+export default function SingleBudgetOverviewModal({
+    index,
+    activeModalIndex,
+    onClose,
     budget,
     calculateProgress,
-}) { 
+}) {
 
     console.log('SINGLEBUDGETDATA: ', budget)
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -26,6 +28,8 @@ export default function SingleBudgetOverviewModal ({
         onClose();
     };
 
+    const { isDarkMode } = useContext(DarkModeContext);
+
     return (
         <Modal
             animationType="slide-right"
@@ -34,20 +38,23 @@ export default function SingleBudgetOverviewModal ({
             onRequestClose={onClose}
         >
             <View style={styles.modalContainer}>
-                <View style={styles.modalHeader}>
+                <View style={isDarkMode ? styles.modalHeaderDark : styles.modalHeader}>
                     <Pressable style={styles.closeButton} onPress={onClose}>
-                        <Icon name='arrow-left' size={25} color='#000' />
+                        {
+                            isDarkMode ? <Icon name='arrow-left' size={20} color='#CFCFCF' />
+                                : <Icon name='arrow-left' size={20} color='#000' />
+                        }
                     </Pressable>
-                    <Text style={styles.headerTitle}>{budget.budgetTitle}</Text>
+                    <Text style={isDarkMode ? styles.headerTitleDark : styles.headerTitle}>{budget.budgetTitle}</Text>
                     <EditButton style={styles.editButton} onPress={toggleEditModal} />
-                    <EditBudgetModal 
+                    <EditBudgetModal
                         budget={{
                             budgetTitle: budget.budgetTitle,
                             totalBudget: budget.totalBudget,
                             totalPrice: budget.totalPrice,
                             progress: calculateProgress(budget.totalBudget, budget.totalPrice),
                             id: budget.id,
-                        }} 
+                        }}
                         index={index}
                         visible={isEditModalVisible}
                         onClose={toggleEditModal}
@@ -96,28 +103,55 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         flex: 1,
+        justifyContent: 'space-between',
     },
     modalHeader: {
         flex: 1,
         flexDirection: 'row',
-        maxHeight: 86,
+        maxHeight: 70,
         width: '100%',
         borderBottomWidth: 1,
         borderColor: 'lightgray',
         justifyContent: 'center',
         alignItems: 'flex-end',
         paddingBottom: 15,
+        gap: 10,
+    },
+    modalHeaderDark: {
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 70,
+        width: '100%',
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        paddingBottom: 15,
+        gap: 10,
+        backgroundColor: "#212121"
     },
     headerTitle: {
+        flex: 1,
         fontSize: 18,
         textAlign: 'left',
         fontWeight: 'bold',
-        width: '50%',
-        paddingLeft: 90,
+        marginTop: 20,
+        textAlign: 'center',
+        paddingLeft: 40
+    },
+    headerTitleDark: {
+        flex: 1,
+        fontSize: 18,
+        textAlign: 'left',
+        fontWeight: 'bold',
+        marginTop: 20,
+        textAlign: 'center',
+        paddingLeft: 40,
+        color: "#CFCFCF"
     },
     closeButton: {
+        marginTop: 20,
         paddingLeft: 20
-
     },
     editButton: {
     },

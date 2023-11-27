@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         alignContents: 'center',
         // maxHeight: 500,
         paddingLeft: 20,
-        paddingRIght: 20,
+        paddingRight: 20,
         width: 370
     },
     container: {

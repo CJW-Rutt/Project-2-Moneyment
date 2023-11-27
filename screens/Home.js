@@ -22,8 +22,7 @@ export default function Home() {
     return (
         <View style={[styles.container, { height: screenHeight - 105 }]}>
             <TopHeader title="Transactions" />
-            {/* <StatusBar style="auto" /> */}
-            <ScrollView >
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={[styles.subContainer]}>
                     <View style={styles.topContainer}>
                         <View style={styles.textContainer}>

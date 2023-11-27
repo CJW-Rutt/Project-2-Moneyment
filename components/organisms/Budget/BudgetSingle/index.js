@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import TransactionsCard from "../../../molecules/TransactionsCard";
 import BudgetSingleSegment from "../BudgetSingleSegment";
 import { collection, query, onSnapshot, getFirestore } from "firebase/firestore";
 
+import { DarkModeContext } from '../../../../context/darkMode';
+import { useContext } from "react";
+
 export default function BudgetSingle({ budget }) {
     const [transactions, setTransactions] = useState({});
+    const { isDarkMode } = useContext(DarkModeContext);
 
     useEffect(() => {
         const db = getFirestore();
@@ -29,28 +33,44 @@ export default function BudgetSingle({ budget }) {
 
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.container}>
-                <View style={styles.barGraphContainer}>
-                    <BudgetSingleSegment budget={budget} />
-                </View>
-                <View style={styles.transactionCardContainer}>
-                    <TransactionsCard transactions={transactions} />
-                </View>
-            </ScrollView>
+            <View style={styles.barGraphContainer}>
+                <BudgetSingleSegment budget={budget} />
+            </View>
+            <Text style={isDarkMode ? styles.headingDark : styles.heading}>Transactions</Text>
+            <View style={styles.transactionCardContainer}>
+                <TransactionsCard transactions={transactions} />
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 0,
+        flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
     transactionCardContainer: {
         zIndex: 1,
+        paddingLeft: 20,
+        paddingRight: 20
     },
     barGraphContainer: {
-        marginTop: 25
+        // marginTop: 25
+    },
+    heading: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        width: 350,
+        marginTop: 25,
+        marginBottom: 10
+    },
+    headingDark: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        width: 350,
+        marginTop: 25,
+        marginBottom: 10,
+        color: "#CFCFCF"
     }
 })

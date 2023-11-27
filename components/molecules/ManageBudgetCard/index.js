@@ -41,7 +41,7 @@ export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBu
             {/* {console.log('Theme: ', theme.colors)} */}
             <View style={styles.manageLeftCol}>
                 <View style={styles.budgetRow}>
-                    <Text style={styles.remainingTitle}>Remaining Budget</Text>
+                    <Text style={isDarkMode ? styles.remainingTitleDark : styles.remainingTitle}>Remaining Budget</Text>
                     <Text style={styles.remainingAmt}>${remainingBudget.toFixed(2)}</Text>
                 </View>
             </View>
@@ -94,6 +94,10 @@ const styles = StyleSheet.create({
     remainingTitle: {
         fontSize: 14,
         color: '#707070',
+    },
+    remainingTitleDark: {
+        fontSize: 14,
+        color: '#CFCFCF',
     },
     remainingAmt: {
         fontSize: 36,

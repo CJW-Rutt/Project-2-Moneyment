@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         paddingBottom: 15,
         gap: 10,
-        backgroundColor: "#212121"
+        backgroundColor: "#212121",
     },
     headerTitle: {
         flex: 1,
