@@ -1,17 +1,12 @@
 import { View, StyleSheet } from "react-native"
-import CategoryContainer from "../CategoryContainer"
-import IconContainer from "../IconContainer"
 import { Text } from "react-native-paper"
 import { DarkModeContext } from '../../../context/darkMode';
 import { useContext } from 'react'
 
 export default function TransactionSpending({ category, location, amount }) {
 
-    //let categoryIcon = category.toLowerCase() !! not in use? !!
-
+    const decimalAmount = (typeof amount === 'number') ? amount.toFixed(2) : '0.00';
     const { isDarkMode } = useContext(DarkModeContext);
-
-    const decimalAmount = amount.toFixed(2);
 
     return (
         <View style={styles.container}>

@@ -14,6 +14,7 @@ export default function SingleBudgetOverviewModal ({
     calculateProgress,
 }) { 
 
+    console.log('SINGLEBUDGETDATA: ', budget)
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
     const toggleEditModal = () => {
@@ -45,6 +46,7 @@ export default function SingleBudgetOverviewModal ({
                             totalBudget: budget.totalBudget,
                             totalPrice: budget.totalPrice,
                             progress: calculateProgress(budget.totalBudget, budget.totalPrice),
+                            id: budget.id,
                         }} 
                         index={index}
                         visible={isEditModalVisible}
@@ -58,6 +60,7 @@ export default function SingleBudgetOverviewModal ({
                         totalBudget: budget.totalBudget,
                         totalPrice: budget.totalPrice,
                         progress: calculateProgress(budget.totalBudget, budget.totalPrice),
+                        id: budget.id,
                     }}
                 />
             </View>

@@ -1,6 +1,4 @@
-import InputField from "../../atoms/InputField";
 import BudgetDropdown from "../../atoms/BudgetDropdown";
-import ToggleSwitch from "../../atoms/Switch";
 import React, { useState, useContext } from 'react';
 import { StyleSheet, View, ScrollView, TextInput } from "react-native";
 import SaveButton from "../../atoms/SaveButton";
@@ -8,9 +6,12 @@ import { Image } from "expo-image";
 import { DarkModeContext } from '../../../context/darkMode';
 import { Text } from "react-native-paper";
 import { useTheme } from "react-native-paper";
+import { collection, getFirestore, addDoc, doc, updateDoc } from "firebase/firestore";
 
 
 export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) {
+    console.log('BUDGET DATA: ', budgetData)
+
     const theme = useTheme()
     const { isDarkMode } = useContext(DarkModeContext);
 
@@ -18,16 +19,36 @@ export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) 
     const [budgetCategory, setBudgetCategory] = useState(budgetData?.budgetCategory || '');
     const [totalBudget, setTotalBudget] = useState(budgetData?.totalBudget?.toString() || '');
 
-    const handleSave = () => {
-        console.log("BudgetForm onSave:", onSave);
-        const updatedBudget = {
-            ...budgetData,
-            budgetTitle,
-            budgetCategory,
-            totalBudget: parseFloat(totalBudget) || 0,
+    const isEditMode = budgetData && budgetData.id;
+
+    const addBudget = async (budgetDetails) => {
+        const db = getFirestore();
+        const budgetCollectionRef = collection(db, 'budgets');
+        await addDoc(budgetCollectionRef, budgetDetails);
+    };
+
+    const updateBudget = async (id, budgetDetails) => {
+        const db = getFirestore();
+        const budgetDocRef = doc(db, 'budgets', id);
+        await updateDoc(budgetDocRef, budgetDetails);
+    };
+
+    const handleSave = async () => {
+        const budgetDetails = {
+            name: budgetTitle,
+            amount: parseFloat(totalBudget) || 0,
         };
-        onSave(updatedBudget);
-        closeModal();
+
+        try {
+            if (isEditMode) {
+                await updateBudget(budgetData.id, budgetDetails);
+            } else {
+                await addBudget(budgetDetails);
+            }
+            closeModal();
+        } catch (error) {
+            console.error("Error saving budget:", error);
+        }
     };
 
     return (
@@ -56,9 +77,11 @@ export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) 
                 </View>
                 <BudgetDropdown />
             </View>
-            {isDarkMode
-                ? <Image source={require("../../../assets/graphics/people/chillingDark.png")} alt='' style={{ width: 292, height: 186 }} contentFit="contain" />
-                : <Image source={require("../../../assets/graphics/people/chilling.png")} alt='' style={{ width: 292, height: 186 }} contentFit="contain" />}
+            {
+                isDarkMode
+                    ? <Image source={require("../../../assets/graphics/people/chillingDark.png")} alt='' style={{ width: 292, height: 186 }} contentFit="contain" />
+                    : <Image source={require("../../../assets/graphics/people/chilling.png")} alt='' style={{ width: 292, height: 186 }} contentFit="contain" />
+            }
             <SaveButton  onSave={handleSave} onPress={onClose} />
         </View>
     );

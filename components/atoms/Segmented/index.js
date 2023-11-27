@@ -1,12 +1,7 @@
-import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
-import { useEffect, useState } from 'react';
-import { Dimensions } from 'react-native';
 import Animated, {
   useSharedValue,
   withTiming,
-  useAnimatedStyle,
-  Easing,
 } from 'react-native-reanimated'
 
 export default function Segmented({
