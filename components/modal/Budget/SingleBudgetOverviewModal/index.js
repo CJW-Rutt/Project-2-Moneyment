@@ -6,13 +6,13 @@ import BudgetSingleTemplate from '../../../templates/Budget/BudgetSingleTemplate
 import EditBudgetModal from '../EditBudgetModal';
 import { useState } from 'react';
 
-export default function SingleBudgetOverviewModal ({ 
-    index, 
-    activeModalIndex, 
-    onClose, 
+export default function SingleBudgetOverviewModal({
+    index,
+    activeModalIndex,
+    onClose,
     budget,
     calculateProgress,
-}) { 
+}) {
 
     console.log('SINGLEBUDGETDATA: ', budget)
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -36,18 +36,18 @@ export default function SingleBudgetOverviewModal ({
             <View style={styles.modalContainer}>
                 <View style={styles.modalHeader}>
                     <Pressable style={styles.closeButton} onPress={onClose}>
-                        <Icon name='arrow-left' size={25} color='#000' />
+                        <Icon name='arrow-left' size={20} color='#000' />
                     </Pressable>
                     <Text style={styles.headerTitle}>{budget.budgetTitle}</Text>
                     <EditButton style={styles.editButton} onPress={toggleEditModal} />
-                    <EditBudgetModal 
+                    <EditBudgetModal
                         budget={{
                             budgetTitle: budget.budgetTitle,
                             totalBudget: budget.totalBudget,
                             totalPrice: budget.totalPrice,
                             progress: calculateProgress(budget.totalBudget, budget.totalPrice),
                             id: budget.id,
-                        }} 
+                        }}
                         index={index}
                         visible={isEditModalVisible}
                         onClose={toggleEditModal}
@@ -96,28 +96,32 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         flex: 1,
+        justifyContent: 'space-between',
     },
     modalHeader: {
         flex: 1,
         flexDirection: 'row',
-        maxHeight: 86,
+        maxHeight: 70,
         width: '100%',
         borderBottomWidth: 1,
         borderColor: 'lightgray',
         justifyContent: 'center',
         alignItems: 'flex-end',
         paddingBottom: 15,
+        gap: 10,
     },
     headerTitle: {
+        flex: 1,
         fontSize: 18,
         textAlign: 'left',
         fontWeight: 'bold',
-        width: '50%',
-        paddingLeft: 90,
+        marginTop: 20,
+        textAlign: 'center',
+        paddingLeft: 40
     },
     closeButton: {
+        marginTop: 20,
         paddingLeft: 20
-
     },
     editButton: {
     },

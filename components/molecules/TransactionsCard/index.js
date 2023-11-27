@@ -11,8 +11,8 @@ export default function TransactionsCard({ transactions }) {
 
     return (
         <View style={styles.container}>
-            <View style={[styles.sheet, { width: windowWidth }]}>
-                <ScrollView>
+            <View style={[styles.sheet]}>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     {
                         Object.entries(transactions).map(([date, transactionArray], index) => (
                             <View key={index}>
@@ -22,10 +22,13 @@ export default function TransactionsCard({ transactions }) {
                                         <View key={transactionIndex}>
                                             <TransactionSpending
                                                 category={item.budget}
-                                                location={item.store} 
+                                                location={item.store}
                                                 amount={item.price}
-                                                payment={item.price} 
+                                                payment={item.price}
                                             />
+                                            {
+                                                transactionArray[transactionIndex + 1] ? <View style={styles.divider}></View> : <></>
+                                            }
                                         </View>
                                     ))
                                 }
@@ -50,28 +53,27 @@ export default function TransactionsCard({ transactions }) {
 
 const styles = StyleSheet.create({
     sheet: {
-        backgroundColor: 'white',
-        height: 400,
-        minHeight: 400,
-        maxHeight: 400,
-
-
+        width: 350,
+        height: 360,
     },
     container: {
-        flex: 1,
         alignItems: 'center',
-        paddingTop: 20
     },
     title: {
         fontSize: 16,
         fontWeight: '700',
         paddingTop: 30,
-        paddingLeft: 30,
         paddingBottom: 30
     },
     date: {
-        paddingLeft: 18,
-        paddingBottom: 16,
+        paddingBottom: 5,
+        fontSize: 14,
         fontWeight: '500'
+    },
+    divider: {
+        borderBottomColor: "#F4F4F4",
+        borderBottomWidth: 1,
+        marginTop: 5,
+        marginBottom: 5
     }
 })

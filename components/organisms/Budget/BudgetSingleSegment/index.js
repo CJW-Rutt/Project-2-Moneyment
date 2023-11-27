@@ -2,6 +2,7 @@ import Segmented from "../../../atoms/Segmented";
 import BudgetCard from "../../../molecules/BudgetCard";
 import BarGraph from "../../../atoms/BarGraph";
 import ManageBudgetCard from "../../../molecules/ManageBudgetCard";
+import { Image } from "expo-image";
 
 import { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Dimensions } from "react-native";
@@ -9,7 +10,7 @@ import { View, StyleSheet, Text, Dimensions } from "react-native";
 export default function BudgetSingleSegment({ budget }) {
     const [position, setPosition] = useState(1)
     const [count, setCount] = useState(3)
-    const [topic, setTopic] = useState('overview')
+    const [topic, setTopic] = useState('details')
     const [num, setNum] = useState(0)
     const [data, setData] = useState([1200, 6100, 15000, 20532])
 
@@ -67,30 +68,34 @@ export default function BudgetSingleSegment({ budget }) {
             <View style={[styles.container, styles.sheet, { width: windowWidth }]}>
                 <Segmented arr={[
                     {
-                        title: 'Overview', onPress: () => {
+                        title: 'Details', onPress: () => {
                             setPosition(0)
-                            setTopic('overview')
+                            setTopic('details')
                             setNum(0)
                             { accData === '' ? setData(defaultAccountData) : setData(accData) }
-                            setView('Overview')
+                            setView('Details')
                         }, number: 0
                     },
                     {
-                        title: 'Details', onPress: () => {
+                        title: 'Overview', onPress: () => {
                             setPosition(1)
-                            setTopic('details')
+                            setTopic('overview')
                             setNum(1)
                             { incData === '' ? setData(defaultIncomeData) : setData(incData) }
-                            setView('Details')
+                            setView('Overview')
                         }, number: 1
                     },
                 ]} />
+                <View style={styles.disclamierContainer}>
+                    <Image source={require('../../../../assets/tooltip/tooltip.svg')} style={{ width: 14, height: 14, marginTop: 5 }} />
+                    <Text style={styles.disclamier}>We are not financial advisors</Text>
+                </View>
                 {
-                    topic === 'overview' ?
+                    topic === 'details' ?
                         <View style={styles.budgetContainer}>
                             <BudgetCard budget={budget} />
                         </View> :
-                        topic === 'details' ?
+                        topic === 'overview' ?
                             <View style={styles.barGraphContainer}>
                                 <BarGraph />
                             </View> : <></>
@@ -122,12 +127,24 @@ const styles = StyleSheet.create({
         maxHeight: 200,
     },
     budgetContainer: {
-        height: 200,
+        // height: 200,
     },
     transactionsTitle: {
         marginTop: 50,
         fontSize: 18,
-
-
+    },
+    disclamier: {
+        width: 350,
+        marginTop: 8,
+        marginBottom: 3,
+        fontWeight: 'bold'
+    },
+    disclamierContainer: {
+        width: 350,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignContent: 'center',
+        gap: 5
     }
 })

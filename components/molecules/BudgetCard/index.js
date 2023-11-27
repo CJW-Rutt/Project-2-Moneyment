@@ -3,17 +3,22 @@ import { StyleSheet, View, Pressable } from "react-native";
 import { Image } from "expo-image"
 import { Text } from "react-native-paper";
 import HorizontalProgressBar from "../../atoms/HorizontalProgressBar";
+import { DarkModeContext } from '../../../context/darkMode';
+import { useContext } from 'react';
 
 
 
 export default function BudgetCard({ budget, onPress }) {
+
+    const { isDarkMode } = useContext(DarkModeContext);
+
     const totalSpent = budget.totalBudget - budget.totalPrice;
 
     const spentText = totalSpent >= 0 ? "on budget" : "overspent";
     const spentTextStyle = totalSpent >= 0 ? styles.greenText : styles.redText;
     return (
         <Pressable onPress={onPress}>
-            <View style={styles.container}>
+            <View style={isDarkMode ? styles.containerDark : styles.container}>
                 <View style={styles.main_container}>
                     <View style={styles.top_content}>
                         <View style={styles.text_content}>
@@ -36,7 +41,7 @@ export default function BudgetCard({ budget, onPress }) {
                     </View>
                     <View
                         style={{
-                            borderTopColor: '#DDDDDD',
+                            borderTopColor: isDarkMode ? '#535353' : '#DDDDDD',
                             borderTopWidth: 1,
                             width: "100 %",
                             marginTop: 12,
@@ -45,33 +50,33 @@ export default function BudgetCard({ budget, onPress }) {
                     />
                     <View style={styles.bottom_content}>
                         <View style={styles.container_price_text_one}>
-                            <Text style={styles.bottom_content_price}>${budget.totalBudget}</Text>
-                            <Text style={styles.bottom_content_text}>Budget</Text>
+                            <Text style={styles.bottom_content_price}>${(budget.totalBudget + 0).toFixed(0)}</Text>
+                            <Text style={isDarkMode ? styles.bottom_content_text_Dark : styles.bottom_content_text}>Budget</Text>
                         </View>
                         <View
                             style={{
-                                borderLeftColor: '#DDDDDD',
+                                borderLeftColor: isDarkMode ? '#535353' : '#DDDDDD',
                                 borderLeftWidth: 1,
                                 height: "100 %",
                                 marginRight: 20
                             }}
                         />
                         <View style={styles.container_price_text_two}>
-                            <Text style={styles.bottom_content_price}>${budget.totalPrice}</Text>
-                            <Text style={styles.bottom_content_text}>Spent</Text>
+                            <Text style={styles.bottom_content_price}>${(budget.totalPrice + 0).toFixed(0)}</Text>
+                            <Text style={isDarkMode ? styles.bottom_content_text_Dark : styles.bottom_content_text}>Spent</Text>
                         </View>
 
                         <View
                             style={{
-                                borderLeftColor: '#DDDDDD',
+                                borderLeftColor: isDarkMode ? '#535353' : '#DDDDDD',
                                 borderLeftWidth: 1,
                                 height: "100 %",
                                 marginRight: 20
                             }}
                         />
                         <View style={styles.container_price_text_two}>
-                            <Text style={styles.bottom_content_price}>${totalSpent}</Text>
-                            <Text style={styles.bottom_content_text}>Left</Text>
+                            <Text style={styles.bottom_content_price}>${(totalSpent + 0).toFixed(0)}</Text>
+                            <Text style={isDarkMode ? styles.bottom_content_text_Dark : styles.bottom_content_text}>Left</Text>
 
                         </View>
                     </View>
@@ -87,6 +92,15 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderWidth: 1,
         borderColor: '#DDDDDD',
+        borderRadius: 5,
+        marginTop: 10,
+        height: 118,
+        justifyContent: "space-between"
+    },
+    containerDark: {
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: '#535353',
         borderRadius: 5,
         marginTop: 10,
         height: 118,
@@ -135,6 +149,10 @@ const styles = StyleSheet.create({
     bottom_content_text: {
         fontSize: 12,
         color: '#707070',
+    },
+    bottom_content_text_Dark: {
+        fontSize: 12,
+        color: '#CFCFCF',
     },
     container_price_text_one: {
         width: "30%",

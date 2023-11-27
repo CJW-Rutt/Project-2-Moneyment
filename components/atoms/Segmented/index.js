@@ -1,4 +1,5 @@
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { useState } from 'react';
 import Animated, {
   useSharedValue,
   withTiming,
@@ -11,7 +12,7 @@ export default function Segmented({
   const bgLeft = useSharedValue(0)
 
   const segStyle = {
-    width: 338
+    width: 350
   }
 
   const bgStyle = {
@@ -19,9 +20,12 @@ export default function Segmented({
     left: bgLeft
   }
 
+  const [selected, setSelected] = useState(false);
+
   const handlePress = (index, func) => {
     func()
     bgLeft.value = withTiming(index * bgStyle.width, { duration: 150 })
+    setSelected(!selected)
   }
 
   return (
@@ -34,13 +38,23 @@ export default function Segmented({
             <TouchableOpacity style={styles.selection} key={index} onPress={() => {
               handlePress(index, item.onPress)
             }}>
-              {item.number.num == index ?
-                <Text style={styles.active}>
-                  {item.title}
-                </Text> :
-                <Text>
-                  {item.title}
-                </Text>}
+              {item.number === 0 ?
+                !selected ?
+                  <Text style={styles.active}>
+                    {item.title}
+                  </Text> :
+                  <Text>
+                    {item.title}
+                  </Text> :
+                item.number === 1 ?
+                  !selected ?
+                    <Text >
+                      {item.title}
+                    </Text> :
+                    <Text style={styles.active}>
+                      {item.title}
+                    </Text> : <></>
+              }
             </TouchableOpacity>
           )
         })
@@ -63,7 +77,7 @@ const styles = StyleSheet.create({
   movingBg: {
     position: 'absolute',
     left: 0,
-    backgroundColor: '#6AB4AC',
+    backgroundColor: '#429488',
     height: '100%',
     borderRadius: 20,
     boxSizing: 'border-box',

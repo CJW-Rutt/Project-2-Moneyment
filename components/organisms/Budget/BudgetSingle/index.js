@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import TransactionsCard from "../../../molecules/TransactionsCard";
 import BudgetSingleSegment from "../BudgetSingleSegment";
 import { collection, query, onSnapshot, getFirestore } from "firebase/firestore";
@@ -29,28 +29,36 @@ export default function BudgetSingle({ budget }) {
 
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.container}>
-                <View style={styles.barGraphContainer}>
-                    <BudgetSingleSegment budget={budget} />
-                </View>
-                <View style={styles.transactionCardContainer}>
-                    <TransactionsCard transactions={transactions} />
-                </View>
-            </ScrollView>
+            <View style={styles.barGraphContainer}>
+                <BudgetSingleSegment budget={budget} />
+            </View>
+            <Text style={styles.heading}>Transactions</Text>
+            <View style={styles.transactionCardContainer}>
+                <TransactionsCard transactions={transactions} />
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 0,
+        flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
     transactionCardContainer: {
         zIndex: 1,
+        paddingLeft: 20,
+        paddingRight: 20
     },
     barGraphContainer: {
-        marginTop: 25
+        // marginTop: 25
+    },
+    heading: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        width: 350,
+        marginTop: 25,
+        marginBottom: 10
     }
 })

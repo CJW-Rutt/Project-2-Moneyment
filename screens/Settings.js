@@ -47,7 +47,7 @@ export default function Settings() {
                         {
                             title: 'Light',
                             onPress: () => {
-                                setIsDark(false)
+                                isDark ? setIsDark(false) : setIsDark(true)
                                 toggleDarkMode()
                                 // console.log(isDark)
                             },
@@ -56,16 +56,21 @@ export default function Settings() {
                         {
                             title: 'Dark',
                             onPress: () => {
-                                setIsDark(true)
+                                isDark ? setIsDark(false) : setIsDark(true)
                                 toggleDarkMode()
                                 // console.log(isDark)
                             },
                             number: 1,
                         }
                     ]} />
-                    <Text style={styles.titleTwo} variant="titleMedium">Profile</Text>
+                    {signedIn ?
+                        <View>
+                            <Text style={styles.titleTwo} variant="titleMedium">Profile</Text>
+                            <UserLogOut />
+                        </View> :
+                        <></>
+                    }
                 </View>
-                {signedIn ? <UserLogOut /> : <></>}
 
                 <View style={styles.secondContainer}>
                     <View style={styles.textContainer}>
