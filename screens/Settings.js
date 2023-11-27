@@ -80,7 +80,7 @@ export default function Settings() {
                     </View>
                     <View style={styles.logoContainer}>
                         {isDark
-                            ? <Image source={require('../assets/logo/lightLogo.svg')} style={{ width: 191, height: 29 }} />
+                            ? <Image source={require('../assets/logo/lightLogo.png')} style={{ width: 191, height: 29 }} />
                             : <Image source={require('../assets/refined-version.svg')} style={{ width: 191, height: 29 }} />}
                     </View>
                 </View>

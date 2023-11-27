@@ -4,8 +4,12 @@ import TransactionsCard from "../../../molecules/TransactionsCard";
 import BudgetSingleSegment from "../BudgetSingleSegment";
 import { collection, query, onSnapshot, getFirestore } from "firebase/firestore";
 
+import { DarkModeContext } from '../../../../context/darkMode';
+import { useContext } from "react";
+
 export default function BudgetSingle({ budget }) {
     const [transactions, setTransactions] = useState({});
+    const { isDarkMode } = useContext(DarkModeContext);
 
     useEffect(() => {
         const db = getFirestore();
@@ -32,7 +36,7 @@ export default function BudgetSingle({ budget }) {
             <View style={styles.barGraphContainer}>
                 <BudgetSingleSegment budget={budget} />
             </View>
-            <Text style={styles.heading}>Transactions</Text>
+            <Text style={isDarkMode ? styles.headingDark : styles.heading}>Transactions</Text>
             <View style={styles.transactionCardContainer}>
                 <TransactionsCard transactions={transactions} />
             </View>
@@ -60,5 +64,13 @@ const styles = StyleSheet.create({
         width: 350,
         marginTop: 25,
         marginBottom: 10
+    },
+    headingDark: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        width: 350,
+        marginTop: 25,
+        marginBottom: 10,
+        color: "#CFCFCF"
     }
 })

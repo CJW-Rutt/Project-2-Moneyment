@@ -7,6 +7,9 @@ import { Image } from "expo-image";
 import { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Dimensions } from "react-native";
 
+import { DarkModeContext } from '../../../../context/darkMode';
+import { useContext } from "react";
+
 export default function BudgetSingleSegment({ budget }) {
     const [position, setPosition] = useState(1)
     const [count, setCount] = useState(3)
@@ -63,6 +66,8 @@ export default function BudgetSingleSegment({ budget }) {
         expNum !== '' ? handleExpData(dataObject.expenses[expNum]) : setData(defaultExpenseData)
     }, [expNum])
 
+    const { isDarkMode } = useContext(DarkModeContext);
+
     return (
         <View>
             <View style={[styles.container, styles.sheet, { width: windowWidth }]}>
@@ -88,7 +93,7 @@ export default function BudgetSingleSegment({ budget }) {
                 ]} />
                 <View style={styles.disclamierContainer}>
                     <Image source={require('../../../../assets/tooltip/tooltip.svg')} style={{ width: 14, height: 14, marginTop: 5 }} />
-                    <Text style={styles.disclamier}>We are not financial advisors</Text>
+                    <Text style={isDarkMode ? styles.disclamierDark : styles.disclamier}>We are not financial advisors</Text>
                 </View>
                 {
                     topic === 'details' ?
@@ -112,7 +117,7 @@ const styles = StyleSheet.create({
         paddingTop: 10
     },
     sheet: {
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         flex: 0,
     },
     track: {
@@ -138,6 +143,13 @@ const styles = StyleSheet.create({
         marginTop: 8,
         marginBottom: 3,
         fontWeight: 'bold'
+    },
+    disclamierDark: {
+        width: 350,
+        marginTop: 8,
+        marginBottom: 3,
+        fontWeight: 'bold',
+        color: "#CFCFCF"
     },
     disclamierContainer: {
         width: 350,
