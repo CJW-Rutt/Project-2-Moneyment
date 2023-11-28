@@ -1,21 +1,22 @@
 import React from 'react';
 import { Modal, View, Pressable, Text, StyleSheet } from 'react-native';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import EditButton from '../../../atoms/EditButton';
 import BudgetForm from '../../../molecules/BudgetForm';
+import { DarkModeContext } from '../../../../context/darkMode';
 
-export default function EditBudgetModal ({ 
+export default function EditBudgetModal({
     onClose,
     budget,
     visible,
     handleUpdateSuccess
 }) {
-    
+
     const handleCloseEditModal = () => {
         setIsEditModalVisible(false);
     };
-    
+
 
     const openEditModal = () => {
         setIsEditModalVisible(true);
@@ -26,6 +27,8 @@ export default function EditBudgetModal ({
         handleUpdateSuccess();
     };
 
+    const { isDarkMode } = useContext(DarkModeContext);
+
     return (
         <Modal
             animationType="slide-right"
@@ -34,14 +37,17 @@ export default function EditBudgetModal ({
             onRequestClose={onClose}
         >
             <View style={styles.modalContainer}>
-                <View style={styles.modalHeader}>
+                <View style={isDarkMode ? styles.modalHeaderDark : styles.modalHeader}>
                     <Pressable style={styles.closeButton} onPress={onClose}>
-                        <Icon name='arrow-left' size={25} color='#000' />
+                        {
+                            isDarkMode ? <Icon name='arrow-left' size={20} color='#CFCFCF' />
+                                : <Icon name='arrow-left' size={20} color='#000' />
+                        }
                     </Pressable>
-                    <Text style={styles.headerTitle}>{budget.budgetTitle}</Text>
+                    <Text style={isDarkMode ? styles.headerTitleDark : styles.headerTitle}>{budget.budgetTitle}</Text>
                 </View>
-                <BudgetForm 
-                    budgetData={budget} 
+                <BudgetForm
+                    budgetData={budget}
                     closeModal={closeModal}
                     onSaveSuccess={handleUpdateSuccess}
                     onClose={handleCloseEditModal}
@@ -79,24 +85,53 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         flex: 1,
+        justifyContent: 'space-between',
     },
     modalHeader: {
         flex: 1,
         flexDirection: 'row',
-        maxHeight: 86,
+        maxHeight: 70,
         width: '100%',
         borderBottomWidth: 1,
         borderColor: 'lightgray',
         justifyContent: 'center',
         alignItems: 'flex-end',
         paddingBottom: 15,
+        gap: 10,
+    },
+    modalHeaderDark: {
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 70,
+        width: '100%',
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        paddingBottom: 15,
+        gap: 10,
+        backgroundColor: "#212121"
     },
     headerTitle: {
+        flex: 1,
         fontSize: 18,
         textAlign: 'left',
         fontWeight: 'bold',
-        width: '50%',
-        paddingLeft: 90,
+        marginTop: 20,
+        textAlign: 'center',
+        // paddingLeft: 40,
+        paddingRight: 55
+    },
+    headerTitleDark: {
+        flex: 1,
+        fontSize: 18,
+        textAlign: 'left',
+        fontWeight: 'bold',
+        marginTop: 20,
+        textAlign: 'center',
+        // paddingLeft: 40,
+        paddingRight: 55,
+        color: "#CFCFCF"
     },
     closeButton: {
         paddingLeft: 20

@@ -7,7 +7,7 @@ import { DarkModeContext } from '../../../context/darkMode';
 import { Text } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 import { collection, getFirestore, addDoc, doc, updateDoc } from "firebase/firestore";
-
+import Message from "../../atoms/Message";
 
 export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) {
     console.log('BUDGET DATA: ', budgetData)
@@ -52,69 +52,123 @@ export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) 
     };
 
     return (
-        <View style={[styles.mainContainer, { backgroundColor: theme.colors.background }]}>
+        <View style={isDarkMode ? styles.mainContainerDark : styles.mainContainer}>
             <View style={styles.inputContainer}>
-                <Text style={styles.title}>General Information</Text>
-                <TextInput
-                    style={[styles.input, { borderColor: theme.colors.primaryLight }]}
-                    placeholder="Budget Title"
-                    placeholderTextColor={theme.colors.primaryLight}
-                    value={budgetTitle}
-                    onChangeText={setBudgetTitle}
+                <Message
+                    header='General Information'
+                    bodyCopy="* required fields"
                 />
-                <TextInput
-                    style={[styles.input, { borderColor: theme.colors.primaryLight }]}
-                    placeholder="Total Budget"
-                    placeholderTextColor={theme.colors.primaryLight}
-                    value={totalBudget}
-                    keyboardType="numeric"
-                    onChangeText={setTotalBudget}
-                />
+                <View style={styles.subContainer}>
+                    <Text style={isDarkMode ? styles.titleDark : styles.title}>Budget name *</Text>
+                    <TextInput
+                        style={isDarkMode ? [styles.inputDark, { borderColor: theme.colors.primaryLight }] : [styles.input, { borderColor: theme.colors.primaryLight }]}
+                        placeholder="Budget name *"
+                        placeholderTextColor={isDarkMode ? "#CFCFCF" : "#707070"}
+                        value={budgetTitle}
+                        onChangeText={setBudgetTitle}
+                    />
+                </View>
+                <View style={styles.subContainer}>
+                    <Text style={isDarkMode ? styles.titleDark : styles.title}>Amount *</Text>
+                    <TextInput
+                        style={isDarkMode ? [styles.inputDark, { borderColor: theme.colors.primaryLight }] : [styles.input, { borderColor: theme.colors.primaryLight }]}
+                        placeholder="Total Budget"
+                        placeholderTextColor={isDarkMode ? "#CFCFCF" : "#707070"}
+                        value={'$' + totalBudget}
+                        keyboardType="numeric"
+                        onChangeText={setTotalBudget}
+                    />
+                </View>
             </View>
+            <View style={isDarkMode ? styles.dividerDark : styles.divider} />
             <View style={styles.dropdownContainer}>
                 <View style={styles.row}>
-                    <Text style={styles.title}>Recurrence</Text>
+                    <Text style={styles.heading}>Recurrence</Text>
                 </View>
                 <BudgetDropdown />
+            </View >
+            <View style={styles.image}>
+                {
+                    isDarkMode
+                        ? <Image source={require("../../../assets/graphics/people/chillingDark.png")} alt='' style={{ width: 300, height: 210 }} contentFit="contain" />
+                        : <Image source={require("../../../assets/graphics/people/chilling.png")} alt='' style={{ width: 300, height: 210 }} contentFit="contain" />
+                }
             </View>
-            {
-                isDarkMode
-                    ? <Image source={require("../../../assets/graphics/people/chillingDark.png")} alt='' style={{ width: 292, height: 186 }} contentFit="contain" />
-                    : <Image source={require("../../../assets/graphics/people/chilling.png")} alt='' style={{ width: 292, height: 186 }} contentFit="contain" />
-            }
-            <SaveButton  onSave={handleSave} onPress={onClose} />
+            <SaveButton onSave={handleSave} onPress={onClose} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     mainContainer: {
+        flex: 1
+    },
+    mainContainerDark: {
         flex: 1,
+        backgroundColor: "#212121"
     },
-    row: {
-        flexDirection: "row",
-        paddingRight: 10,
-        alignItems: "center",
-    },
-    inputContainer: {
-        paddingTop: 10,
-        paddingBottom: 10,
-        borderBottomWidth: 1,
-        borderBottomEndRadius: 10,
-        borderBottomStartRadius: 10,
-        borderColor: "#A9A9A9"
+    subContainer: {
+        paddingLeft: 20,
+        paddingRight: 20,
+        gap: 5
     },
     title: {
-        paddingLeft: 14,
-        paddingTop: 10,
-        fontSize: 18,
-        fontWeight: "600",
-        paddingBottom: 10,
+        font: 12,
+        color: "#707070"
+    },
+    titleDark: {
+        font: 12,
+        color: "#CFCFCF"
+    },
+    inputContainer: {
+        paddingTop: 20,
+        gap: 20
     },
     input: {
-        height: 40,
-        margin: 12,
         borderWidth: 1,
-        padding: 10,
+        borderColor: "#707070",
+        borderRadius: 5,
+        paddingLeft: 10,
+        height: 35,
+        fontWeight: 'bold'
     },
+    inputDark: {
+        borderWidth: 1,
+        borderColor: "#707070",
+        borderRadius: 5,
+        paddingLeft: 10,
+        height: 35,
+        fontWeight: 'bold',
+        color: "#CFCFCF"
+    },
+    divider: {
+        width: 350,
+        borderBottomColor: "#A9A9A9",
+        borderBottomWidth: 1,
+        marginLeft: 20,
+        marginTop: 20
+    },
+    dividerDark: {
+        width: 350,
+        borderBottomColor: "#535353",
+        borderBottomWidth: 1,
+        marginLeft: 20,
+        marginTop: 20
+    },
+    heading: {
+        fontSize: 16,
+        fontWeight: '800',
+        paddingTop: 20,
+        paddingLeft: 20,
+        paddingRight: 20
+    },
+    image: {
+        marginTop: 20,
+        marginBottom: 20,
+        flexDirection: "row",
+        justifyContent: 'center'
+    },
+    row: {
+        marginBottom: 5
+    }
 });
