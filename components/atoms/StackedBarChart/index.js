@@ -52,11 +52,11 @@ export default function StackedChart({ totalBudget, totalSpent }) {
 
             <View style={styles.legend}>
                 <View style={styles.budgetColor} />
-                <Text style={styles.text}>Budget</Text>
+                <Text style={isDarkMode ? styles.textDark : styles.text}>Budget</Text>
                 <View style={styles.spentColor} />
-                <Text style={styles.text}>Spent</Text>
+                <Text style={isDarkMode ? styles.textDark : styles.text}>Spent</Text>
                 <View style={styles.overspentColor} />
-                <Text style={styles.text}>Overspent</Text>
+                <Text style={isDarkMode ? styles.textDark : styles.text}>Overspent</Text>
             </View>
         </View>
     )
@@ -93,6 +93,12 @@ const styles = StyleSheet.create({
         margin: 10,
         marginLeft: 5,
         fontSize: 12
+    },
+    textDark: {
+        margin: 10,
+        marginLeft: 5,
+        fontSize: 12,
+        color: "#CFCFCF"
     }
 
 })

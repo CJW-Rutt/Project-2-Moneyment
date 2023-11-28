@@ -77,35 +77,35 @@ export default function App() {
   }
 
   return (
-      <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
-        <PaperProvider theme={paperTheme}>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <SafeAreaView >
-            </SafeAreaView>
-            <NavigationContainer>
-              {
-                signedIn
-                  ? <NavBar />
-                  : <>
-                    {
-                      showSignIn
-                        ? <Login />
-                        : <>
-                          <Pressable
-                            style={[styles.unlockContainer, { width: screenWidth }]}
-                            onPress={() => setShowSignIn(true)}
-                          >
-                            <Text style={{textAlign: 'center'}}>Log in to unlock full access</Text>
-                          </Pressable>
-                          <NavBar signedIn={{signedIn}} />
-                        </>
-                    }
-                  </>
-              }
-            </NavigationContainer>
-          </GestureHandlerRootView>
-        </PaperProvider>
-      </DarkModeContext.Provider>
+    <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+      <PaperProvider theme={paperTheme}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <SafeAreaView >
+          </SafeAreaView>
+          <NavigationContainer>
+            {
+              signedIn
+                ? <NavBar />
+                : <>
+                  {
+                    showSignIn
+                      ? <Login />
+                      : <>
+                        <Pressable
+                          style={[styles.unlockContainer, { width: screenWidth }]}
+                          onPress={() => setShowSignIn(true)}
+                        >
+                          <Text style={{ textAlign: 'center', color: "#fff", fontSize: 12, fontWeight: 'bold' }}>Log in to unlock full access</Text>
+                        </Pressable>
+                        <NavBar signedIn={{ signedIn }} />
+                      </>
+                  }
+                </>
+            }
+          </NavigationContainer>
+        </GestureHandlerRootView>
+      </PaperProvider>
+    </DarkModeContext.Provider>
   );
 }
 

@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
     },
     amount: {
         fontSize: 14,
-        textAlign: 'right'
+        textAlign: 'right',
+        fontWeight: 'bold'
     },
     amountContainer: {
         flexDirection: 'row',

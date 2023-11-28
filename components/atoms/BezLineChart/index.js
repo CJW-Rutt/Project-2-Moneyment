@@ -41,7 +41,7 @@ export default function BezLineChart() {
         backgroundGradientTo: "#000",
         backgroundGradientToOpacity: 0,
         color: (opacity = 1) => `rgba(66,148,136, ${opacity})`,
-        labelColor: (opacity = 1) => `rgba(265, 265, 265, ${opacity})`,
+        labelColor: (opacity = 1) => `rgba(207, 207, 207, ${opacity})`,
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.5,
         useShadowColorFromDataset: false // optional,
