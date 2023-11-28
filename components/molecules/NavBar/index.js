@@ -17,6 +17,7 @@ import { useTheme } from 'react-native-paper';
 
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import TopHeader from '../TopHeader';
+import ChatModal from '../../organisms/ChatModal';
 
 // ComponentDocs(){ return ( https://callstack.github.io/react-native-paper/docs/components/BottomNavigation/ ) } 
 
@@ -25,8 +26,6 @@ import TopHeader from '../TopHeader';
 export default function NavBar({ signedIn }) {
     const theme = useTheme()
     const { isDarkMode } = useContext(DarkModeContext)
-    const height = SIZES.height
-    const width = SIZES.width
 
     const [index, setIndex] = useState(0);
 
@@ -57,14 +56,6 @@ export default function NavBar({ signedIn }) {
     const darkOverride = { colors: { secondaryContainer: darkOverrideColor } }
 
     const [routes] = useState([
-        // {
-        //     key: 'chat',
-        //     title: 'Chat',
-        //     focusedIcon: 'comment',
-        //     unfocusedIcon: 'comment',
-        //     color: '#707070',
-        //     notif: false
-        // },
         {
             key: 'home',
             title: 'Transactions',
@@ -101,7 +92,6 @@ export default function NavBar({ signedIn }) {
     ]);
 
     const renderScene = BottomNavigation.SceneMap({
-        // chat: Chat,
         home: Home,
         add: Add,
         budget: Budget,
@@ -172,15 +162,7 @@ export default function NavBar({ signedIn }) {
             {
                 showChat
                     ? <>
-                        <Modal
-                            contentContainerStyle={{ zIndex: 3, position: 'absolute', height: height-90, width: width, margin: 'auto', backgroundColor: isDarkMode ? 'black' : 'white'} }
-                            visible={showChat}
-                            onDismiss={hideChat}
-                            dismissable
-                        >
-                            <TopHeader title='Chat' type='close' func={hideChat} />
-                            <Chat />
-                        </Modal>
+                        <ChatModal show={showChat} func={hideChat} />
                     </>
                     : <>
                         <FAB
