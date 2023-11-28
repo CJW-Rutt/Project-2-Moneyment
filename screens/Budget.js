@@ -193,6 +193,22 @@ export default function Budget() {
                             remainingBudget={remainingBudget}
                             totalSpent={totalSpent}
                         />
+                        <View styles={styles.chart}>
+                            <StackedChart totalBudget={totalBudgetSum} totalSpent={totalPriceSum} />
+                        </View>
+                        <View style={styles.budgetcontainer}>
+                            <Pressable onPress={() => openNewModal()}>
+                                <View style={styles.manageRightCol}>
+                                    <Text
+                                        style={isDarkMode ? darkButton : lightButton}
+                                    >+ New Budget</Text>
+                                </View>
+                            </Pressable>
+                            <AddBudgetModal
+                                visible={modalVisible}
+                                onClose={closeNewModal}
+                                addBudget={addBudget} />
+                        </View>
                         {
                             displayedBudgets.map((budgetItem, index) => (
                                 <View key={index}>
