@@ -34,7 +34,7 @@ const DualDropdownMenu = () => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.row}>
-				<Text style={styles.label}>Every</Text>
+				<Text style={isDarkMode ? styles.labelDark : styles.label}>Every</Text>
 				<TouchableOpacity onPress={() => setPickerVisible1(!isPickerVisible1)}>
 					<View style={styles.selectedContainer}>
 						<Picker
@@ -55,7 +55,7 @@ const DualDropdownMenu = () => {
 				</TouchableOpacity>
 			</View>
 			<View style={styles.row}>
-				<Text style={styles.label}>Starting</Text>
+				<Text style={isDarkMode ? styles.labelDark : styles.label}>Starting</Text>
 				<TouchableOpacity onPress={() => setPickerVisible2(!isPickerVisible2)}>
 					<View style={styles.selectedContainer}>
 						<Picker
@@ -82,43 +82,40 @@ const DualDropdownMenu = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 0,
-		padding: 16,
+		paddingLeft: 20,
+		paddingRight: 20
 	},
 	label: {
 		fontSize: 12,
-		marginBottom: 5,
-		padding: 10,
-		paddingTop: 13,
 		color: "#707070",
-		minWidth: 70,
+		alignItems: 'center',
+	},
+	labelDark: {
+		fontSize: 12,
+		color: "#CFCFCF",
 		alignItems: 'center',
 	},
 	selectedContainer: {
-		paddingLeft: 10,
 		alignContent: "center",
-		gap: 5
 	},
 	picker: {
-		alignSelf: "center",
-		alignItems: 'center',
-		justifyContent: "center",
 		width: 150,
 		border: "#ccc",
 		borderWidth: 1,
 	},
 	pickerLabel: {
 		fontSize: 12,
-		fontWeight: "bold",
+		fontWeight: "800",
 	},
 	pickerContainer: {
-		marginLeft: 5,
 		justifyContent: "center",
 		borderBottomColor: "#000",
 	},
 	row: {
 		flexDirection: "row",
 		alignItems: "center",
-		paddingTop: 5,
+		gap: 20,
+		width: "100%",
 	},
 });
 

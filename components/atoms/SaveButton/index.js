@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     },
     container: {
         minWidth: 350,
-        backgroundColor: '#6AB4AC',
+        backgroundColor: '#429488',
         maxHeight: 49,
         flex: 1,
         alignItems: 'center',
