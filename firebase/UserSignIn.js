@@ -53,6 +53,7 @@ export default function UserEmailSignIn({ navigation }) {
                         }}
                         style={isDarkMode ? styles.inputDark : styles.input}
                         placeholderTextColor={isDarkMode ? "#CFCFCF" : "#707070"}
+                        secureTextEntry
                     />
                 </View>
                 <Button

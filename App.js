@@ -16,6 +16,8 @@ import { auth } from './firebase/firebase.config';
 import { Text } from 'react-native-paper';
 import { onAuthStateChanged } from 'firebase/auth';
 import Login from './screens/Login';
+import Welcome from './screens/Welcome';
+import { WelcomeContext, WelcomeProvider } from './context/welcome';
 
 const screenWidth = Dimensions.get('screen').width
 
@@ -27,6 +29,7 @@ export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [signedIn, setSignedIn] = useState(false)
   const [showSignIn, setShowSignIn] = useState(false)
+  const [showWelcome, setShowWelcome] = useState(true)
 
   const paperTheme =
     isDarkMode
@@ -47,6 +50,10 @@ export default function App() {
 
   const toggleDarkMode = () => {
     setIsDarkMode((prevMode) => !prevMode);
+  };
+
+  const toggleShowWelcome = () => {
+    setShowWelcome((prevMode) => !prevMode);
   };
 
   const checkUser = async () => {
@@ -82,27 +89,37 @@ export default function App() {
         <GestureHandlerRootView style={{ flex: 1 }}>
           <SafeAreaView >
           </SafeAreaView>
-          <NavigationContainer>
-            {
-              signedIn
-                ? <NavBar />
-                : <>
-                  {
-                    showSignIn
-                      ? <Login />
-                      : <>
-                        <Pressable
-                          style={[styles.unlockContainer, { width: screenWidth }]}
-                          onPress={() => setShowSignIn(true)}
-                        >
-                          <Text style={{ textAlign: 'center', color: "#fff", fontSize: 12, fontWeight: 'bold' }}>Log in to unlock full access</Text>
-                        </Pressable>
-                        <NavBar signedIn={{ signedIn }} />
-                      </>
-                  }
-                </>
-            }
-          </NavigationContainer>
+
+          <WelcomeContext.Provider value={{ showWelcome, toggleShowWelcome }}>
+            <NavigationContainer>
+              {
+                signedIn
+                  ? <NavBar />
+                  : <>
+                    {
+                      showSignIn
+                        ?
+                        <>
+                          <Login />
+                        </>
+                        : <>
+                          {showWelcome ?
+                            <Welcome />
+                            : <>
+                              <Pressable
+                                style={[styles.unlockContainer, { width: screenWidth }]}
+                                onPress={() => setShowSignIn(true)}
+                              >
+                                <Text style={{ textAlign: 'center', color: "#fff", fontSize: 12, fontWeight: 'bold' }}>Log in to unlock full access</Text>
+                              </Pressable>
+                              <NavBar signedIn={{ signedIn }} />
+                            </>}
+                        </>
+                    }
+                  </>
+              }
+            </NavigationContainer>
+          </WelcomeContext.Provider>
         </GestureHandlerRootView>
       </PaperProvider>
     </DarkModeContext.Provider>
@@ -124,5 +141,5 @@ const styles = StyleSheet.create({
     zIndex: 2,
     textAlign: 'center',
     justifyContent: 'center'
-  }
+  },
 });

@@ -38,6 +38,7 @@ export default function UserRegistrationSignIn() {
                         }}
                         style={isDarkMode ? styles.inputDark : styles.input}
                         placeholderTextColor={isDarkMode ? "#CFCFCF" : "#707070"}
+                        secureTextEntry
                     />
                 </View>
                 <View style={styles.inputContainer}>
