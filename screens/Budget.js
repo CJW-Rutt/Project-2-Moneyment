@@ -32,7 +32,7 @@ export default function Budget() {
                     return acc + (transaction.price || 0);
                 }
                 return acc;
-            }, 0);
+            }, 0).toFixed(2);
 
             noBudgetTotal += transactions.reduce((acc, transaction) => {
                 return transaction.budget === budget.name ? acc : acc + (transaction.price || 0);
@@ -41,21 +41,20 @@ export default function Budget() {
             return {
                 ...budget,
                 budgetTitle: budget.name,
-                totalBudget: budget.amount,
-                totalPrice: totalSpent,
-                left: budget.amount - totalSpent
+                totalBudget: parseFloat(budget.amount.toFixed(2)),
+                totalPrice: parseFloat(totalSpent),
+                left: parseFloat((budget.amount - totalSpent).toFixed(2))
             };
         });
 
         updatedBudgets.push({
             budgetTitle: "No Budget",
-            totalBudget: noBudgetTotal,
-            totalPrice: noBudgetTotal,
+            totalBudget: parseFloat(noBudgetTotal.toFixed(2)),
+            totalPrice: parseFloat(noBudgetTotal.toFixed(2)),
             left: 0
         });
 
         setDisplayedBudgets(updatedBudgets);
-
     };
 
     useEffect(() => {
@@ -194,23 +193,8 @@ export default function Budget() {
                             remainingBudget={remainingBudget}
                             totalSpent={totalSpent}
                         />
-                        <View styles={styles.chart}>
-                            <StackedChart totalBudget={totalBudgetSum} totalSpent={totalPriceSum} />
-                        </View>
-                        <View style={styles.budgetcontainer}>
-                            {signedIn ? <Pressable onPress={() => openNewModal()}>
-                                <View style={styles.manageRightCol}>
-                                    <Text
-                                        style={isDarkMode ? darkButton : lightButton}
-                                    >+ New Budget</Text>
-                                </View>
-                            </Pressable> : <></>}
-                            <AddBudgetModal
-                                visible={modalVisible}
-                                onClose={closeNewModal}
-                                addBudget={addBudget}
-                            />
-                            {displayedBudgets.map((budgetItem, index) => (
+                        {
+                            displayedBudgets.map((budgetItem, index) => (
                                 <View key={index}>
                                     <BudgetCard
                                         budget={{
@@ -233,9 +217,8 @@ export default function Budget() {
                                         onAddBudget={addBudget}
                                     />
                                 </View>
-                            ))}
-                        </View>
-                        <StatusBar />
+                            ))
+                        }
                     </View>
                 </ScrollView>
             </View>

@@ -13,9 +13,14 @@ export default function BudgetCard({ budget, onPress }) {
     const { isDarkMode } = useContext(DarkModeContext);
 
     const totalSpent = budget.totalBudget - budget.totalPrice;
+    const totalSpentFixed = totalSpent.toFixed(2);
 
+    const spent = budget.totalPrice;
+    const spentFixed = spent.toFixed(2);
+    
     const spentText = totalSpent >= 0 ? "on budget" : "overspent";
     const spentTextStyle = totalSpent >= 0 ? styles.greenText : styles.redText;
+
     return (
         <Pressable onPress={onPress}>
             <View style={isDarkMode ? styles.containerDark : styles.container}>
@@ -62,8 +67,8 @@ export default function BudgetCard({ budget, onPress }) {
                             }}
                         />
                         <View style={styles.container_price_text_two}>
-                            <Text style={styles.bottom_content_price}>${(budget.totalPrice + 0).toFixed(0)}</Text>
-                            <Text style={isDarkMode ? styles.bottom_content_text_Dark : styles.bottom_content_text}>Spent</Text>
+                            <Text style={styles.bottom_content_price}>${spentFixed}</Text>
+                            <Text style={styles.bottom_content_text}>Spent</Text>
                         </View>
 
                         <View
@@ -75,9 +80,8 @@ export default function BudgetCard({ budget, onPress }) {
                             }}
                         />
                         <View style={styles.container_price_text_two}>
-                            <Text style={styles.bottom_content_price}>${(totalSpent + 0).toFixed(0)}</Text>
-                            <Text style={isDarkMode ? styles.bottom_content_text_Dark : styles.bottom_content_text}>Left</Text>
-
+                            <Text style={styles.bottom_content_price}>${totalSpentFixed}</Text>
+                            <Text style={styles.bottom_content_text}>Left</Text>
                         </View>
                     </View>
                 </View>
