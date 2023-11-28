@@ -4,7 +4,7 @@ import { DarkModeContext } from '../../../context/darkMode';
 import { useContext } from 'react'
 
 export default function TransactionSpending({ category, location, amount }) {
-
+    
     const decimalAmount = (typeof amount === 'number') ? amount.toFixed(2) : '0.00';
     const { isDarkMode } = useContext(DarkModeContext);
 

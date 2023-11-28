@@ -11,8 +11,6 @@ export default function EditBudgetModal ({
     visible,
     handleUpdateSuccess
 }) {
-
-    //const [isEditModalVisible, setIsEditModalVisible] = useState(false);
     
     const handleCloseEditModal = () => {
         setIsEditModalVisible(false);

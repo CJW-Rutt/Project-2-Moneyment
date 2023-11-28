@@ -17,35 +17,6 @@ export default function ScanReceipt({ onCloseScan }) {
 
     const { isDarkMode } = useContext(DarkModeContext)
 
-    const message = {
-        takePhoto: {
-            header: 'Take a photo!',
-            body: 'Include the store name, transaction date, item details, and prices in your photo.'
-        },
-        photoTaken: {
-            header: 'Information Scanned!',
-            body: 'Moneyment will pull the transaction information from the receipt.'
-        }
-    }
-
-    useEffect(() => {
-        // This is the effect function, it runs after the initial render.
-
-        return () => {
-            // This is the cleanup function, it runs when the component unmounts.
-            console.log("ScanReceipt is unmounting");
-            // Reset states or perform other cleanup tasks here.
-            // For example:
-            setShowCamera(false);
-            setPhotoTaken(false);
-            setShowForm(false);
-            // ... any other state resets or cleanup you need
-        };
-    }, []);
-
-    const gptQuestion = 'Review and analyze the receipt data and align the return with your role.';
-    const gptRole = 'You are provided with receipt data. Analyze it and extract and return Total Price:, Type:, and Place:. Type is the type of item strictly done with two words or less. Place is the type of store strictly done with two words or less. So if Vape Batteries are bought, Vape Store is the place. The response for each category CANNOT be more then 2 words. Just choose.';
-
     const [showCamera, setShowCamera] = useState(false)
     const [photoTaken, setPhotoTaken] = useState(false)
     const [showForm, setShowForm] = useState(false)
@@ -59,6 +30,28 @@ export default function ScanReceipt({ onCloseScan }) {
         purchaseType: '',
         purchasePlace: ''
     });
+
+    useEffect(() => {
+        return () => {
+            setShowCamera(false);
+            setPhotoTaken(false);
+            setShowForm(false);
+        };
+    }, []);
+
+    const message = {
+        takePhoto: {
+            header: 'Take a photo!',
+            body: 'Include the store name, transaction date, item details, and prices in your photo.'
+        },
+        photoTaken: {
+            header: 'Information Scanned!',
+            body: 'Moneyment will pull the transaction information from the receipt.'
+        }
+    }
+
+    const gptQuestion = 'Review and analyze the receipt data and align the return with your role.';
+    const gptRole = 'You are provided with receipt data. Analyze it and extract and return Total Price:, Type:, and Place:. Type is the type of item strictly done with two words or less. Place is the type of store strictly done with two words or less. So if Vape Batteries are bought, Vape Store is the place. The response for each category CANNOT be more then 2 words. Just choose.';
 
     const handleOCRProcessing = async (uri) => {
 
@@ -119,14 +112,6 @@ export default function ScanReceipt({ onCloseScan }) {
         }
     };
 
-    // const handleCamera = () => {
-    //     showCamera ? setShowCamera(false) : setShowCamera(true)
-    // }
-
-    // const handleForm = () => {
-    //     showForm ? setShowForm(false) : setShowForm(true)
-    // }
-
     return (
         <>
             <View style={isDarkMode ? styles.containerDark : styles.container}>
@@ -152,12 +137,6 @@ export default function ScanReceipt({ onCloseScan }) {
                                         </> :
                                         <>
                                             {
-                                                // imageUri ? <></> :
-                                                //     <Text style={[styles.text, styles.header]}>
-                                                //         Example
-                                                //     </Text>
-                                            }
-                                            {
                                                 imageUri ?
                                                     <Image
                                                         source={{ uri: imageUri }}
@@ -176,19 +155,6 @@ export default function ScanReceipt({ onCloseScan }) {
 
                             }
                         </View>
-
-                        {/* <Pressable style={styles.button}>
-                            {
-                                showCamera && photoTaken ?
-                                    <Text style={styles.buttonText} onPress={() => setShowForm(true)}>
-                                        Next
-                                    </Text> :
-                                    showCamera && photoTaken === false ?
-                                        <Text style={styles.buttonText} onPress={() => setPhotoTaken(true)}>Take photo</Text> :
-                                        <GalleryButton onImageSelect={setImageUri} />
-                            }
-                        </Pressable> */}
-
                         <Pressable style={isDarkMode ? styles.buttonDark : styles.button}>
                             {
                                 imageUri ?
@@ -196,7 +162,6 @@ export default function ScanReceipt({ onCloseScan }) {
                                     <GalleryButton onImageSelect={setImageUri} />
                             }
                         </Pressable>
-
                         <TransactionFormModal
                             visible={showForm}
                             onClose={onCloseScan}
@@ -222,7 +187,6 @@ const styles = StyleSheet.create({
         maxHeight: 520,
         justifyContent: 'center',
         alignItems: 'center',
-        // gap: 15,
         marginTop: 20,
         marginBottom: 13,
         overflow: 'hidden',
@@ -252,7 +216,6 @@ const styles = StyleSheet.create({
         maxHeight: 520,
         justifyContent: 'center',
         alignItems: 'center',
-        // gap: 15,
         marginTop: 20,
         marginBottom: 13,
         overflow: 'hidden',

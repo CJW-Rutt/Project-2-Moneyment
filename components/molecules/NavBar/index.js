@@ -4,10 +4,12 @@ import { View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
 
+
 import Home from '../../../screens/Home';
 import Add from '../../../screens/Add';
 import Budget from '../../../screens/Budget';
 import Settings from '../../../screens/Settings';
+import Chat from '../../../screens/Chat';
 import Login from '../../../screens/Login';
 
 import { DarkModeContext } from '../../../context/darkMode';
@@ -42,6 +44,14 @@ export default function NavBar({ signedIn }) {
     const darkOverride = { colors: { secondaryContainer: darkOverrideColor } }
 
     const [routes] = useState([
+        {
+            key: 'chat',
+            title: 'Chat',
+            focusedIcon: 'comment',
+            unfocusedIcon: 'comment',
+            color: '#707070',
+            notif: false
+        },
         {
             key: 'home',
             title: 'Transactions',
@@ -78,6 +88,7 @@ export default function NavBar({ signedIn }) {
     ]);
 
     const renderScene = BottomNavigation.SceneMap({
+        chat: Chat,
         home: Home,
         add: Add,
         budget: Budget,
