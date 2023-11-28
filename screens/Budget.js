@@ -32,7 +32,7 @@ export default function Budget() {
                     return acc + (transaction.price || 0);
                 }
                 return acc;
-            }, 0);
+            }, 0).toFixed(2);
     
             noBudgetTotal += transactions.reduce((acc, transaction) => {
                 return transaction.budget === budget.name ? acc : acc + (transaction.price || 0);
@@ -41,21 +41,20 @@ export default function Budget() {
             return {
                 ...budget,
                 budgetTitle: budget.name,
-                totalBudget: budget.amount,
-                totalPrice: totalSpent,
-                left: budget.amount - totalSpent
+                totalBudget: parseFloat(budget.amount.toFixed(2)),
+                totalPrice: parseFloat(totalSpent),
+                left: parseFloat((budget.amount - totalSpent).toFixed(2))
             };
         });
     
         updatedBudgets.push({
             budgetTitle: "No Budget",
-            totalBudget: noBudgetTotal,
-            totalPrice: noBudgetTotal,
+            totalBudget: parseFloat(noBudgetTotal.toFixed(2)),
+            totalPrice: parseFloat(noBudgetTotal.toFixed(2)),
             left: 0
         });
     
         setDisplayedBudgets(updatedBudgets);
-
     };
 
     useEffect(() => {
@@ -209,30 +208,32 @@ export default function Budget() {
                             onClose={closeNewModal}
                             addBudget={addBudget}
                         />
-                        {displayedBudgets.map((budgetItem, index) => (
-                            <View key={index}>
-                                <BudgetCard
-                                    budget={{
-                                        budgetTitle: budgetItem.budgetTitle,
-                                        totalBudget: budgetItem.totalBudget,
-                                        totalPrice: budgetItem.totalPrice,
-                                        progress: calculateProgress(budgetItem.totalBudget, budgetItem.totalPrice),
-                                    }}
-                                    onPress={() => openModal(index)}
-                                />
-                                <SingleBudgetOverviewModal
-                                    index={index}
-                                    activeModalIndex={activeModalIndex}
-                                    onClose={closeModal}
-                                    budget={budgetItem}
-                                    onEdit={() => openEdit(index)}
-                                    calculateProgress={calculateProgress}
-                                    closeNewModal={closeNewModal}
-                                    modalVisible={modalVisible}
-                                    onAddBudget={addBudget}
-                                />
-                            </View>
-                        ))}
+                        {
+                            displayedBudgets.map((budgetItem, index) => (
+                                <View key={index}>
+                                    <BudgetCard
+                                        budget={{
+                                            budgetTitle: budgetItem.budgetTitle,
+                                            totalBudget: budgetItem.totalBudget,
+                                            totalPrice: budgetItem.totalPrice,
+                                            progress: calculateProgress(budgetItem.totalBudget, budgetItem.totalPrice),
+                                        }}
+                                        onPress={() => openModal(index)}
+                                    />
+                                    <SingleBudgetOverviewModal
+                                        index={index}
+                                        activeModalIndex={activeModalIndex}
+                                        onClose={closeModal}
+                                        budget={budgetItem}
+                                        onEdit={() => openEdit(index)}
+                                        calculateProgress={calculateProgress}
+                                        closeNewModal={closeNewModal}
+                                        modalVisible={modalVisible}
+                                        onAddBudget={addBudget}
+                                    />
+                                </View>
+                            ))
+                        }
                     </View>
                     <StatusBar />
                 </ScrollView>

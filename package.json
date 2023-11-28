@@ -38,6 +38,7 @@
     "react-native-chart-kit": "^6.12.0",
     "react-native-event-listeners": "^1.0.7",
     "react-native-gesture-handler": "~2.12.0",
+    "react-native-gifted-chat": "^2.4.0",
     "react-native-iconify": "^0.2.10",
     "react-native-paper": "^5.11.0",
     "react-native-progress": "^5.0.0",

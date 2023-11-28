@@ -1,8 +1,9 @@
 import axios from "axios";
 import { gptTransactionReturnParse } from "../utils/gptTransactionReturnParse";
 
-export const gptTransactionReview = async (question, data, role) => {
-    
+// when called with gptTransactionReview(question, data, role, false) will return raw response for chat
+
+export const gptTransactionReview = async (question, data, role, shouldParse = true) => {
     const lambdaUrl = 'https://rrlk64nyb6forf6odff5klxque0tbopz.lambda-url.ca-central-1.on.aws/'; 
 
     try {
@@ -12,12 +13,14 @@ export const gptTransactionReview = async (question, data, role) => {
             data: data,
         });
 
-        //console.log('Response from Lambda:', response.data);
+        console.log('Response from Lambda:', response.data);
 
-        const assistantMessage = response.data.choices[0].message.content;
-        const parsedResults = gptTransactionReturnParse(assistantMessage);
-
-        return parsedResults;
+        if (shouldParse) {
+            const assistantMessage = response.data.choices[0].message.content;
+            return gptTransactionReturnParse(assistantMessage);
+        } else {
+            return response.data;
+        }
 
     } catch (error) {
         console.error('Error sending data to Lambda:', error);
