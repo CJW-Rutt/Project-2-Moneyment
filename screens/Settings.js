@@ -34,7 +34,6 @@ export default function Settings() {
 
     useEffect(() => {
         checkUser()
-        // console.log('signedIn on Settings.js is', signedIn)
     }, [])
 
     return (
