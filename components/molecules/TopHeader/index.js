@@ -38,7 +38,7 @@ export default function TopHeader({
             <View style={signedIn ? styles.container : styles.demoContainer}>
                 {
                     type === 'close'
-                        ? <Pressable onPress={func} style={styles.icon}>
+                        ? <Pressable onPress={func} style={signedIn ? styles.icon : styles.demoIcon}>
                             {isDarkMode
                                 ? <Icon name='arrow-left' size={25} color='#fff' />
                                 : <Icon name='arrow-left' size={25} color='#000' />}
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderBottomColor: '#A9A9A9',
         borderBottomWidth: 1,
-        // alignItems: 'center',
+        alignItems: 'center',
         justifyContent: 'center',
         position: 'relative',
     },
@@ -94,6 +94,11 @@ const styles = StyleSheet.create({
     },
     icon: {
         position: 'absolute',
-        left: 20
+        left: 20,
+    },
+    demoIcon: {
+        position: 'absolute',
+        left: 20,
+        bottom: 5
     }
 })
