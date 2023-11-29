@@ -1,21 +1,23 @@
 import { useState, useContext, useEffect } from 'react';
-import { BottomNavigation, Text, Image, Badge } from 'react-native-paper';
-import { View, StyleSheet } from 'react-native';
+import { BottomNavigation, Text, Image, Badge, Modal } from 'react-native-paper';
+import { View, StyleSheet, Pressable } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
-
+import { FAB } from 'react-native-paper';
+import { SIZES } from '../../../constants';
 
 import Home from '../../../screens/Home';
 import Add from '../../../screens/Add';
 import Budget from '../../../screens/Budget';
 import Settings from '../../../screens/Settings';
 import Chat from '../../../screens/Chat';
-import Login from '../../../screens/Login';
 
 import { DarkModeContext } from '../../../context/darkMode';
 import { useTheme } from 'react-native-paper';
 
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import TopHeader from '../TopHeader';
+import ChatModal from '../../organisms/ChatModal';
 
 // ComponentDocs(){ return ( https://callstack.github.io/react-native-paper/docs/components/BottomNavigation/ ) } 
 
@@ -26,6 +28,16 @@ export default function NavBar({ signedIn }) {
     const { isDarkMode } = useContext(DarkModeContext)
 
     const [index, setIndex] = useState(0);
+
+    const [showChat, setShowChat] = useState(false)
+
+    const handleOpenChat = () => {
+        setShowChat(true)
+    }
+
+    const hideChat = () => {
+        setShowChat(false)
+    }
 
     const colors = {
         light: {
@@ -44,14 +56,6 @@ export default function NavBar({ signedIn }) {
     const darkOverride = { colors: { secondaryContainer: darkOverrideColor } }
 
     const [routes] = useState([
-        {
-            key: 'chat',
-            title: 'Chat',
-            focusedIcon: 'comment',
-            unfocusedIcon: 'comment',
-            color: '#707070',
-            notif: false
-        },
         {
             key: 'home',
             title: 'Transactions',
@@ -88,7 +92,6 @@ export default function NavBar({ signedIn }) {
     ]);
 
     const renderScene = BottomNavigation.SceneMap({
-        chat: Chat,
         home: Home,
         add: Add,
         budget: Budget,
@@ -136,23 +139,61 @@ export default function NavBar({ signedIn }) {
     );
 
     return (
-        <BottomNavigation
-            navigationState={{ index, routes }}
-            onIndexChange={setIndex}
-            renderScene={renderScene}
-            renderIcon={renderIcon}
-            barStyle={isDarkMode
-                ? {
-                    borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: theme.colors.secondaryDark, position: 'absolute',
-                    overflow: 'hidden'
-                }
-                : {
-                    backgroundColor: '#F4F4F4', borderTopLeftRadius: 20, borderTopRightRadius: 20, position: 'absolute',
-                    overflow: 'hidden'
-                }}
-            keyboardHidesNavigationBar={true}
-            theme={isDarkMode ? darkOverride : lightOverride}
-            renderLabel={CustomTabBarLabel}
-        />
+        <>
+
+            <BottomNavigation
+                navigationState={{ index, routes }}
+                onIndexChange={setIndex}
+                renderScene={renderScene}
+                renderIcon={renderIcon}
+                barStyle={isDarkMode
+                    ? {
+                        borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: theme.colors.secondaryDark, position: 'absolute',
+                        overflow: 'hidden'
+                    }
+                    : {
+                        backgroundColor: '#F4F4F4', borderTopLeftRadius: 20, borderTopRightRadius: 20, position: 'absolute',
+                        overflow: 'hidden'
+                    }}
+                keyboardHidesNavigationBar={true}
+                theme={isDarkMode ? darkOverride : lightOverride}
+                renderLabel={CustomTabBarLabel}
+            />
+            {
+                showChat
+                    ? <>
+                        <ChatModal show={showChat} func={hideChat} />
+                    </>
+                    : <>
+                        <FAB
+                            icon="chat"
+                            style={styles.fab}
+                            color='white'
+                            onPress={() => {
+                                handleOpenChat()
+                                console.log('Show chat', showChat)
+                            }}
+                        />
+                    </>
+            }
+        </>
+
     );
 }
+
+const styles = StyleSheet.create({
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 80,
+        zIndex: 3,
+        backgroundColor: '#429488'
+        // opacity: 0.3
+    },
+    chatContainer: {
+        // zIndex: 5,
+        position: 'absolute',
+        top: 0
+    }
+})

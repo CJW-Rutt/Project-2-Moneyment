@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions, Text } from "react-native";
+import { View, StyleSheet, ScrollView, Dimensions} from "react-native";
 import CategoryContainer from "../../atoms/CategoryContainer";
 import TransactionSpending from "../../atoms/TransactionSpending";
 import { collection, query, onSnapshot, getFirestore } from "firebase/firestore";
 import { DarkModeContext } from '../../../context/darkMode';
 import { useContext } from 'react'
+import { Text } from 'react-native-paper';
 
 
 export default function TransactionsCardHome() {
@@ -100,7 +101,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignContents: 'center',
         borderBottomColor: 'darkGrey',
-        width: '100%'
+        width: '100%',
+        paddingBottom: 65
     },
     dayContainer: {
         width: '100%',

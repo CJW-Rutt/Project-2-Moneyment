@@ -1,11 +1,14 @@
 import { Text, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
 import { Button } from "react-native-paper";
+import { WelcomeContext } from '../context/welcome';
+import { useContext } from 'react';
 
-export default function Welcome() {
+export default function Welcome({ navigate }) {
+    const { welcomePage, toggleShowWelcome } = useContext(WelcomeContext) 
 
-    const getStarted = async () => {
-        // Do something
+    const getStarted = () => {
+        toggleShowWelcome()
     }
 
     return (
