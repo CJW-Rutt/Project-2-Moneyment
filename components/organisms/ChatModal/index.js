@@ -16,8 +16,7 @@ export default function ChatModal({ show, func }) {
     return (
         <>
             <Modal
-                contentContainerStyle={{ zIndex: 3, position: 'absolute', height: height - 90, width: width, margin: 'auto', backgroundColor: isDarkMode ? 'black' : 'white' }}
-                dismissable
+                contentContainerStyle={{ zIndex: 3, position: 'absolute', height: height - 150, width: width, margin: 'auto', backgroundColor: isDarkMode ? 'black' : 'white', padding: 0 }}
                 visible={show}
             >
                 <TopHeader title='Chat' type='close' func={func} />

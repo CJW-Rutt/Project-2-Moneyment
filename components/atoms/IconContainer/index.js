@@ -33,6 +33,7 @@ export default function IconContainer({ icon, size, colour }) {
         rbcMiniCard: <Image source={require("../../../assets/icons/minicard/RBC.png")} alt='' style={styles.rbcMini} contentFit="contain" />,
         cibcMiniCard: <Image source={require("../../../assets/icons/minicard/CIBC.png")} alt='' style={styles.cibcMini} contentFit="contain" />,
         cashMiniCard: <Image source={require("../../../assets/icons/minicard/Cash.png")} alt='' style={styles.cashMini} contentFit="contain" />,
+        send: <Image source={require("../../../assets/icons/chat/Send.png")} alt='' style={styles.xl} contentFit="contain" />,
     };
 
     return (

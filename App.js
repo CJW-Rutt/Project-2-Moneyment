@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 20,
     backgroundColor: '#429488',
-    height: 25,
+    height: 44,
     zIndex: 2,
     textAlign: 'center',
     justifyContent: 'center'
