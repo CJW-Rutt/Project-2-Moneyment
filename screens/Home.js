@@ -20,9 +20,9 @@ export default function Home() {
     const { isDarkMode } = useContext(DarkModeContext);
 
     return (
-        <View style={[styles.container, { height: screenHeight - 105 }]}>
+        <View style={[styles.container, { height: screenHeight - 55, width: windowWidth }]}>
             <TopHeader title="Transactions" />
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} directionalLockEnabled>
                 <View style={[styles.subContainer]}>
                     <View style={styles.topContainer}>
                         <View style={styles.textContainer}>
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     },
     content: {
         height: 'auto',
+        width: 300
     },
     transaction: {
     },

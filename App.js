@@ -87,14 +87,15 @@ export default function App() {
     <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
       <PaperProvider theme={paperTheme}>
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <SafeAreaView >
-          </SafeAreaView>
+
 
           <WelcomeContext.Provider value={{ showWelcome, toggleShowWelcome }}>
             <NavigationContainer>
               {
                 signedIn
-                  ? <NavBar />
+                  ? <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+                    <NavBar />
+                  </SafeAreaView>
                   : <>
                     {
                       showSignIn
@@ -104,7 +105,9 @@ export default function App() {
                         </>
                         : <>
                           {showWelcome ?
-                            <Welcome />
+                            <SafeAreaView style={{ flex: 1 }}>
+                              <Welcome />
+                            </SafeAreaView>
                             : <>
                               <Pressable
                                 style={[styles.unlockContainer, { width: screenWidth }]}
@@ -120,6 +123,7 @@ export default function App() {
               }
             </NavigationContainer>
           </WelcomeContext.Provider>
+
         </GestureHandlerRootView>
       </PaperProvider>
     </DarkModeContext.Provider>
@@ -135,7 +139,7 @@ const styles = StyleSheet.create({
   },
   unlockContainer: {
     position: 'absolute',
-    top: 20,
+    top: 30,
     backgroundColor: '#429488',
     height: 44,
     zIndex: 2,

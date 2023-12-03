@@ -39,7 +39,7 @@ export default function Settings() {
     return (
         <View>
             <TopHeader title='Settings' />
-            <View style={[styles.container, { height: screenHeight - 180 }]}>
+            <View style={[styles.container, { height: screenHeight - 250 }]}>
                 <View style={styles.subContainer}>
                     <Text style={styles.title} variant="titleMedium">Display</Text>
                     <LightDarkSegment arr={[

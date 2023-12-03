@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions} from "react-native";
+import { View, StyleSheet, ScrollView, Dimensions } from "react-native";
 import CategoryContainer from "../../atoms/CategoryContainer";
 import TransactionSpending from "../../atoms/TransactionSpending";
 import { collection, query, onSnapshot, getFirestore } from "firebase/firestore";
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         alignContents: 'center',
         borderBottomColor: 'darkGrey',
         width: '100%',
-        paddingBottom: 65
+        paddingBottom: 150
     },
     dayContainer: {
         width: '100%',

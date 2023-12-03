@@ -55,9 +55,9 @@ export default function TopHeader({
 
 const styles = StyleSheet.create({
     container: {
-        minHeight: 70,
+        minHeight: 60,
         width: screenWidth,
-        maxHeight: 70,
+        maxHeight: 60,
         flex: 1,
         // justifyContent: 'space-between',
         flexDirection: 'row',
@@ -68,9 +68,9 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     demoContainer: {
-        minHeight: 90,
+        minHeight: 60,
         width: screenWidth,
-        maxHeight: 90,
+        maxHeight: 60,
         flex: 1,
         // justifyContent: 'space-between',
         flexDirection: 'row',
@@ -79,17 +79,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative',
+        marginTop: 74,
     },
     text: {
         textAlign: 'center',
-        marginTop: 20,
-        marginBottom: 10,
+        // marginTop: 20,
+        // marginBottom: 10,
         fontWeight: 800
     },
     demoText: {
         textAlign: 'center',
-        marginTop: 55,
-        marginBottom: 5,
+        // marginTop: 55,
+        // marginBottom: 5,
         fontWeight: 800
     },
     icon: {
