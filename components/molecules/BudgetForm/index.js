@@ -74,7 +74,7 @@ export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) 
                         style={isDarkMode ? [styles.inputDark, { borderColor: theme.colors.primaryLight }] : [styles.input, { borderColor: theme.colors.primaryLight }]}
                         placeholder="Total Budget"
                         placeholderTextColor={isDarkMode ? "#CFCFCF" : "#707070"}
-                        value={'$' + totalBudget}
+                        value={totalBudget}
                         keyboardType="numeric"
                         onChangeText={setTotalBudget}
                     />

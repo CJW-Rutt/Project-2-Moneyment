@@ -1,10 +1,19 @@
 import React from 'react';
-import { Modal, View, StyleSheet } from 'react-native';
+import { Modal, View, StyleSheet, Pressable } from 'react-native';
 import TopHeader from '../../../molecules/TopHeader';
 import BudgetForm from '../../../molecules/BudgetForm';
+import { DarkModeContext } from '../../../../context/darkMode';
+import { useContext } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome5'
+import { Text } from 'react-native-paper';
 
-export default function AddBudgetModal({ visible, onClose, addBudget }) { 
+
+
+export default function AddBudgetModal({ visible, onClose, addBudget }) {
     // console.log("AddBudgetModal addBudget:", addBudget);
+
+    const { isDarkMode } = useContext(DarkModeContext);
+
     return (
         <Modal
             animationType="slide-right"
@@ -13,11 +22,20 @@ export default function AddBudgetModal({ visible, onClose, addBudget }) {
             onRequestClose={onClose}
         >
             <View style={styles.modalContainer}>
-                <TopHeader
+                {/* <TopHeader
                     title='New Budget'
                     type='close'
                     func={onClose}
-                />
+                /> */}
+                <View style={isDarkMode ? styles.modalHeaderDark : styles.modalHeader}>
+                    <Pressable style={styles.closeButton} onPress={onClose}>
+                        {
+                            isDarkMode ? <Icon name='arrow-left' size={20} color='#CFCFCF' />
+                                : <Icon name='arrow-left' size={20} color='#000' />
+                        }
+                    </Pressable>
+                    <Text style={styles.headerTitle}>New Budget</Text>
+                </View>
                 <BudgetForm onSave={addBudget} closeModal={onClose} />
             </View>
         </Modal>
@@ -88,5 +106,43 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         width: "100%"
+    },
+    modalHeader: {
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 90,
+        width: '100%',
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        paddingBottom: 15,
+        gap: 10,
+    },
+    modalHeaderDark: {
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 90,
+        width: '100%',
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        paddingBottom: 15,
+        gap: 10,
+        backgroundColor: "#212121",
+    },
+    headerTitle: {
+        flex: 1,
+        fontSize: 18,
+        textAlign: 'left',
+        fontWeight: 'bold',
+        marginTop: 20,
+        textAlign: 'center',
+        paddingRight: 45
+    },
+    closeButton: {
+        marginTop: 20,
+        paddingLeft: 20
     }
 });
