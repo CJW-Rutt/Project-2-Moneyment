@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     modalHeader: {
         flex: 1,
         flexDirection: 'row',
-        maxHeight: 70,
+        maxHeight: 90,
         width: '100%',
         borderBottomWidth: 1,
         borderColor: 'lightgray',
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     modalHeaderDark: {
         flex: 1,
         flexDirection: 'row',
-        maxHeight: 70,
+        maxHeight: 90,
         width: '100%',
         borderBottomWidth: 1,
         borderColor: 'lightgray',
