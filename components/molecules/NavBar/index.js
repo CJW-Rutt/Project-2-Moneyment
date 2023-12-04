@@ -167,7 +167,7 @@ export default function NavBar({ signedIn }) {
                     : <>
                         <FAB
                             icon="chat"
-                            style={styles.fab}
+                            style={[styles.fab, { bottom: SIZES.height * 0.1 }]}
                             color='white'
                             onPress={() => {
                                 handleOpenChat()
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         margin: 16,
         right: 0,
-        bottom: 110,
+        // bottom: 110,
         zIndex: 3,
         backgroundColor: '#429488'
         // opacity: 0.3
