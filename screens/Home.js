@@ -38,7 +38,7 @@ export default function Home() {
         });
 
         return () => unsubscribe();
-    })
+    }, [])
 
     const getMonth = (str) => {
         return str.slice(0, 3)
@@ -61,7 +61,7 @@ export default function Home() {
         setChartData(chartDataArr)
         setChartLabel(chartLabelArr)
 
-        // console.log(chartData)
+        console.log(chartData)
     }, [transactions])
 
     // useEffect(() => {
