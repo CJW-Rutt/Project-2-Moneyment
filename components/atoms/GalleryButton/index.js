@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, StyleSheet, View, Pressable, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet, Pressable, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { DarkModeContext } from "../../../context/darkMode";
 import { useContext } from "react";
@@ -11,18 +11,15 @@ export default function GalleryButton({ onImageSelect }) {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            aspect: [4, 3], //need to make this bigger?
+            aspect: [4, 3],
         });
-        console.log('Image Picker Result:', result);
-        if (!result.canceled) {
+
+        if (result) {
             onImageSelect(result.assets[0].uri);
         }
     };
 
     return (
-        // <View style={styles.container}>
-        //     <Button title="Select Image" onPress={selectImage} color="transparent" />
-        // </View>
         <Pressable style={styles.container} onPress={selectImage}>
             <Text style={isDarkMode ? styles.textDark : styles.text}>SELECT IMAGE</Text>
         </Pressable>

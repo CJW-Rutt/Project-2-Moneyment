@@ -158,11 +158,11 @@ const styles = StyleSheet.create({
         gap: 5
     },
     title: {
-        font: 12,
+        fontSize: 12,
         color: "#707070"
     },
     titleDark: {
-        font: 12,
+        fontSize: 12,
         color: "#CFCFCF"
     },
     inputContainer: {
