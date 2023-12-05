@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Pressable } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useState, useContext, useEffect } from 'react';
-import { collection, query, where, onSnapshot, getFirestore } from "firebase/firestore";
+import { collection, query, where, onSnapshot, getFirestore, orderBy } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 import { Text } from 'react-native-paper';
@@ -31,9 +31,14 @@ export default function Budget() {
     useEffect(() => {
         displayedBudgets.map(i => chartLabels.push(i.budgetTitle))
         setChartLabel(chartLabels)
-        displayedBudgets.map((i) => chartDataArr.push([i.totalPrice, i.left]))
+
+        displayedBudgets.map((i) => {
+            i.left >= 0 ?
+            chartDataArr.push([i.totalPrice, i.left])
+            : chartDataArr.push([i.totalPrice, 0, i.left*(0-1)])
+        })
         setChartData(chartDataArr)
-        console.log('test')
+
     }, [displayedBudgets])
 
     const aggregateData = () => {
@@ -72,7 +77,8 @@ export default function Budget() {
 
     useEffect(() => {
         const db = getFirestore();
-        const unsubscribe = onSnapshot(collection(db, "budgets"), (snapshot) => {
+        const q = query(collection(db, "budgets"), orderBy("time", "desc"))
+        const unsubscribe = onSnapshot(q, (snapshot) => {
             const budgetsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setBudgets(budgetsData);
             // console.log('BUDGETS DATA: ', budgetsData);

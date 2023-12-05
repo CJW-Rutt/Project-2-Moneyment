@@ -21,7 +21,6 @@ export default function BezLineChart({ sum, chartData=[1, 2, 3], chartLabel }) {
     }
 
     const data = {
-        // labels: ["Sep 4", "Sep 25", "Oct 2", "Oct 16"],
         datasets: [
             {
                 data: chartData,

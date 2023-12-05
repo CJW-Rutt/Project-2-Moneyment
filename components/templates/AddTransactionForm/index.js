@@ -15,6 +15,8 @@ export default function AddTransactionForm({ initialValues = {}, onClose }) {
     const [transactionType, setTransactionType] = useState('');
     const [budget, setBudget] = useState(initialValues.purchaseType || '');
 
+    const currentTimestamp = new Date().getTime();
+
     const handleTransactionTypeSelect = (selectedType) => {
         setTransactionType(selectedType);
     };
@@ -28,6 +30,7 @@ export default function AddTransactionForm({ initialValues = {}, onClose }) {
             price: parseFloat(price),
             budget: budget,
             type: transactionType,
+            time: currentTimestamp
         };
 
         try {

@@ -12,6 +12,8 @@ import Message from "../../atoms/Message";
 export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) {
     console.log('BUDGET DATA: ', budgetData)
 
+    const currentTimestamp = new Date().getTime();
+
     const theme = useTheme()
     const { isDarkMode } = useContext(DarkModeContext);
 
@@ -41,6 +43,7 @@ export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) 
         const budgetDetails = {
             name: budgetTitle,
             amount: parseFloat(totalBudget) || 0,
+            time: currentTimestamp
         };
 
         try {
