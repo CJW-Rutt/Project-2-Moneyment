@@ -151,7 +151,7 @@ export default function Chat() {
         const userMessage = messages[0].text;
 
         const question = 'Your question here';
-        const role = 'Your role here';
+        const role = 'You are a budgeting specialist and helper. You must only answer questions related to finance, budgeting, and money. Please gently remind the user if they try to ask about topics that arent finance, budgeting or money. If the user asks for advice or suggestions, you MUST remind them at the end of your response: I am not a financial advisor, if you requrie financial advice, seek a professional.';
 
         gptTransactionReview(question, userMessage, role, false)
             .then(setIsTyping(true))
