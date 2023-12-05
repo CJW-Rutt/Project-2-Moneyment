@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { StyleSheet, View, Dimensions, Pressable } from 'react-native';
+import { StyleSheet, View, Dimensions, Pressable, LogBox } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider as PaperProvider, useTheme } from 'react-native-paper';
@@ -20,6 +20,9 @@ import Welcome from './screens/Welcome';
 import { WelcomeContext, WelcomeProvider } from './context/welcome';
 
 const screenWidth = Dimensions.get('screen').width
+
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 
 
 export default function App() {
