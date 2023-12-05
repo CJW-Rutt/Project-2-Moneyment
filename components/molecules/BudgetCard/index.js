@@ -5,11 +5,12 @@ import { Text } from "react-native-paper";
 import HorizontalProgressBar from "../../atoms/HorizontalProgressBar";
 import { DarkModeContext } from '../../../context/darkMode';
 import { useContext } from 'react';
+import IconList from "../../../utils/Icons";
 
 
 
 export default function BudgetCard({ budget, onPress }) {
-
+    console.log('B CARD: ', budget)
     const { isDarkMode } = useContext(DarkModeContext);
 
     const totalSpent = budget.totalBudget - budget.totalPrice;
@@ -28,7 +29,7 @@ export default function BudgetCard({ budget, onPress }) {
                     <View style={styles.top_content}>
                         <View style={styles.text_content}>
                             <Image
-                                source={require("../../../assets/graphics/category/Coffee.png")} // make this dynamic
+                                source={IconList[budget.icon]}
                                 alt=''
                                 style={styles.img}
                                 contentFit="contain"

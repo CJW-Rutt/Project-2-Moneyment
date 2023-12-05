@@ -159,7 +159,6 @@ export default function Chat() {
                 console.log('Received RESPONSE: ', gptResponse);
                 setIsTyping(false)
 
-                // Extracting the text from the response's 'content' field
                 const responseText = gptResponse.choices && gptResponse.choices[0].message && gptResponse.choices[0].message.content
                     ? gptResponse.choices[0].message.content
                     : 'Response not available.';
@@ -187,7 +186,7 @@ export default function Chat() {
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} // Adjust if necessary
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
             >
                 <View style={{ flex: 1, marginBottom: 80 }}>
                     <View style={{
