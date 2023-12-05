@@ -54,6 +54,7 @@ export default function SingleBudgetOverviewModal({
                             totalPrice: budget.totalPrice,
                             progress: calculateProgress(budget.totalBudget, budget.totalPrice),
                             id: budget.id,
+                            icon: budget.icon
                         }}
                         index={index}
                         visible={isEditModalVisible}

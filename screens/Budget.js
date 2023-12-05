@@ -61,7 +61,8 @@ export default function Budget() {
                 budgetTitle: budget.name,
                 totalBudget: parseFloat(budget.amount.toFixed(2)),
                 totalPrice: parseFloat(totalSpent),
-                left: parseFloat((budget.amount - totalSpent).toFixed(2))
+                left: parseFloat((budget.amount - totalSpent).toFixed(2)),
+                icon: budget.icon,
             };
         });
 
@@ -238,6 +239,7 @@ export default function Budget() {
                                                 totalBudget: budgetItem.totalBudget,
                                                 totalPrice: budgetItem.totalPrice,
                                                 progress: calculateProgress(budgetItem.totalBudget, budgetItem.totalPrice),
+                                                icon: budgetItem.icon,
                                             }}
                                             onPress={() => openModal(index)}
                                         />

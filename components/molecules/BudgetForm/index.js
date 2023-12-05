@@ -1,6 +1,6 @@
 import BudgetDropdown from "../../atoms/BudgetDropdown";
-import React, { useState, useContext } from 'react';
-import { StyleSheet, View, ScrollView, TextInput } from "react-native";
+import React, { useState, useContext, useEffect } from 'react';
+import { StyleSheet, View, TextInput } from "react-native";
 import SaveButton from "../../atoms/SaveButton";
 import { Image } from "expo-image";
 import { DarkModeContext } from '../../../context/darkMode';
@@ -8,10 +8,11 @@ import { Text } from "react-native-paper";
 import { useTheme, Switch } from "react-native-paper";
 import { collection, getFirestore, addDoc, doc, updateDoc } from "firebase/firestore";
 import Message from "../../atoms/Message";
+import { Picker } from '@react-native-picker/picker';
+import IconList from '../../../utils/Icons/index.js';
 
 export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) {
-    console.log('BUDGET DATA: ', budgetData)
-
+    console.log(budgetData);
     const currentTimestamp = new Date().getTime();
 
     const theme = useTheme()
@@ -20,12 +21,12 @@ export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) 
     const [toggle, setToggle] = useState(false)
 
     const onToggle = () => setToggle(!toggle)
-
-    const [budgetTitle, setBudgetTitle] = useState(budgetData?.budgetTitle || '');
-    const [budgetCategory, setBudgetCategory] = useState(budgetData?.budgetCategory || '');
-    const [totalBudget, setTotalBudget] = useState(budgetData?.totalBudget?.toString() || '');
-
+    
     const isEditMode = budgetData && budgetData.id;
+
+    const [budgetTitle, setBudgetTitle] = useState(isEditMode ? budgetData.budgetTitle : '');
+    const [totalBudget, setTotalBudget] = useState(isEditMode ? budgetData.totalBudget?.toString() : '');
+    const [selectedIcon, setSelectedIcon] = useState(isEditMode ? budgetData.icon : '');
 
     const addBudget = async (budgetDetails) => {
         const db = getFirestore();
@@ -39,10 +40,19 @@ export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) 
         await updateDoc(budgetDocRef, budgetDetails);
     };
 
+    useEffect(() => {
+        if (isEditMode) {
+            setBudgetTitle(budgetData.budgetTitle || '');
+            setTotalBudget(budgetData.totalBudget?.toString() || '');
+            setSelectedIcon(budgetData.icon || '');
+        }
+    }, []);
+
     const handleSave = async () => {
         const budgetDetails = {
             name: budgetTitle,
             amount: parseFloat(totalBudget) || 0,
+            icon: selectedIcon,
             time: currentTimestamp
         };
 
@@ -85,6 +95,27 @@ export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) 
                         keyboardType="numeric"
                         onChangeText={setTotalBudget}
                     />
+                </View>
+                <View style={styles.iconRow}>
+                    <View style={styles.iconPicker}>
+                        <Picker
+                            selectedValue={selectedIcon}
+                            onValueChange={(itemValue, itemIndex) =>
+                                setSelectedIcon(itemValue)
+                            }>
+                            {Object.keys(IconList).map((key) => (
+                                <Picker.Item key={key} label={key} value={key} />
+                            ))}
+                        </Picker>
+                    </View>
+                    {
+                        selectedIcon && IconList[selectedIcon] && (
+                            <Image
+                                source={IconList[selectedIcon]}
+                                style={{ width: 50, height: 50, alignSelf: 'center', marginLeft: 10, marginRight: 10 }}
+                            />
+                        )
+                    }
                 </View>
             </View>
             <View style={isDarkMode ? styles.dividerDark : styles.divider} />
@@ -189,5 +220,21 @@ const styles = StyleSheet.create({
     },
     switchContainer: {
         paddingTop: 10
+    },
+    iconRow: {
+        flexDirection: 'row', 
+        alignItems: 'center',
+        paddingRight: 20,
+        paddingLeft: 20,
+        height: 35,
+    },
+    iconPicker: {
+        flex: 3,
+        borderWidth: 1,
+        borderColor: "#707070",
+        justifyContent: 'center',
+        borderRadius: 5,
+        
+        height: 35,
     }
 });
