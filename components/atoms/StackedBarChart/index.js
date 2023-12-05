@@ -9,23 +9,6 @@ const screenWidth = Dimensions.get("window").width;
 export default function StackedChart({ totalBudget, totalSpent, realData, labels, chart }) {
     const { isDarkMode } = useContext(DarkModeContext);
 
-    // const [chartLabel, setChartLabel] = useState([])
-    // const [chartData, setChartData] = useState([])
-
-    // const chartLabels = []
-    // const chartDataArr = []
-
-    // useEffect(() => {
-    //     realData.map(i => chartLabels.push(i.budgetTitle))
-    //     setChartLabel(chartLabels)
-    //     console.log("data LENGTH IS HERE WTF", realData.length)
-    //     realData.map((i, index) => {
-    //         chartDataArr.push([i.totalPrice, i.left])
-    //         setChartData(chartDataArr)
-    //     })
-    //     console.log("chartdata", chartData)
-    // }, [])
-
     useEffect(() => {
         console.log(labels)
     }, [])
