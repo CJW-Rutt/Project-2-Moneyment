@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Dimensions } from "react-native";
 import CategoryContainer from "../../atoms/CategoryContainer";
 import TransactionSpending from "../../atoms/TransactionSpending";
-import { collection, query, onSnapshot, getFirestore } from "firebase/firestore";
+import { collection, query, onSnapshot, getFirestore, orderBy } from "firebase/firestore";
 import { DarkModeContext } from '../../../context/darkMode';
 import { useContext } from 'react'
 import { Text } from 'react-native-paper';
-
 
 export default function TransactionsCardHome() {
 
@@ -17,7 +16,7 @@ export default function TransactionsCardHome() {
 
     useEffect(() => {
         const db = getFirestore();
-        const q = query(collection(db, "transactions"));
+        const q = query(collection(db, "transactions"), orderBy('time', 'desc'));
 
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const newTransactions = {};
@@ -31,7 +30,6 @@ export default function TransactionsCardHome() {
             });
             setTransactions(newTransactions);
         });
-
         return () => unsubscribe();
     }, []);
 
