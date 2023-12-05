@@ -16,12 +16,25 @@ import TopHeader from '../components/molecules/TopHeader';
 import AddBudgetModal from '../components/modal/Budget/AddBudgetModal';
 import SingleBudgetOverviewModal from '../components/modal/Budget/SingleBudgetOverviewModal';
 
-
 export default function Budget() {
 
     const [budgets, setBudgets] = useState([]);
     const [displayedBudgets, setDisplayedBudgets] = useState([]);
     const [transactions, setTransactions] = useState([]);
+
+    const [chartLabel, setChartLabel] = useState([])
+    const [chartData, setChartData] = useState([])
+
+    const chartLabels = []
+    const chartDataArr = []
+
+    useEffect(() => {
+        displayedBudgets.map(i => chartLabels.push(i.budgetTitle))
+        setChartLabel(chartLabels)
+        displayedBudgets.map((i) => chartDataArr.push([i.totalPrice, i.left]))
+        setChartData(chartDataArr)
+        console.log('test')
+    }, [displayedBudgets])
 
     const aggregateData = () => {
         let noBudgetTotal = 0;
@@ -47,12 +60,12 @@ export default function Budget() {
             };
         });
 
-        updatedBudgets.push({
-            budgetTitle: "No Budget",
-            totalBudget: parseFloat(noBudgetTotal.toFixed(2)),
-            totalPrice: parseFloat(noBudgetTotal.toFixed(2)),
-            left: 0
-        });
+        // updatedBudgets.push({
+        //     budgetTitle: "No Budget",
+        //     totalBudget: parseFloat(noBudgetTotal.toFixed(2)),
+        //     totalPrice: parseFloat(noBudgetTotal.toFixed(2)),
+        //     left: 0
+        // });
 
         setDisplayedBudgets(updatedBudgets);
     };
@@ -62,7 +75,7 @@ export default function Budget() {
         const unsubscribe = onSnapshot(collection(db, "budgets"), (snapshot) => {
             const budgetsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setBudgets(budgetsData);
-            console.log('BUDGETS DATA: ', budgetsData);
+            // console.log('BUDGETS DATA: ', budgetsData);
         });
 
         return () => unsubscribe();
@@ -74,7 +87,7 @@ export default function Budget() {
         const unsubscribe = onSnapshot(collection(db, "transactions"), (snapshot) => {
             const transactionsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setTransactions(transactionsData);
-            console.log('TRANSACTIONS DATA: ', transactionsData);
+            // console.log('TRANSACTIONS DATA: ', transactionsData);
         });
 
         return () => unsubscribe();
@@ -163,11 +176,11 @@ export default function Budget() {
         await onAuthStateChanged(auth, (user) => {
             if (user) {
                 const uid = user.uid;
-                console.log('signed in', uid)
+                // console.log('signed in', uid)
                 setSignedIn(true)
             } else {
                 setSignedIn(false)
-                console.log('not signed in')
+                // console.log('not signed in')
             }
         })
     }
@@ -194,7 +207,7 @@ export default function Budget() {
                             totalSpent={totalSpent}
                         />
                         <View styles={styles.chart}>
-                            <StackedChart totalBudget={totalBudgetSum} totalSpent={totalPriceSum} />
+                            <StackedChart totalBudget={totalBudgetSum} totalSpent={totalPriceSum} labels={chartLabel} chart={chartData} />
                         </View>
                         <View style={styles.budgetcontainer}>
                             <Pressable onPress={() => openNewModal()}>
@@ -209,32 +222,34 @@ export default function Budget() {
                                 onClose={closeNewModal}
                                 addBudget={addBudget} />
                         </View>
-                        {
-                            displayedBudgets.map((budgetItem, index) => (
-                                <View key={index}>
-                                    <BudgetCard
-                                        budget={{
-                                            budgetTitle: budgetItem.budgetTitle,
-                                            totalBudget: budgetItem.totalBudget,
-                                            totalPrice: budgetItem.totalPrice,
-                                            progress: calculateProgress(budgetItem.totalBudget, budgetItem.totalPrice),
-                                        }}
-                                        onPress={() => openModal(index)}
-                                    />
-                                    <SingleBudgetOverviewModal
-                                        index={index}
-                                        activeModalIndex={activeModalIndex}
-                                        onClose={closeModal}
-                                        budget={budgetItem}
-                                        onEdit={() => openEdit(index)}
-                                        calculateProgress={calculateProgress}
-                                        closeNewModal={closeNewModal}
-                                        modalVisible={modalVisible}
-                                        onAddBudget={addBudget}
-                                    />
-                                </View>
-                            ))
-                        }
+                        <View style={styles.budgetCardContainer} >
+                            {
+                                displayedBudgets.map((budgetItem, index) => (
+                                    <View key={index}>
+                                        <BudgetCard
+                                            budget={{
+                                                budgetTitle: budgetItem.budgetTitle,
+                                                totalBudget: budgetItem.totalBudget,
+                                                totalPrice: budgetItem.totalPrice,
+                                                progress: calculateProgress(budgetItem.totalBudget, budgetItem.totalPrice),
+                                            }}
+                                            onPress={() => openModal(index)}
+                                        />
+                                        <SingleBudgetOverviewModal
+                                            index={index}
+                                            activeModalIndex={activeModalIndex}
+                                            onClose={closeModal}
+                                            budget={budgetItem}
+                                            onEdit={() => openEdit(index)}
+                                            calculateProgress={calculateProgress}
+                                            closeNewModal={closeNewModal}
+                                            modalVisible={modalVisible}
+                                            onAddBudget={addBudget}
+                                        />
+                                    </View>
+                                ))
+                            }
+                        </View>
                     </View>
                 </ScrollView>
             </View>
@@ -317,6 +332,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         width: "100%"
+    },
+    budgetCardContainer: {
+        marginBottom: 120
     }
-
 });

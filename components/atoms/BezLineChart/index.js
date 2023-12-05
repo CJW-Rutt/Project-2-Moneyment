@@ -9,18 +9,27 @@ import { DarkModeContext } from '../../../context/darkMode';
 
 const screenWidth = Dimensions.get("window").width;
 
-export default function BezLineChart() {
+export default function BezLineChart({ sum, chartData=[1, 2, 3], chartLabel }) {
     const { isDarkMode } = useContext(DarkModeContext);
 
+    if (chartData.length === 0) {
+        chartData = [0, 0, 0]
+    }
+
+    if (chartLabel.length === 0) {
+        chartLabel = [" "]
+    }
+
     const data = {
-        labels: ["Sep 4", "Sep 25", "Oct 2", "Oct 16"],
+        // labels: ["Sep 4", "Sep 25", "Oct 2", "Oct 16"],
         datasets: [
             {
-                data: [150, 330, 405, 749],
+                data: chartData,
                 color: (opacity = 1) => `rgba(66,148,136, ${opacity})`, // optional
                 strokeWidth: 2 // optional
             }
         ],
+        labels: chartLabel
     };
 
     const chartConfigLight = {
@@ -50,7 +59,7 @@ export default function BezLineChart() {
     return (
         <>
             <Text style={isDarkMode ? styles.viewTextDark : styles.viewText}>Total Expenses</Text>
-            <Text style={isDarkMode ? styles.balanceDark : styles.balance}>$749</Text>
+            <Text style={isDarkMode ? styles.balanceDark : styles.balance}>${sum.toFixed(2)}</Text>
             <LineChart
                 data={data}
                 width={screenWidth + 20}

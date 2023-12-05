@@ -2,30 +2,49 @@ import { StackedBarChart } from "react-native-chart-kit";
 import { View, Dimensions, StyleSheet } from "react-native";
 import { Text } from "react-native-paper";
 import { DarkModeContext } from '../../../context/darkMode';
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const screenWidth = Dimensions.get("window").width;
-export default function StackedChart({ totalBudget, totalSpent }) {
+
+export default function StackedChart({ totalBudget, totalSpent, realData, labels, chart }) {
     const { isDarkMode } = useContext(DarkModeContext);
 
-    const data = {
-        labels: ["Coffee", "Entertainment", "Dineout"],
-        data: [
-            [500, 50.45,],
-            [1500, 578,],
-            [5000, 1570,]
-        ],
-        barColors: ["#E58331", "#429488", "#B04121",]
+    // const [chartLabel, setChartLabel] = useState([])
+    // const [chartData, setChartData] = useState([])
 
+    // const chartLabels = []
+    // const chartDataArr = []
+
+    // useEffect(() => {
+    //     realData.map(i => chartLabels.push(i.budgetTitle))
+    //     setChartLabel(chartLabels)
+    //     console.log("data LENGTH IS HERE WTF", realData.length)
+    //     realData.map((i, index) => {
+    //         chartDataArr.push([i.totalPrice, i.left])
+    //         setChartData(chartDataArr)
+    //     })
+    //     console.log("chartdata", chartData)
+    // }, [])
+
+    useEffect(() => {
+        console.log(labels)
+    }, [])
+
+    const data = {
+        labels: labels,
+        data: chart,
+        barColors: ["#E58331", "#429488", "#B04121",]
     };
+
+    // {"amount": 20, "budgetTitle": "Coffee", "id": "2vrRrik6swUAyoQi4DpA", "left": 15, "name": "Coffee", "totalBudget": 20, "totalPrice": 5}, {"amount": 50, "budgetTitle": "Mom's Birthday", "id": "fknpqaT4WpWvBsIyFqth", "left": 50, "name": "Mom's Birthday", "totalBudget": 50, "totalPrice": 0}, {"amount": 200, "budgetTitle": "Shopping", "id": "k53R9XTWhHd8qhfPA3mR", "left": 100, "name": "Shopping", 
+
     const chartConfigLight = {
         backgroundGradientFrom: "#fff",
         backgroundGradientFromOpacity: 0,
         backgroundGradientTo: "#fff",
         backgroundGradientToOpacity: 0.5,
         color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-        barPercentage: 1.5,
-        barRadius: 5,
+        barPercentage: 0.75,
         propsForLabels: { fill: "transparent", }
     }
 
@@ -35,21 +54,18 @@ export default function StackedChart({ totalBudget, totalSpent }) {
         backgroundGradientTo: "#000",
         backgroundGradientToOpacity: 0,
         color: (opacity = 1) => `rgba(207, 207, 207, ${opacity})`,
-        barPercentage: 1.5,
-        barRadius: 5,
+        barPercentage: 0.75,
         propsForLabels: { fill: "transparent", }
     }
 
     return (
         <View>
-            {console.log(isDarkMode)}
             <StackedBarChart
                 data={data}
                 width={350}
                 height={180}
                 chartConfig={isDarkMode ? chartConfigDark : chartConfigLight}
             />
-
             <View style={styles.legend}>
                 <View style={styles.budgetColor} />
                 <Text style={isDarkMode ? styles.textDark : styles.text}>Budget</Text>

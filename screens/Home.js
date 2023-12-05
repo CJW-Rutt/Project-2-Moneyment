@@ -1,18 +1,74 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Dimensions, ScrollView } from 'react-native';
 import BezLineChart from '../components/atoms/BezLineChart';
 import TransactionsCardHome from '../components/molecules/TransactionsCardHome';
+import { collection, query, onSnapshot, getFirestore } from "firebase/firestore";
 import { Text } from 'react-native-paper';
 import { DarkModeContext } from '../context/darkMode';
-import { useContext } from 'react'
-
-import {
-    MD3LightTheme as DefaultTheme,
-    PaperProvider,
-} from 'react-native-paper';
+import { useContext, useEffect, useState } from 'react'
 import TopHeader from '../components/molecules/TopHeader';
 
 export default function Home() {
+
+    const [transactions, setTransactions] = useState({});
+    const [sum, setSum] = useState(0)
+    const [chartData, setChartData] = useState([])
+    const [chartLabel, setChartLabel] = useState([])
+
+    let num = 0
+    let chartStartNum = 0
+
+    const chartDataArr = []
+    const chartLabelArr = []
+
+    useEffect(() => {
+        const db = getFirestore();
+        const q = query(collection(db, "transactions"));
+
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const newTransactions = {};
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const date = data.date;
+                if (!newTransactions[date]) {
+                    newTransactions[date] = [];
+                }
+                newTransactions[date].push({ id: doc.id, ...data });
+            });
+            setTransactions(newTransactions);
+        });
+
+        return () => unsubscribe();
+    })
+
+    const getMonth = (str) => {
+        return str.slice(0, 3)
+    }
+
+    const getDay = (str) => {
+        return str.split(" ")[1].split(",")[0]
+    }
+
+    const getDate = (str1, str2) => {
+        return `${getMonth(str1)} ${getDay(str2)}`
+    }
+
+    useEffect(() => {
+        Object.entries(transactions).map(i => {
+            setSum(num += i[1][0].price)
+            chartDataArr.push(chartStartNum += i[1][0].price)
+            chartLabelArr.push(getDate(i[1][0].date, i[1][0].date))
+        })
+        setChartData(chartDataArr)
+        setChartLabel(chartLabelArr)
+
+        // console.log(chartData)
+    }, [transactions])
+
+    // useEffect(() => {
+    //     Object.entries(transactions).map(i => {
+    //         console.log(i[1][0])
+    //     })
+    // }, [])
 
     const windowWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
@@ -30,7 +86,7 @@ export default function Home() {
                             <Text style={isDarkMode ? styles.descDark : styles.desc}>Understand your finances with simple charts</Text>
                         </View>
                         <View style={styles.content}>
-                            <BezLineChart />
+                            <BezLineChart sum={sum} chartData={chartData} chartLabel={chartLabel} />
                         </View>
                         <View style={{
                             borderBottomColor: '#F4F4F4',
@@ -49,7 +105,6 @@ export default function Home() {
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
