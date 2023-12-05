@@ -1,15 +1,19 @@
 
 import React, { useState } from 'react';
 import { Iconify } from 'react-native-iconify';
-import { View, Text, TouchableOpacity, Modal, StyleSheet, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Modal, StyleSheet, ScrollView } from 'react-native';
 import { Picker } from "@react-native-picker/picker"
 import { DarkModeContext } from '../../../context/darkMode';
 import { useContext } from 'react';
-import { useTheme } from 'react-native-paper';
+import { useTheme, Switch, Text } from 'react-native-paper';
 
-const DualDropdownMenu = () => {
+const DualDropdownMenu = ({toggle}) => {
 	const { isDarkMode } = useContext(DarkModeContext)
 	const theme = useTheme()
+
+	// const [toggle, setToggle] = useState(false)
+
+	// const onToggle = () => setToggle(!toggle)
 
 	const [selectedItem1, setSelectedItem1] = useState("Day");
 	const [selectedItem2, setSelectedItem2] = useState('Next Week');
@@ -33,48 +37,61 @@ const DualDropdownMenu = () => {
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.row}>
-				<Text style={isDarkMode ? styles.labelDark : styles.label}>Every</Text>
-				<TouchableOpacity onPress={() => setPickerVisible1(!isPickerVisible1)}>
-					<View style={styles.selectedContainer}>
-						<Picker
-							style={[styles.picker, { color: theme.colors.primaryLight }]}
-							selectedValue={selectedItem1}
-							onValueChange={(value) => {
-								setSelectedItem1(value);
-								setPickerVisible1(false);
-							}}
-							dropdownIconColor={theme.colors.primaryLight}
-						>
-							<Picker.Item label={"Select An Option"} value={null} />
-							{options1.map((option) => (
-								<Picker.Item key={option.value} label={option.label} value={option.value} style={styles.pickerLabel} />
-							))}
-						</Picker>
+			{/* <View style={styles.checkBoxContainer}>
+				<Switch
+					value={toggle}
+					onValueChange={onToggle}
+					color='#429488'
+				/>
+				<Text>Recurring budget</Text>
+			</View> */}
+			{toggle
+				? <>
+					<View style={styles.row}>
+						<Text style={isDarkMode ? styles.labelDark : styles.label}>Every</Text>
+						<TouchableOpacity onPress={() => setPickerVisible1(!isPickerVisible1)}>
+							<View style={styles.selectedContainer}>
+								<Picker
+									style={[styles.picker, { color: theme.colors.primaryLight }]}
+									selectedValue={selectedItem1}
+									onValueChange={(value) => {
+										setSelectedItem1(value);
+										setPickerVisible1(false);
+									}}
+									dropdownIconColor={theme.colors.primaryLight}
+								>
+									<Picker.Item label={"Select An Option"} value={null} />
+									{options1.map((option) => (
+										<Picker.Item key={option.value} label={option.label} value={option.value} style={styles.pickerLabel} />
+									))}
+								</Picker>
+							</View>
+						</TouchableOpacity>
 					</View>
-				</TouchableOpacity>
-			</View>
-			<View style={styles.row}>
-				<Text style={isDarkMode ? styles.labelDark : styles.label}>Starting</Text>
-				<TouchableOpacity onPress={() => setPickerVisible2(!isPickerVisible2)}>
-					<View style={styles.selectedContainer}>
-						<Picker
-							style={[styles.picker, { color: theme.colors.primaryLight }]}
-							selectedValue={selectedItem2}
-							onValueChange={(value) => {
-								setSelectedItem2(value);
-								setPickerVisible2(false);
-							}}
-							dropdownIconColor={theme.colors.primaryLight}
+					<View style={styles.row}>
+						<Text style={isDarkMode ? styles.labelDark : styles.label}>Starting</Text>
+						<TouchableOpacity onPress={() => setPickerVisible2(!isPickerVisible2)}>
+							<View style={styles.selectedContainer}>
+								<Picker
+									style={[styles.picker, { color: theme.colors.primaryLight }]}
+									selectedValue={selectedItem2}
+									onValueChange={(value) => {
+										setSelectedItem2(value);
+										setPickerVisible2(false);
+									}}
+									dropdownIconColor={theme.colors.primaryLight}
 
-						>
-							{options2.map((option) => (
-								<Picker.Item key={option.value} label={option.label} value={option.value} style={styles.pickerLabel} />
-							))}
-						</Picker>
+								>
+									{options2.map((option) => (
+										<Picker.Item key={option.value} label={option.label} value={option.value} style={styles.pickerLabel} />
+									))}
+								</Picker>
+							</View>
+						</TouchableOpacity>
 					</View>
-				</TouchableOpacity>
-			</View>
+				</>
+				: <>
+				</>}
 		</View>
 	);
 };
@@ -117,6 +134,10 @@ const styles = StyleSheet.create({
 		gap: 20,
 		width: "100%",
 	},
+	checkBoxContainer: {
+		flexDirection: 'row',
+		alignItems: 'center'
+	}
 });
 
 export default DualDropdownMenu;

@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { useTheme } from "react-native-paper";
 import TopHeader from "../TopHeader";
 
-export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBudget, totalSpent }) {
+export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBudget = 0, totalSpent }) {
 
     const { isDarkMode } = useContext(DarkModeContext);
     const theme = useTheme();

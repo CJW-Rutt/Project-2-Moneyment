@@ -5,7 +5,7 @@ import SaveButton from "../../atoms/SaveButton";
 import { Image } from "expo-image";
 import { DarkModeContext } from '../../../context/darkMode';
 import { Text } from "react-native-paper";
-import { useTheme } from "react-native-paper";
+import { useTheme, Switch } from "react-native-paper";
 import { collection, getFirestore, addDoc, doc, updateDoc } from "firebase/firestore";
 import Message from "../../atoms/Message";
 
@@ -14,6 +14,10 @@ export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) 
 
     const theme = useTheme()
     const { isDarkMode } = useContext(DarkModeContext);
+
+    const [toggle, setToggle] = useState(false)
+
+    const onToggle = () => setToggle(!toggle)
 
     const [budgetTitle, setBudgetTitle] = useState(budgetData?.budgetTitle || '');
     const [budgetCategory, setBudgetCategory] = useState(budgetData?.budgetCategory || '');
@@ -84,8 +88,15 @@ export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) 
             <View style={styles.dropdownContainer}>
                 <View style={styles.row}>
                     <Text style={styles.heading}>Recurrence</Text>
+                    <View style={styles.switchContainer}>
+                        <Switch
+                            value={toggle}
+                            onValueChange={onToggle}
+                            color='#429488'
+                        />
+                    </View>
                 </View>
-                <BudgetDropdown />
+                <BudgetDropdown toggle={toggle} />
             </View >
             <View style={styles.image}>
                 {
@@ -158,7 +169,7 @@ const styles = StyleSheet.create({
     heading: {
         fontSize: 16,
         fontWeight: '800',
-        paddingTop: 20,
+        paddingTop: 10,
         paddingLeft: 20,
         paddingRight: 20
     },
@@ -169,6 +180,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     row: {
-        marginBottom: 5
+        marginBottom: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    switchContainer: {
+        paddingTop: 10
     }
 });
