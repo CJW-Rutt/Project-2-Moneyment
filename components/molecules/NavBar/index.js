@@ -167,7 +167,7 @@ export default function NavBar({ signedIn }) {
                     : <>
                         <FAB
                             icon="chat"
-                            style={[styles.fab, { bottom: SIZES.height * 0.1 }]}
+                            style={[styles.fab, { bottom: SIZES.height * 0.115 }]}
                             color='white'
                             onPress={() => {
                                 handleOpenChat()
