@@ -6,6 +6,7 @@ import { Text } from 'react-native-paper';
 import { DarkModeContext } from '../context/darkMode';
 import { useContext, useEffect, useState } from 'react'
 import TopHeader from '../components/molecules/TopHeader';
+import { SIZES } from '../constants';
 
 export default function Home() {
 
@@ -70,16 +71,16 @@ export default function Home() {
     //     })
     // }, [])
 
-    const windowWidth = Dimensions.get('window').width;
-    const screenHeight = Dimensions.get('window').height;
+    const windowWidth = Dimensions.get('screen').width;
+    const screenHeight = Dimensions.get('screen').height;
 
     const { isDarkMode } = useContext(DarkModeContext);
 
     return (
         <View style={[styles.container, { height: screenHeight - 55, width: windowWidth }]}>
             <TopHeader title="Transactions" />
-            <ScrollView showsVerticalScrollIndicator={false} directionalLockEnabled>
-                <View style={[styles.subContainer]}>
+            <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
+                <View style={[styles.subContainer, { width: SIZES.width }]}>
                     <View style={styles.topContainer}>
                         <View style={styles.textContainer}>
                             <Text style={styles.title}>Track Your Transactions!</Text>

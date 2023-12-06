@@ -18,6 +18,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import Login from './screens/Login';
 import Welcome from './screens/Welcome';
 import { WelcomeContext, WelcomeProvider } from './context/welcome';
+import { StatusBar } from 'expo-status-bar';
 
 const screenWidth = Dimensions.get('screen').width
 
@@ -72,6 +73,10 @@ export default function App() {
     })
   }
 
+  const statusBarColor = () => {
+    StatusBar.setStatusBarBackgroundColor('#429488')
+  }
+
   useEffect(() => {
     checkUser()
     // console.log('signedIn on App.js is', signedIn)
@@ -93,6 +98,11 @@ export default function App() {
 
 
           <WelcomeContext.Provider value={{ showWelcome, toggleShowWelcome }}>
+            {
+              signedIn
+                ? <StatusBar style='dark' />
+                : <StatusBar style='dark' StatusBarStyle={statusBarColor} />
+            }
             <NavigationContainer>
               {
                 signedIn
@@ -116,7 +126,7 @@ export default function App() {
                                 style={[styles.unlockContainer, { width: screenWidth }]}
                                 onPress={() => setShowSignIn(true)}
                               >
-                                <Text style={{ textAlign: 'center', color: "#fff", fontSize: 12, fontWeight: 'bold' }}>Log in to unlock full access</Text>
+                                <Text style={{ textAlign: 'center', color: "#fff", fontSize: 12, fontWeight: 'bold', paddingTop: 40 }}>Log in to unlock full access</Text>
                               </Pressable>
                               <NavBar signedIn={{ signedIn }} />
                             </>}
@@ -126,7 +136,6 @@ export default function App() {
               }
             </NavigationContainer>
           </WelcomeContext.Provider>
-
         </GestureHandlerRootView>
       </PaperProvider>
     </DarkModeContext.Provider>
@@ -142,9 +151,10 @@ const styles = StyleSheet.create({
   },
   unlockContainer: {
     position: 'absolute',
-    top: 30,
+    top: 0,
     backgroundColor: '#429488',
-    height: 44,
+    height: SIZES.height * 0.1,
+    // height: 44,
     zIndex: 2,
     textAlign: 'center',
     justifyContent: 'center'
