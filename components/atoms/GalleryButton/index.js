@@ -14,7 +14,7 @@ export default function GalleryButton({ onImageSelect }) {
             aspect: [4, 3],
         });
 
-        if (result) {
+        if (!result.canceled) {
             onImageSelect(result.assets[0].uri);
         }
     };

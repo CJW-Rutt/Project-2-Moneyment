@@ -11,8 +11,7 @@ import Message from "../../atoms/Message";
 import { Picker } from '@react-native-picker/picker';
 import IconList from '../../../utils/Icons/index.js';
 
-export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) {
-    console.log(budgetData);
+export default function BudgetForm({ budgetData, closeModal, onClose }) {
     const currentTimestamp = new Date().getTime();
 
     const theme = useTheme()
@@ -103,9 +102,11 @@ export default function BudgetForm({ budgetData, onSave, closeModal, onClose }) 
                             onValueChange={(itemValue, itemIndex) =>
                                 setSelectedIcon(itemValue)
                             }>
-                            {Object.keys(IconList).map((key) => (
-                                <Picker.Item key={key} label={key} value={key} />
-                            ))}
+                                {
+                                    Object.keys(IconList).map((key) => (
+                                        <Picker.Item key={key} label={key} value={key} />
+                                    ))
+                                }
                         </Picker>
                     </View>
                     {
@@ -227,6 +228,8 @@ const styles = StyleSheet.create({
         paddingRight: 20,
         paddingLeft: 20,
         height: 35,
+        marginTop: 50,
+        marginBottom: 50,
     },
     iconPicker: {
         flex: 3,
