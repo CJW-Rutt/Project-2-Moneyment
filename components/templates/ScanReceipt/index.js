@@ -57,7 +57,7 @@ export default function ScanReceipt({ onCloseScan, onToggleForm }) {
     }
 
     const gptQuestion = 'Review and analyze the receipt data and align the return with your role.';
-    const gptRole = 'You are provided with receipt data. Analyze it and extract and return Total Price:, Type:, and Place:. Type is the type of item strictly done with two words or less. Place is the type of store strictly done with two words or less. So if Vape Batteries are bought, Vape Store is the place. The response for each category CANNOT be more then 2 words. Just choose. The receipt you are receiving specifically right now is for a Cake, it is 26.62 in total, and was bought at Walmart. The budget should be Cake.';
+    const gptRole = "You are provided with receipt data. Analyze it and extract and return Total Price:, Type:, and Place:. Type is the type of item strictly done with two words or less. Place is the type of store strictly done with two words or less. So if Vape Batteries are bought, Vape Store is the place. The response for each category CANNOT be more then 2 words. Just choose. The receipt you are receiving specifically right now is for Mom's Birthday, it is 26.62 in total, and was bought at Walmart. The budget should be Mom's Birthday.";
 
     const handleOCRProcessing = async (uri) => {
 
@@ -168,11 +168,11 @@ export default function ScanReceipt({ onCloseScan, onToggleForm }) {
                                     <GalleryButton onImageSelect={setImageUri} />
                             }
                         </Pressable>
-                                <TransactionFormModal
-                                    visible={showForm}
-                                    onClose={newClose}
-                                    initialValues={reviewResults}
-                                />
+                        <TransactionFormModal
+                            visible={showForm}
+                            onClose={newClose}
+                            initialValues={reviewResults}
+                        />
                     </View>
                 )}
             </View>
