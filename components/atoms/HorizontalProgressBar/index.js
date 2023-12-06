@@ -24,7 +24,7 @@ export default function HorizontalProgressBar({ progress }){
             style={styles.progress_bar}
             progress={progress}
             color={getBarColor(progress)}
-            width={350}
+            width={390}
             height={5}
         />
     )

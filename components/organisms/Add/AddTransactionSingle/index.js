@@ -27,7 +27,7 @@ export default function AddTransactionSingle() {
 
     const handleScan = () => {
         console.log('AddTransactionSingle: handleScan');
-        showScan ? setShowScan(false) : setShowScan(true)
+        showScan ? setShowScan(false) : setShowScan(false)
     }
 
     const handleAddBudget = (newBudget) => {

@@ -26,7 +26,7 @@ export default function AddTransactionForm({ initialValues = {}, onClose }) {
 
         const newTransaction = {
             store: store,
-            date: date, // We need to update this 
+            date: date,
             price: parseFloat(price),
             budget: budget,
             type: transactionType,
