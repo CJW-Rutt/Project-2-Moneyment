@@ -2,11 +2,12 @@ import { StyleSheet, View, Button, Modal, Pressable } from 'react-native';
 import { useState, useContext, useEffect } from 'react';
 import { Text } from 'react-native-paper';
 import { Image } from "expo-image"
+import { DarkModeContext } from '../../../../context/darkMode';
 import Icon from 'react-native-vector-icons/FontAwesome5'
+
+import TransactionFormModal from '../../../modal/Add/TransactionFormModal';
 import ScanReceipt from '../../../templates/ScanReceipt';
 import LongTextButton from '../../../atoms/LongTextButton';
-import { DarkModeContext } from '../../../../context/darkMode';
-import TransactionFormModal from '../../../modal/Add/TransactionFormModal';
 
 export default function AddTransactionSingle() {
     const [showScan, setShowScan] = useState(false);
@@ -14,7 +15,7 @@ export default function AddTransactionSingle() {
     const [showTransactionFormModal, setShowTransactionFormModal] = useState(false);
 
     useEffect(() => {
-        console.log(`Transaction Form Modal is now ${showTransactionFormModal ? 'open' : 'closed'}.`);
+        console.log(`TransactionFormModal is now ${showTransactionFormModal ? 'open' : 'closed'}.`);
         if (showTransactionFormModal) {
             console.log("Modal opened. Trace this back to find where it's set.");
         }
@@ -27,7 +28,7 @@ export default function AddTransactionSingle() {
 
     const handleScan = () => {
         console.log('AddTransactionSingle: handleScan');
-        showScan ? setShowScan(false) : setShowScan(false)
+        showScan ? setShowScan(false) : setShowScan(true)
     }
 
     const handleAddBudget = (newBudget) => {
@@ -58,7 +59,7 @@ export default function AddTransactionSingle() {
                                 </Pressable>
                                 <Text style={styles.headerTitle}>Scan Receipt</Text>
                             </View>
-                            <ScanReceipt onCloseScan={handleScan} />
+                            <ScanReceipt onCloseScan={handleScan} onToggleForm={toggleTransactionFormModal}/>
                         </Modal>
                     </> :
                     <>
@@ -74,13 +75,13 @@ export default function AddTransactionSingle() {
                         {isDarkMode === true ? <Image source={require("../../../../assets/graphics/people/phone_using.svg")} alt='' style={{ width: 338, height: 250, marginTop: 30, }} contentFit="contain" />
                             : <Image source={require("../../../../assets/graphics/people/phone_using.svg")} alt='' style={{ width: 338, height: 250, marginTop: 30, }} contentFit="contain" />}
 
-                        {showTransactionFormModal && (
+                        {showTransactionFormModal && ( 
                             <TransactionFormModal
                                 visible={showTransactionFormModal}
                                 onClose={toggleTransactionFormModal}
                                 onAddBudget={handleAddBudget}
                             />
-                        )}
+                        )} 
                     </>
             }
         </View>

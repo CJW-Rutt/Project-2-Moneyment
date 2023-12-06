@@ -1,19 +1,20 @@
 import { useEffect } from 'react';
 import { Modal, View, StyleSheet, Pressable, Text } from 'react-native';
-import AddTransactionForm from '../../../templates/AddTransactionForm';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { DarkModeContext } from '../../../../context/darkMode';
 import { useContext } from 'react'
 
-export default function TransactionFormModal({ visible, onClose, initialValues }) {
+import AddTransactionForm from '../../../templates/AddTransactionForm';
 
+export default function TransactionFormModal({ visible, onClose, initialValues }) {
+    console.log('TRANSACTIONFORMMODAL VISIBILITY:', visible)
     const { isDarkMode } = useContext(DarkModeContext);
 
     useEffect(() => {
-        console.log("Modal component mounted");
+        console.log("TRANSACTIONFORMMODEL: Modal component mounted");
 
         return () => {
-            console.log("Modal component unmounted");
+            console.log("TRANSACTIONFORMMODEL: Modal component unmounted");
         };
     }, []);
 

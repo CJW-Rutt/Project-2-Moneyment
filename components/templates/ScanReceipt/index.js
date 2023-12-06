@@ -13,7 +13,7 @@ import TransactionFormModal from "../../modal/Add/TransactionFormModal"
 import { DarkModeContext } from "../../../context/darkMode";
 import { useContext } from "react";
 
-export default function ScanReceipt({ onCloseScan }) {
+export default function ScanReceipt({ onCloseScan, onToggleForm }) {
 
     const { isDarkMode } = useContext(DarkModeContext)
 
@@ -39,6 +39,11 @@ export default function ScanReceipt({ onCloseScan }) {
             setShowForm(false);
         };
     }, []);
+
+    const newClose = () => {
+        setShowForm(false);
+        onCloseScan();
+    }
 
     const message = {
         takePhoto: {
@@ -163,11 +168,11 @@ export default function ScanReceipt({ onCloseScan }) {
                                     <GalleryButton onImageSelect={setImageUri} />
                             }
                         </Pressable>
-                        <TransactionFormModal
-                            visible={showForm}
-                            onClose={onCloseScan}
-                            initialValues={reviewResults}
-                        />
+                                <TransactionFormModal
+                                    visible={showForm}
+                                    onClose={newClose}
+                                    initialValues={reviewResults}
+                                />
                     </View>
                 )}
             </View>

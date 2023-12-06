@@ -9,7 +9,7 @@ import { useTheme, Switch } from "react-native-paper";
 import { collection, getFirestore, addDoc, doc, updateDoc } from "firebase/firestore";
 import Message from "../../atoms/Message";
 import { Picker } from '@react-native-picker/picker';
-import IconList from '../../../utils/icons/index.js';
+import IconList from '../../../utils/Icons/index.js';
 
 export default function BudgetForm({ budgetData, closeModal, onClose }) {
     const currentTimestamp = new Date().getTime();
