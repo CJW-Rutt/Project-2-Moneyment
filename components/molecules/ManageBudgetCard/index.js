@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { useTheme } from "react-native-paper";
 import TopHeader from "../TopHeader";
 
-export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBudget = 0, totalSpent }) {
+export default function ManageBudgetCard({ remainingBudget = 0 }) {
 
     const { isDarkMode } = useContext(DarkModeContext);
     const theme = useTheme();
@@ -38,42 +38,13 @@ export default function ManageBudgetCard({ onAddBudget, totalBudget, remainingBu
 
     return (
         <View style={styles.manageContainer}>
-            {/* {console.log('Theme: ', theme.colors)} */}
             <View style={styles.manageLeftCol}>
                 <View style={styles.budgetRow}>
                     <Text style={isDarkMode ? styles.remainingTitleDark : styles.remainingTitle}>Remaining Budget</Text>
                     <Text style={styles.remainingAmt}>${remainingBudget.toFixed(2)}</Text>
                 </View>
             </View>
-            {/* <Pressable onPress={() => openModal()}>
-                <View style={styles.manageRightCol}>
-                    <Text
-                        style={isDarkMode ? darkButton : lightButton}
-                    >Add Budget</Text>
-                </View>
-            </Pressable> */}
-
-            {/* Modal Begins */}
-            {/* <Modal
-                animationType="slide"
-                transparent={false}
-                visible={modalVisible}
-                onRequestClose={closeModal}
-            // contentContainerStyle={{ backgroundColor: theme.colors.background }}
-            >
-                <View style={[styles.modalContainer, { backgroundColor: theme.colors.background }]}>
-                    <TopHeader
-                        title='New Budget'
-                        type='close'
-                        func={closeModal}
-                    />
-                    <BudgetForm onAddBudget={onAddBudget} closeModal={closeModal} />
-                </View>
-            </Modal> */}
-            {/* Modal Ends */}
-
         </View>
-
     );
 }
 

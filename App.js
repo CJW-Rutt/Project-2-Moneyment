@@ -1,8 +1,8 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { StyleSheet, View, Dimensions, Pressable, LogBox } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Dimensions, Pressable, LogBox } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
-import { Provider as PaperProvider, useTheme } from 'react-native-paper';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useMaterial3Theme } from '@pchmn/expo-material3-theme';
 import { useColorScheme } from 'react-native';
@@ -11,23 +11,21 @@ import { useFonts } from 'expo-font';
 import { SIZES } from './constants';
 import NavBar from './components/molecules/NavBar';
 import { DarkModeContext } from './context/darkMode';
-import { RefreshProvider } from './utils/RefreshContext';
 import { auth } from './firebase/firebase.config';
 import { Text } from 'react-native-paper';
 import { onAuthStateChanged } from 'firebase/auth';
 import Login from './screens/Login';
 import Welcome from './screens/Welcome';
-import { WelcomeContext, WelcomeProvider } from './context/welcome';
+import { WelcomeContext } from './context/welcome';
 import { StatusBar } from 'expo-status-bar';
 
 const screenWidth = Dimensions.get('screen').width
 
-LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreLogs(['Warning: ...']); // sorry we didnt have time to fix everything haha the warnings would ruin the presentation vibe
 LogBox.ignoreAllLogs();
 
 
 export default function App() {
-  // const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
   const colorScheme = useColorScheme();
   const { theme } = useMaterial3Theme();
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -64,11 +62,9 @@ export default function App() {
     await onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
-        console.log('signed in', uid)
         setSignedIn(true)
       } else {
         setSignedIn(false)
-        console.log('not signed in')
       }
     })
   }
@@ -79,7 +75,6 @@ export default function App() {
 
   useEffect(() => {
     checkUser()
-    // console.log('signedIn on App.js is', signedIn)
   }, [])
 
   //FONTS
@@ -95,8 +90,6 @@ export default function App() {
     <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
       <PaperProvider theme={paperTheme}>
         <GestureHandlerRootView style={{ flex: 1 }}>
-
-
           <WelcomeContext.Provider value={{ showWelcome, toggleShowWelcome }}>
             {
               signedIn
@@ -154,7 +147,6 @@ const styles = StyleSheet.create({
     top: 0,
     backgroundColor: '#429488',
     height: SIZES.height * 0.1,
-    // height: 44,
     zIndex: 2,
     textAlign: 'center',
     justifyContent: 'center'

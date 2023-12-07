@@ -1,10 +1,9 @@
 import { View, TextInput, Text, StyleSheet } from 'react-native';
 import { useState } from 'react';
 
-const InputField = () => {
+export default function InputField() {
     const [text, onChangeText] = useState('');
     const [number, onChangeNumber] = useState('');
-
 
     return (
         <View style={styles.container}>
@@ -49,5 +48,3 @@ const styles = StyleSheet.create({
 
     }
 });
-
-export default InputField;

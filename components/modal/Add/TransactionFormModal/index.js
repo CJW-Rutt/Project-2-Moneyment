@@ -7,16 +7,8 @@ import { useContext } from 'react'
 import AddTransactionForm from '../../../templates/AddTransactionForm';
 
 export default function TransactionFormModal({ visible, onClose, initialValues }) {
-    console.log('TRANSACTIONFORMMODAL VISIBILITY:', visible)
+    
     const { isDarkMode } = useContext(DarkModeContext);
-
-    useEffect(() => {
-        console.log("TRANSACTIONFORMMODEL: Modal component mounted");
-
-        return () => {
-            console.log("TRANSACTIONFORMMODEL: Modal component unmounted");
-        };
-    }, []);
 
     return (
         <Modal

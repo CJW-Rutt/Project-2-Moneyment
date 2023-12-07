@@ -16,7 +16,6 @@ export default function SingleBudgetOverviewModal({
     calculateProgress,
 }) {
 
-    console.log('SINGLEBUDGETDATA: ', budget)
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
     const toggleEditModal = () => {

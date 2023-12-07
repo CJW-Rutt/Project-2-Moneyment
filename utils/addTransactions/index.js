@@ -5,10 +5,6 @@ const transactionList = []
 export const useTransactions = () => {
     const [transactions, setTransactions] = useState(transactionList);
 
-    useEffect(() => {
-        console.log("Updated transactions:", transactions);
-    }, [transactions]);
-
     const addTransaction = (newTransaction) => {
         setTransactions(currentTransactions => [...currentTransactions, newTransaction]);
     };

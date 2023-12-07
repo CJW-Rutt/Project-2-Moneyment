@@ -1,8 +1,7 @@
 import React from 'react';
 import { Modal, View, Pressable, Text, StyleSheet } from 'react-native';
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import EditButton from '../../../atoms/EditButton';
 import BudgetForm from '../../../molecules/BudgetForm';
 import { DarkModeContext } from '../../../../context/darkMode';
 
@@ -119,7 +118,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 20,
         textAlign: 'center',
-        // paddingLeft: 40,
         paddingRight: 55
     },
     headerTitleDark: {
@@ -129,7 +127,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 20,
         textAlign: 'center',
-        // paddingLeft: 40,
         paddingRight: 55,
         color: "#CFCFCF"
     },

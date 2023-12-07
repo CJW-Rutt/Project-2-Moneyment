@@ -1,5 +1,5 @@
-import { StyleSheet, View, Button, Modal, Pressable } from 'react-native';
-import { useState, useContext, useEffect } from 'react';
+import { StyleSheet, View, Modal, Pressable } from 'react-native';
+import { useState, useContext} from 'react';
 import { Text } from 'react-native-paper';
 import { Image } from "expo-image"
 import { DarkModeContext } from '../../../../context/darkMode';
@@ -14,26 +14,13 @@ export default function AddTransactionSingle() {
     const { isDarkMode } = useContext(DarkModeContext);
     const [showTransactionFormModal, setShowTransactionFormModal] = useState(false);
 
-    useEffect(() => {
-        console.log(`TransactionFormModal is now ${showTransactionFormModal ? 'open' : 'closed'}.`);
-        if (showTransactionFormModal) {
-            console.log("Modal opened. Trace this back to find where it's set.");
-        }
-    }, [showTransactionFormModal]);
-
     const toggleTransactionFormModal = () => {
-        console.log("AddTransactionSingle: toggleTransactionFormModal");
         setShowTransactionFormModal(!showTransactionFormModal);
     };
 
     const handleScan = () => {
-        console.log('AddTransactionSingle: handleScan');
         showScan ? setShowScan(false) : setShowScan(true)
     }
-
-    const handleAddBudget = (newBudget) => {
-        console.log("New budget added:", newBudget);
-    };
 
     return (
         <View style={styles.container}>
@@ -79,7 +66,6 @@ export default function AddTransactionSingle() {
                             <TransactionFormModal
                                 visible={showTransactionFormModal}
                                 onClose={toggleTransactionFormModal}
-                                onAddBudget={handleAddBudget}
                             />
                         )} 
                     </>

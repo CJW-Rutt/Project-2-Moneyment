@@ -3,8 +3,6 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import { DarkModeContext } from '../../../context/darkMode';
 import { useContext } from 'react'
 
-// Don't overwrite my files without discussing it with me first. (Corey)
-
 export default function LongTextButton({ type, onPress }) {
 
     const { isDarkMode } = useContext(DarkModeContext);

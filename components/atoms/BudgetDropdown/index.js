@@ -1,19 +1,14 @@
 
 import React, { useState } from 'react';
-import { Iconify } from 'react-native-iconify';
 import { View, TouchableOpacity, Modal, StyleSheet, ScrollView } from 'react-native';
 import { Picker } from "@react-native-picker/picker"
 import { DarkModeContext } from '../../../context/darkMode';
 import { useContext } from 'react';
-import { useTheme, Switch, Text } from 'react-native-paper';
+import { useTheme, Text } from 'react-native-paper';
 
-const DualDropdownMenu = ({toggle}) => {
+export default function DualDropdownMenu({toggle}) {
 	const { isDarkMode } = useContext(DarkModeContext)
 	const theme = useTheme()
-
-	// const [toggle, setToggle] = useState(false)
-
-	// const onToggle = () => setToggle(!toggle)
 
 	const [selectedItem1, setSelectedItem1] = useState("Day");
 	const [selectedItem2, setSelectedItem2] = useState('Next Week');
@@ -37,14 +32,6 @@ const DualDropdownMenu = ({toggle}) => {
 
 	return (
 		<View style={styles.container}>
-			{/* <View style={styles.checkBoxContainer}>
-				<Switch
-					value={toggle}
-					onValueChange={onToggle}
-					color='#429488'
-				/>
-				<Text>Recurring budget</Text>
-			</View> */}
 			{toggle
 				? <>
 					<View style={styles.row}>
@@ -139,8 +126,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	}
 });
-
-export default DualDropdownMenu;
 
 
 

@@ -14,6 +14,8 @@ export default function AddTransactionForm({ initialValues = {}, onClose }) {
     const [price, setPrice] = useState(initialValues.totalAmount || '');
     const [transactionType, setTransactionType] = useState('');
     const [budget, setBudget] = useState(initialValues.purchaseType || '');
+    const [priceError, setPriceError] = useState('');
+    const [budgetError, setBudgetError] = useState('');
 
     const currentTimestamp = new Date().getTime();
 
@@ -21,7 +23,28 @@ export default function AddTransactionForm({ initialValues = {}, onClose }) {
         setTransactionType(selectedType);
     };
 
+    const validateForm = () => {
+        let isValid = true;
+
+        if (!price || isNaN(price)) {
+            setPriceError("Please enter a valid price.");
+            isValid = false;
+        } else {
+            setPriceError("");
+        }
+
+        if (!budget) {
+            setBudgetError("Budget name is required.");
+            isValid = false;
+        } else {
+            setBudgetError("");
+        }
+
+        return isValid;
+    };
+
     const handleSave = async () => {
+        if (!validateForm()) return;
         const db = getFirestore();
 
         const newTransaction = {
@@ -35,9 +58,7 @@ export default function AddTransactionForm({ initialValues = {}, onClose }) {
 
         try {
             const docRef = await addDoc(collection(db, "transactions"), newTransaction);
-            onClose();
-
-            console.log("Document written with ID: ", docRef.id);
+            onClose();;
         } catch (e) {
             console.error("Error adding document: ", e);
         }
@@ -81,14 +102,15 @@ export default function AddTransactionForm({ initialValues = {}, onClose }) {
                                 />
                             </View>
                             <View style={styles.smallRowContainer}>
-                                <Text style={isDarkMode ? styles.textDark : ""}>
-                                    Price *
-                                </Text>
+                                {
+                                    priceError ?
+                                        <Text style={styles.errorText}>{priceError}</Text> :
+                                        <Text style={isDarkMode ? styles.textDark : ""}>Price *</Text>
+                                }
                                 <TextInput
-                                    style={isDarkMode ? styles.inputShortDark : styles.inputShort}
+                                    style={priceError ? styles.inputError : (isDarkMode ? styles.inputDark : styles.input)}
                                     value={price}
                                     onChangeText={price => setPrice(price)}
-                                    placeholder="$5.00"
                                     keyboardType="numeric"
                                     placeholderTextColor={isDarkMode ? "#CFCFCF" : "#000"}
                                 />
@@ -102,11 +124,13 @@ export default function AddTransactionForm({ initialValues = {}, onClose }) {
                         </View>
 
                         <View style={styles.smallContainer}>
-                            <Text style={isDarkMode ? styles.textDark : ""}>
-                                Budget Name *
-                            </Text>
+                            {
+                                    budgetError ?
+                                        <Text style={styles.errorText}>{budgetError}</Text> :
+                                        <Text style={isDarkMode ? styles.textDark : ""}>Budget Name *</Text>
+                            }
                             <TextInput
-                                style={isDarkMode ? styles.inputDark : styles.input}
+                                style={budgetError ? styles.inputError : (isDarkMode ? styles.inputDark : styles.input)}
                                 value={budget}
                                 onChangeText={text => setBudget(text)}
                                 placeholder="Budget Name"
@@ -195,13 +219,11 @@ const styles = StyleSheet.create({
     reviewText: {
         fontSize: 16,
         fontWeight: "700",
-        // paddingTop: 20,
         paddingBottom: 5
     },
     reviewTextDark: {
         fontSize: 16,
         fontWeight: "700",
-        // paddingTop: 20,
         paddingBottom: 5,
         color: "#CFCFCf"
     },
@@ -218,5 +240,15 @@ const styles = StyleSheet.create({
     },
     textDark: {
         color: "#CFCFCF"
+    },
+    inputError: {
+        borderColor: 'red',
+        borderWidth: 1,
+        marginTop: 5,
+    },
+    errorText: {
+        fontSize: 12,
+        color: 'red',
+
     }
 })

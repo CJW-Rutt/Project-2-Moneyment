@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import TransactionsCard from "../../../molecules/TransactionsCard";
 import BudgetSingleSegment from "../BudgetSingleSegment";
 import { collection, query, onSnapshot, getFirestore } from "firebase/firestore";
@@ -28,7 +28,6 @@ export default function BudgetSingle({ budget }) {
             });
             setTransactions(newTransactions);
         });
-        // console.log("transactions", transactions)
         return () => unsubscribe();
     }, []);
 
@@ -43,27 +42,19 @@ export default function BudgetSingle({ budget }) {
                     //i is ["December 5, 2023", [{"budget": "Mom", "date": "December 5, 2023", "id": "LZjID8NHnOyK4PJObYuP", "price": 45, "store": "La Foret", "time": 1701810606041, "type": "Credit Card"}, {"budget": "Books", "date": "December 5, 2023", "id": "PWkqPJ0OTybX49eNBSYH", "price": 5, "store": "Walmart", "time": 1701811574440, "type": "Cash"}]]
 
                 } else if (i[1][index].budget.toLowerCase() === budget.budgetTitle.toLowerCase() && i[0] === i[1][index].date) {
-                    // console.log('ITEM IS HERE!!!', i[1][index])
                     arr.push(i[1][index])
 
                     let filterArr = arr.filter(a => a.date === i[0])
 
-                    // console.log('ARR IS HERE!!!!!', arr)
                     makeObj(i, filterArr)
                 }
             })
         })
         console.log('filteredTransaction is', filteredTransaction)
-        console.log(Object.entries(filteredTransaction)) //[["December 7, 2023", [[Object]]]]
+        console.log(Object.entries(filteredTransaction)) 
     }
 
     const makeObj = (item, arr) => filteredTransaction[item[0]] = arr
-
-    const trimArr = (arr) => {
-        return arr.filter((j) => {
-            j.budget.toLowerCase() !== budget.budgetTitle.toLowerCase()
-        })
-    }
 
     useEffect(() => {
         getHistory()
@@ -77,7 +68,6 @@ export default function BudgetSingle({ budget }) {
             </View>
             <Text style={isDarkMode ? styles.headingDark : styles.heading}>Transactions</Text>
             <View style={styles.transactionCardContainer}>
-                {/* {console.log('transaction before passing', history)} */}
                 <TransactionsCard transactions={history} />
             </View>
         </View>
@@ -94,9 +84,6 @@ const styles = StyleSheet.create({
         zIndex: 1,
         paddingLeft: 20,
         paddingRight: 20
-    },
-    barGraphContainer: {
-        // marginTop: 25
     },
     heading: {
         fontSize: 16,

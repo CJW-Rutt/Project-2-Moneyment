@@ -6,7 +6,6 @@ import { DarkModeContext } from '../../../context/darkMode';
 import { useContext } from "react";
 
 export default function TransactionsCard({ transactions }) {
-    const windowWidth = Dimensions.get('window').width;
 
     if (!transactions || Object.keys(transactions).length === 0) {
         return <Text>No transactions available</Text>;

@@ -1,4 +1,4 @@
-import { View, Pressable, Text } from "react-native";
+import { Pressable, Text } from "react-native";
 import { StyleSheet } from "react-native";
 
 export default function ManageBudget() {

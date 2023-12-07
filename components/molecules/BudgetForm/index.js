@@ -27,6 +27,9 @@ export default function BudgetForm({ budgetData, closeModal, onClose }) {
     const [totalBudget, setTotalBudget] = useState(isEditMode ? budgetData.totalBudget?.toString() : '');
     const [selectedIcon, setSelectedIcon] = useState(isEditMode ? budgetData.icon : '');
 
+    const [budgetTitleError, setBudgetTitleError] = useState('');
+    const [totalBudgetError, setTotalBudgetError] = useState('');
+
     const addBudget = async (budgetDetails) => {
         const db = getFirestore();
         const budgetCollectionRef = collection(db, 'budgets');
@@ -47,7 +50,28 @@ export default function BudgetForm({ budgetData, closeModal, onClose }) {
         }
     }, []);
 
+    const validateForm = () => {
+        let isValid = true;
+
+        if (!budgetTitle) {
+            setBudgetTitleError("Budget name is required.");
+            isValid = false;
+        } else {
+            setBudgetTitleError("");
+        }
+
+        if (!totalBudget || isNaN(totalBudget)) {
+            setTotalBudgetError("Please enter a valid amount.");
+            isValid = false;
+        } else {
+            setTotalBudgetError("");
+        }
+
+        return isValid;
+    };
+
     const handleSave = async () => {
+        if (!validateForm()) return;
         const budgetDetails = {
             name: budgetTitle,
             amount: parseFloat(totalBudget) || 0,
@@ -75,9 +99,16 @@ export default function BudgetForm({ budgetData, closeModal, onClose }) {
                     bodyCopy="* required fields"
                 />
                 <View style={styles.subContainer}>
-                    <Text style={isDarkMode ? styles.titleDark : styles.title}>Budget name *</Text>
+                    {   
+                        budgetTitleError ? 
+                            <Text style={styles.errorText}>{budgetTitleError}</Text> :
+                            <Text style={isDarkMode ? styles.titleDark : styles.title}>Budget name *</Text>
+                    }
                     <TextInput
-                        style={isDarkMode ? [styles.inputDark, { borderColor: theme.colors.primaryLight }] : [styles.input, { borderColor: theme.colors.primaryLight }]}
+                        style={[
+                            isDarkMode ? styles.inputDark : styles.input,
+                            budgetTitleError ? styles.inputError : { borderColor: theme.colors.primaryLight }
+                        ]}
                         placeholder="Budget name *"
                         placeholderTextColor={isDarkMode ? "#CFCFCF" : "#707070"}
                         value={budgetTitle}
@@ -85,9 +116,16 @@ export default function BudgetForm({ budgetData, closeModal, onClose }) {
                     />
                 </View>
                 <View style={styles.subContainer}>
-                    <Text style={isDarkMode ? styles.titleDark : styles.title}>Amount *</Text>
+                    {
+                        totalBudgetError ? 
+                            <Text style={styles.errorText}>{totalBudgetError}</Text> :
+                            <Text style={isDarkMode ? styles.titleDark : styles.title}>Amount *</Text>
+                    }
                     <TextInput
-                        style={isDarkMode ? [styles.inputDark, { borderColor: theme.colors.primaryLight }] : [styles.input, { borderColor: theme.colors.primaryLight }]}
+                        style={[
+                            isDarkMode ? styles.inputDark : styles.input,
+                            totalBudgetError ? styles.inputError : { borderColor: theme.colors.primaryLight }
+                        ]}
                         placeholder="Total Budget"
                         placeholderTextColor={isDarkMode ? "#CFCFCF" : "#707070"}
                         value={totalBudget}
@@ -237,7 +275,18 @@ const styles = StyleSheet.create({
         borderColor: "#707070",
         justifyContent: 'center',
         borderRadius: 5,
-        
         height: 35,
-    }
+    },
+    errorText: {
+        fontSize: 14,
+        color: 'red',
+    },
+    inputError: {
+        borderColor: 'red',
+        borderWidth: 1,
+    },
+    errorText: {
+        fontSize: 12,
+        color: 'red',
+    },
 });

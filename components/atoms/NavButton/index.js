@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
 import { Image } from "expo-image"
 import { Iconify } from 'react-native-iconify';
-import { Icon } from '@iconify/react';
 
 
 export default function NavButton({ icon, active }) {

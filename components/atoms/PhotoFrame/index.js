@@ -1,4 +1,4 @@
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { View, Image } from 'react-native';
 
 export default function PhotoFrame() {
     <View style={{
