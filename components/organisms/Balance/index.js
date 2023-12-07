@@ -1,14 +1,12 @@
 import Segmented from "../../atoms/Segmented";
-import PageIndicator from "../../molecules/PageIndicator";
 import CategoryCard from "../../molecules/Balance/CategoryCard";
 import BezLineChart from "../../atoms/BezLineChart";
 
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 
 export default function Balance() {
     const [position, setPosition] = useState(1)
-    const [count, setCount] = useState(3)
     const [topic, setTopic] = useState('accounts')
     const [num, setNum] = useState(0)
     const [data, setData] = useState([1200, 6100, 15000, 20532])
@@ -78,7 +76,6 @@ export default function Balance() {
                             setNum(0)
                             { accData === '' ? setData(defaultAccountData) : setData(accData) }
                             setView('Balance')
-                            // console.log('test1')
                         }, number: { num }
                     },
                     {
@@ -88,7 +85,6 @@ export default function Balance() {
                             setNum(1)
                             { incData === '' ? setData(defaultIncomeData) : setData(incData) }
                             setView('Income')
-                            // console.log('test2')
                         }, number: { num }
                     },
                     {
@@ -98,7 +94,6 @@ export default function Balance() {
                             setNum(2)
                             { expData === '' ? setData(defaultExpenseData) : setData(expData) }
                             setView('Expenses')
-                            // console.log('test3')
                         }, number: { num }
                     },
                 ]} />
@@ -178,7 +173,6 @@ export default function Balance() {
                                 </View>
                                 : <></>
                 }
-                {/* <PageIndicator count={count} position={position} /> */}
             </View>
         </View>
     )
@@ -186,7 +180,6 @@ export default function Balance() {
 
 const styles = StyleSheet.create({
     container: {
-        // justifyContent: 'center',
         alignItems: 'center',
         gap: 16,
         paddingTop: 20

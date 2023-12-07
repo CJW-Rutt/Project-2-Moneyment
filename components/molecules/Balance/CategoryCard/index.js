@@ -1,9 +1,6 @@
-import { Image } from "expo-image"
-import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from "react-native"
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native"
 import CategoryContainer from "../../../atoms/CategoryContainer"
 import IconContainer from "../../../atoms/IconContainer"
-
-import { useEffect, useState } from "react"
 
 export default function CategoryCard({ arr = [{
     text: 'food', amount: '20'

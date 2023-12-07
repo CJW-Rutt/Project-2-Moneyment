@@ -1,10 +1,9 @@
 import React, { useState, useCallback, useEffect, useContext } from 'react';
-import { View, KeyboardAvoidingView, Platform, Keyboard, Text, StyleSheet } from 'react-native';
+import { View, KeyboardAvoidingView, Platform, Keyboard, StyleSheet } from 'react-native';
 import { GiftedChat, InputToolbar, Send, Bubble } from 'react-native-gifted-chat';
 import { gptTransactionReview } from '../api/gptTransactionReview';
 import { SIZES } from '../constants'
 import { TouchableWithoutFeedback } from 'react-native';
-import { TextInput } from 'react-native-paper';
 import IconContainer from '../components/atoms/IconContainer';
 import { DarkModeContext } from '../context/darkMode';
 
@@ -34,9 +33,6 @@ export default function Chat() {
                             width: SIZES.width - 30,
                             left: 15,
                             marginBottom: -100,
-                            // borderColor: '#707070',
-                            // borderWidth: 1,
-                            // borderRadius: 5,
                         }
                     ]}
                     textInputStyle={
@@ -156,7 +152,6 @@ export default function Chat() {
         gptTransactionReview(question, userMessage, role, false)
             .then(setIsTyping(true))
             .then(gptResponse => {
-                console.log('Received RESPONSE: ', gptResponse);
                 setIsTyping(false)
 
                 const responseText = gptResponse.choices && gptResponse.choices[0].message && gptResponse.choices[0].message.content

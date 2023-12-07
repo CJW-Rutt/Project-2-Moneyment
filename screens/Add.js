@@ -18,7 +18,6 @@ export default function Add() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: '#fff',
         display: 'flex',
         flexDirection: 'column',
         alignContent: 'center',

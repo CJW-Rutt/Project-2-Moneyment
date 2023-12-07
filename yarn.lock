@@ -7487,7 +7487,7 @@ react-native-gifted-chat@^2.4.0:
 
 react-native-iconify@^0.2.10:
   version "0.2.10"
-  resolved "https://registry.npmjs.org/react-native-iconify/-/react-native-iconify-0.2.10.tgz"
+  resolved "https://registry.yarnpkg.com/react-native-iconify/-/react-native-iconify-0.2.10.tgz#95e4a1625f5e759a44ff8ee6e7df5b897d34717d"
   integrity sha512-fXiLRdRb4gYr9EXe7M0tCXIqzj8UgKNm+ErOMxkVonBnCJ3FMM88hhCmE0bzW+y8Dc/LcAAE/yMBt9HCa59+Jw==
   dependencies:
     "@iconify/json" "^2.2.69"

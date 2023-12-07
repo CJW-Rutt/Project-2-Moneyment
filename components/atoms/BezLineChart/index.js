@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { View } from 'react-native'
+import React from 'react'
 import { StyleSheet } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from "react-native";
@@ -24,8 +23,8 @@ export default function BezLineChart({ sum, chartData=[1, 2, 3], chartLabel }) {
         datasets: [
             {
                 data: chartData,
-                color: (opacity = 1) => `rgba(66,148,136, ${opacity})`, // optional
-                strokeWidth: 2 // optional
+                color: (opacity = 1) => `rgba(66,148,136, ${opacity})`,
+                strokeWidth: 2
             }
         ],
         labels: chartLabel
@@ -38,9 +37,9 @@ export default function BezLineChart({ sum, chartData=[1, 2, 3], chartLabel }) {
         backgroundGradientToOpacity: 0,
         color: (opacity = 1) => `rgba(66,148,136, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-        strokeWidth: 2, // optional, default 3
+        strokeWidth: 2,
         barPercentage: 0.5,
-        useShadowColorFromDataset: false // optional,
+        useShadowColorFromDataset: false
     };
 
     const chartConfigDark = {
@@ -50,9 +49,9 @@ export default function BezLineChart({ sum, chartData=[1, 2, 3], chartLabel }) {
         backgroundGradientToOpacity: 0,
         color: (opacity = 1) => `rgba(66,148,136, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(207, 207, 207, ${opacity})`,
-        strokeWidth: 2, // optional, default 3
+        strokeWidth: 2,
         barPercentage: 0.5,
-        useShadowColorFromDataset: false // optional,
+        useShadowColorFromDataset: false
     };
 
     return (

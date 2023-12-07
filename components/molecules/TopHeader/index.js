@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
         width: screenWidth,
         maxHeight: 60,
         flex: 1,
-        // justifyContent: 'space-between',
         flexDirection: 'row',
         borderBottomColor: '#A9A9A9',
         borderBottomWidth: 1,
@@ -72,7 +71,6 @@ const styles = StyleSheet.create({
         width: screenWidth,
         maxHeight: 60,
         flex: 1,
-        // justifyContent: 'space-between',
         flexDirection: 'row',
         borderBottomColor: '#A9A9A9',
         borderBottomWidth: 1,
@@ -83,14 +81,10 @@ const styles = StyleSheet.create({
     },
     text: {
         textAlign: 'center',
-        // marginTop: 20,
-        // marginBottom: 10,
         fontWeight: 800
     },
     demoText: {
         textAlign: 'center',
-        // marginTop: 55,
-        // marginBottom: 5,
         fontWeight: 800
     },
     icon: {

@@ -16,15 +16,6 @@ export default function UserLogOut() {
     return (
         <>
             <View style={styles.container}>
-                {/* <Text>
-                    Log Out
-                </Text> */}
-                {/* <Button
-                    onPress={() => logOutUser()}
-                    mode='contained'
-                >
-                    Log Out
-                </Button> */}
                 <Pressable onPress={() => logOutUser()}
                     style={styles.button}            >
                     <Text style={isDarkMode ? styles.buttonTextDark : styles.buttonText}   >Log Out</Text>

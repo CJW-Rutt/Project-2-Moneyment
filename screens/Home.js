@@ -65,12 +65,6 @@ export default function Home() {
         console.log(chartData)
     }, [transactions])
 
-    // useEffect(() => {
-    //     Object.entries(transactions).map(i => {
-    //         console.log(i[1][0])
-    //     })
-    // }, [])
-
     const windowWidth = Dimensions.get('screen').width;
     const screenHeight = Dimensions.get('screen').height;
 

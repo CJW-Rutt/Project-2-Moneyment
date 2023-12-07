@@ -87,10 +87,8 @@ export default function TransactionsCardHome() {
 
 const styles = StyleSheet.create({
     sheet: {
-        // backgroundColor: 'blue',
         minHeight: 200,
         alignContents: 'center',
-        // maxHeight: 500,
         paddingLeft: 20,
         paddingRight: 20,
         width: 370

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
-import { View, Text, StyleSheet } from 'react-native';
-import { Icon } from '@iconify/react';
+import { View, StyleSheet } from 'react-native';
 import { DarkModeContext } from '../../../context/darkMode';
 import { useContext } from 'react'
 
-const TransactionType = ({ onTypeSelect }) => {
+export default function TransactionType({ onTypeSelect }) {
 
   const { isDarkMode } = useContext(DarkModeContext);
 
@@ -27,7 +26,6 @@ const TransactionType = ({ onTypeSelect }) => {
         data={options}
         onSelect={handleSelect}
         buttonTextAfterSelection={(selectedOption) => {
-          // Text to show after selection
           return selectedOption;
         }}
         rowTextForSelection={(item) => {
@@ -76,9 +74,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'grey'
   },
-  selectedRowStyle: {
-    // backgroundColor: 'rgb(240,240,240)'
-  },
   selectedRowTextStyle: {
     fontWeight: '600',
     color: 'black'
@@ -106,8 +101,6 @@ const styles = StyleSheet.create({
   valueText: {
     fontSize: 16,
     color: 'black',
-    marginLeft: 10, // Add some space to the left
+    marginLeft: 10,
   },
 });
-
-export default TransactionType;

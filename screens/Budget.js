@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Pressable } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useState, useContext, useEffect } from 'react';
@@ -66,13 +65,6 @@ export default function Budget() {
             };
         });
 
-        // updatedBudgets.push({
-        //     budgetTitle: "No Budget",
-        //     totalBudget: parseFloat(noBudgetTotal.toFixed(2)),
-        //     totalPrice: parseFloat(noBudgetTotal.toFixed(2)),
-        //     left: 0
-        // });
-
         setDisplayedBudgets(updatedBudgets);
     };
 
@@ -82,7 +74,6 @@ export default function Budget() {
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const budgetsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setBudgets(budgetsData);
-            // console.log('BUDGETS DATA: ', budgetsData);
         });
 
         return () => unsubscribe();
@@ -94,7 +85,6 @@ export default function Budget() {
         const unsubscribe = onSnapshot(collection(db, "transactions"), (snapshot) => {
             const transactionsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setTransactions(transactionsData);
-            // console.log('TRANSACTIONS DATA: ', transactionsData);
         });
 
         return () => unsubscribe();
@@ -183,18 +173,15 @@ export default function Budget() {
         await onAuthStateChanged(auth, (user) => {
             if (user) {
                 const uid = user.uid;
-                // console.log('signed in', uid)
                 setSignedIn(true)
             } else {
                 setSignedIn(false)
-                // console.log('not signed in')
             }
         })
     }
 
     useEffect(() => {
         checkUser()
-        // console.log('signedIn on Budget.js is', signedIn)
     }, [])
 
     return (

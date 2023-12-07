@@ -1,7 +1,7 @@
 import Balance from "../../organisms/Balance";
 import Message from "../../atoms/Message";
 
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 export default function WalletTemplate() {
     return (

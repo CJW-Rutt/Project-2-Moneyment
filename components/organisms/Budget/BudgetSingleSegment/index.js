@@ -1,7 +1,6 @@
 import Segmented from "../../../atoms/Segmented";
 import BudgetCard from "../../../molecules/BudgetCard";
 import BarGraph from "../../../atoms/BarGraph";
-import ManageBudgetCard from "../../../molecules/ManageBudgetCard";
 import { Image } from "expo-image";
 
 import { useState, useEffect } from "react";
@@ -105,7 +104,6 @@ export default function BudgetSingleSegment({ budget }) {
                                 <BarGraph />
                             </View> : <></>
                 }
-                {/* <PageIndicator count={count} position={position} /> */}
             </View>
         </View>
     )
@@ -117,7 +115,6 @@ const styles = StyleSheet.create({
         paddingTop: 10
     },
     sheet: {
-        // backgroundColor: 'white',
         flex: 0,
     },
     track: {
@@ -130,9 +127,6 @@ const styles = StyleSheet.create({
     },
     barGraphContainer: {
         maxHeight: 200,
-    },
-    budgetContainer: {
-        // height: 200,
     },
     transactionsTitle: {
         marginTop: 50,

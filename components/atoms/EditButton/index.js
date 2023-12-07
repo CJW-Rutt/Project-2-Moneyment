@@ -1,10 +1,10 @@
-import { View, Pressable, Text } from "react-native";
+import { Pressable, Text } from "react-native";
 import { StyleSheet } from "react-native";
 import { Image } from "expo-image";
 import { DarkModeContext } from '../../../context/darkMode';
 import { useContext } from "react";
 
-export default function EditButton({ onPress, style }) {
+export default function EditButton({ onPress }) {
 
     const { isDarkMode } = useContext(DarkModeContext);
 

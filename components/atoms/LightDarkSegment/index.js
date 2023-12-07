@@ -1,13 +1,9 @@
-import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
-import { useEffect, useState } from 'react';
-import { Dimensions } from 'react-native';
+import { useState } from 'react';
 import { Image } from 'expo-image'
 import Animated, {
   useSharedValue,
-  withTiming,
-  useAnimatedStyle,
-  Easing,
+  withTiming
 } from 'react-native-reanimated'
 
 export default function LightDarkSegment({ arr }) {

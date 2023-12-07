@@ -10,7 +10,7 @@ import IconList from "../../../utils/Icons";
 
 
 export default function BudgetCard({ budget, onPress }) {
-    console.log('B CARD: ', budget)
+
     const { isDarkMode } = useContext(DarkModeContext);
 
     const totalSpent = budget.totalBudget - budget.totalPrice;
@@ -38,7 +38,6 @@ export default function BudgetCard({ budget, onPress }) {
                             />
                             <View>
                                 <Text style={styles.budget_name}>{budget.budgetTitle}</Text>
-                                {/* <Text style={styles.budget_recurrence}>Weekly</Text> */}
                             </View>
                         </View>
                         <View style={styles.budget_status}>
@@ -114,14 +113,12 @@ const styles = StyleSheet.create({
     budget_name: {
         fontSize: 16,
         fontWeight: 'bold'
-        // color: '#000'
     },
     budget_recurrence: {
         fontSize: 12,
         padding: 3,
         paddingLeft: 10,
         paddingRight: 10
-        // color: '#707070'
     },
     main_container: {
         padding: 15,
@@ -132,7 +129,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         columnGap: 15,
-        // backgroundColor: 'blue',
         justifyContent: 'space-between'
     },
     text_content: {

@@ -5,7 +5,6 @@ import GoogleSignIn from "../firebase/GoogleSignIn"
 import UserRegistrationSignIn from "../firebase/UserRegistration"
 import UserEmailSignIn from "../firebase/UserSignIn"
 import { onAuthStateChanged, getAuth } from 'firebase/auth'
-import { auth } from "../firebase/firebase.config"
 import { Image } from 'expo-image'
 import { DarkModeContext } from "../context/darkMode"
 

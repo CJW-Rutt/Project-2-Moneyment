@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Statusbar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Switch, Appearance } from 'react-native';
+import { View, Switch } from 'react-native';
 export default function ToggleSwitch() {
     const [isEnabled, setIsEnabled] = useState(false);
 

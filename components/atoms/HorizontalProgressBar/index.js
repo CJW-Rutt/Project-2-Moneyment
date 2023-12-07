@@ -3,19 +3,13 @@ import { StyleSheet } from 'react-native';
 
 export default function HorizontalProgressBar({ progress }){
 
-    // const barColor = {
-    //     red: '#B04121',
-    //     orange: '#E58331',
-    //     blue: '#6AB4AC'
-    // }
-
     const getBarColor = (progress) => {
         if (progress >= 1) {
-          return '#B04121'; // Red when progress is 100%
+          return '#B04121';
         } else if (progress >= 0.7) {
-          return '#E58331'; // Orange when progress is between 70% and 99%
+          return '#E58331';
         } else { 
-          return '#6AB4AC'; // Blue when progress is below 70%
+          return '#6AB4AC';
         }
       }
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, View, StyleSheet, Pressable } from 'react-native';
-import TopHeader from '../../../molecules/TopHeader';
 import BudgetForm from '../../../molecules/BudgetForm';
 import { DarkModeContext } from '../../../../context/darkMode';
 import { useContext } from 'react';
@@ -10,7 +9,6 @@ import { Text } from 'react-native-paper';
 
 
 export default function AddBudgetModal({ visible, onClose, addBudget }) {
-    // console.log("AddBudgetModal addBudget:", addBudget);
 
     const { isDarkMode } = useContext(DarkModeContext);
 
@@ -22,11 +20,6 @@ export default function AddBudgetModal({ visible, onClose, addBudget }) {
             onRequestClose={onClose}
         >
             <View style={styles.modalContainer}>
-                {/* <TopHeader
-                    title='New Budget'
-                    type='close'
-                    func={onClose}
-                /> */}
                 <View style={isDarkMode ? styles.modalHeaderDark : styles.modalHeader}>
                     <Pressable style={styles.closeButton} onPress={onClose}>
                         {

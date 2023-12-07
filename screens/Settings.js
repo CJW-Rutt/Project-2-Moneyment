@@ -12,7 +12,6 @@ import { auth } from '../firebase/firebase.config';
 import { onAuthStateChanged } from 'firebase/auth'
 
 export default function Settings() {
-    // const { isDarkMode, toggleDarkMode } = useTheme();
     const [isDark, setIsDark] = useState(false)
     const [signedIn, setSignedIn] = useState(false)
     const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
@@ -23,11 +22,9 @@ export default function Settings() {
         await onAuthStateChanged(auth, (user) => {
             if (user) {
                 const uid = user.uid;
-                console.log('signed in', uid)
                 setSignedIn(true)
             } else {
                 setSignedIn(false)
-                console.log('not signed in')
             }
         })
     }
@@ -48,7 +45,6 @@ export default function Settings() {
                             onPress: () => {
                                 isDark ? setIsDark(false) : setIsDark(true)
                                 toggleDarkMode()
-                                // console.log(isDark)
                             },
                             number: 0,
                         },
@@ -57,7 +53,6 @@ export default function Settings() {
                             onPress: () => {
                                 isDark ? setIsDark(false) : setIsDark(true)
                                 toggleDarkMode()
-                                // console.log(isDark)
                             },
                             number: 1,
                         }
@@ -126,10 +121,8 @@ const styles = StyleSheet.create({
     subTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        // color: "#707070"
     },
     body: {
         fontSize: 12,
-        // color: "#707070"
     }
 })

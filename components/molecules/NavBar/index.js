@@ -1,8 +1,7 @@
-import { useState, useContext, useEffect } from 'react';
-import { BottomNavigation, Text, Image, Badge, Modal } from 'react-native-paper';
-import { View, StyleSheet, Pressable } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { CommonActions } from '@react-navigation/native';
+import { useState, useContext } from 'react';
+import { BottomNavigation, Text } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+
 import { FAB } from 'react-native-paper';
 import { SIZES } from '../../../constants';
 
@@ -10,13 +9,11 @@ import Home from '../../../screens/Home';
 import Add from '../../../screens/Add';
 import Budget from '../../../screens/Budget';
 import Settings from '../../../screens/Settings';
-import Chat from '../../../screens/Chat';
 
 import { DarkModeContext } from '../../../context/darkMode';
 import { useTheme } from 'react-native-paper';
 
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import TopHeader from '../TopHeader';
 import ChatModal from '../../organisms/ChatModal';
 
 // ComponentDocs(){ return ( https://callstack.github.io/react-native-paper/docs/components/BottomNavigation/ ) } 
@@ -117,9 +114,6 @@ export default function NavBar({ signedIn }) {
                             color={focused ? colors.light.activeColor : colors.light.inactiveColor}
                         />
                 }
-                {/* {
-                    route.notif === true ? <Badge size={10} style={{ position: 'absolute', top: -5, right: -10 }}></Badge> : <></>
-                } */}
             </>
         );
     };
@@ -171,7 +165,6 @@ export default function NavBar({ signedIn }) {
                             color='white'
                             onPress={() => {
                                 handleOpenChat()
-                                console.log('Show chat', showChat)
                             }}
                         />
                     </>
@@ -186,13 +179,10 @@ const styles = StyleSheet.create({
         position: 'absolute',
         margin: 16,
         right: 0,
-        // bottom: 110,
         zIndex: 3,
         backgroundColor: '#429488'
-        // opacity: 0.3
     },
     chatContainer: {
-        // zIndex: 5,
         position: 'absolute',
         top: 0
     }

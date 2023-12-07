@@ -19,8 +19,6 @@ export default function StackedChart({ totalBudget, totalSpent, realData, labels
         barColors: ["#E58331", "#429488", "#B04121",]
     };
 
-    // {"amount": 20, "budgetTitle": "Coffee", "id": "2vrRrik6swUAyoQi4DpA", "left": 15, "name": "Coffee", "totalBudget": 20, "totalPrice": 5}, {"amount": 50, "budgetTitle": "Mom's Birthday", "id": "fknpqaT4WpWvBsIyFqth", "left": 50, "name": "Mom's Birthday", "totalBudget": 50, "totalPrice": 0}, {"amount": 200, "budgetTitle": "Shopping", "id": "k53R9XTWhHd8qhfPA3mR", "left": 100, "name": "Shopping", 
-
     const chartConfigLight = {
         backgroundGradientFrom: "#fff",
         backgroundGradientFromOpacity: 0,
